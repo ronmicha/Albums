@@ -8,18 +8,38 @@ var config = {
     password: 'RonShaq123',
     server: 'as-server.database.windows.net',
     options: {
-        database: 'AlbumShop'
+        database: 'AlbumShop',
+        encrypt: true
     }
 };
 
-var connection = new Connection(config);
+exports.GetHottestAlbums = function ()
+{
+    var connection = new Connection(config);
+    connection.on('connect', function (err)
+    {
+        if (err)
+            ReportError(err);
 
-// Attempt to connect and execute queries if connection goes through
-connection.on('connect', function(err) {
-    if (err) {
-        console.log(err)
-    }
-    else{
-        insertIntoDatabase()
-    }
-});
+        Request = new Request("SELECT * From Albums", function (err, rowcount, rows)
+        {
+            console.log(rowcount + ' Returned');
+        });
+
+        Request.on('row', function (columns)
+        {
+            columns.forEach(function (column)
+            {
+                console.log("%s\t%s", column.metadata.colName, column.value);
+            });
+        });
+
+        connection.execSql(Request);
+    });
+};
+
+function ReportError(err)
+{
+    console.log(err);
+    throw new Error(err);
+}
