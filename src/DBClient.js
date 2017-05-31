@@ -12,10 +12,23 @@ var config = {
     }
 };
 
-exports.GetHottestAlbums = function (callback, numOfAlbums)
+exports.GetHottestAlbums = function (numOfAlbums, callback)
 {
     let query = "SELECT TOP " + numOfAlbums + " * " +
         "FROM Albums A INNER JOIN Orders ";
+    Get(query, callback);
+};
+
+exports.GetGenres = function (callback)
+{
+    let query = "SELECT Name AS GenreName FROM Genres";
+    Get(query, callback);
+};
+
+exports.GetAlbumsByGenre = function (genre, callback)
+{
+    let query = "SELECT A.Name, A.Artist, G.Name AS Genre, A.Price, A.Date_Released, A.Rating" +
+        " FROM Albums A Join Genres G ON A.Genre = G.ID WHERE G.Name = '{0}'".format(genre);
     Get(query, callback);
 };
 
@@ -92,10 +105,13 @@ function Post(query, callback)
 
 
 //region General functionalities
-if (!String.prototype.format) {
-    String.prototype.format = function() {
+if (!String.prototype.format)
+{
+    String.prototype.format = function ()
+    {
         var args = arguments;
-        return this.replace(/{(\d+)}/g, function(match, number) {
+        return this.replace(/{(\d+)}/g, function (match, number)
+        {
             return typeof args[number] != 'undefined'
                 ? args[number]
                 : match

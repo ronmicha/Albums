@@ -1,6 +1,7 @@
 let express = require('express');
 let dbClient = require('../DBClient');
 let validator = require('validator');
+let cookieSession = require('cookie-session');
 let router = express.Router();
 
 router.get('/', function (req, res, next)
