@@ -26,7 +26,10 @@ function Get(query, callback)
     connection.on('connect', function (err)
     {
         if (err)
+        {
             callback(err);
+            return;
+        }
 
         let request = new Request(query, function (err, rowcount)
         {
@@ -38,10 +41,10 @@ function Get(query, callback)
 
         request.on('row', function (columns)
         {
-            let row = [];
+            let row = {};
             columns.forEach(function (column)
             {
-                row.push({attribute: column.metadata.colName, val: column.value});
+                row[column.metadata.colName] = column.value;
             });
             data.push(row);
         });
