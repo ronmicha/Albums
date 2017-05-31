@@ -19,5 +19,5 @@ app.listen(3000, function ()
 app.use(function (err, req, res, next)
 {
     console.log(err);
-    res.send(err.message);
+    res.status(418).send('ERROR: ' + err.message);
 });
