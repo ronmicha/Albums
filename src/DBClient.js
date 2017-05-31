@@ -67,7 +67,6 @@ function Get(query, callback)
 }
 
 function Post(query, callback)
-
 {
     let connection = new Connection(config);
 
