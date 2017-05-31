@@ -12,7 +12,13 @@ app.use('/admins', admins);
 
 app.get('/', function (req, res)
 {
-    dbClient.GetHottestAlbums();
+    dbClient.GetHottestAlbums(function (err, data)
+    {
+        if (err)
+            console.log(err);
+        else
+            res.send(data);
+    });
 });
 
 app.listen(3000, function ()

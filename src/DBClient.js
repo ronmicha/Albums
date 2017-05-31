@@ -1,7 +1,6 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 
-
 // Create connection to database
 var config = {
     userName: 'shwiloo',
@@ -13,33 +12,40 @@ var config = {
     }
 };
 
-exports.GetHottestAlbums = function ()
+exports.GetHottestAlbums = function (callback)
 {
-    var connection = new Connection(config);
+    let query = "SELECT * FROM Albums";
+    Get(query, callback);
+};
+
+function Get(query, callback)
+{
+    let connection = new Connection(config);
+    let data = [];
+
     connection.on('connect', function (err)
     {
         if (err)
-            ReportError(err);
+            callback(err);
 
-        Request = new Request("SELECT * From Albums", function (err, rowcount, rows)
+        let request = new Request(query, function (err, rowcount)
         {
-            console.log(rowcount + ' Returned');
+            if (err)
+                callback(err);
+            else
+                callback(null, data);
         });
 
-        Request.on('row', function (columns)
+        request.on('row', function (columns)
         {
+            let row = [];
             columns.forEach(function (column)
             {
-                console.log("%s\t%s", column.metadata.colName, column.value);
+                row.push({attribute: column.metadata.colName, val: column.value});
             });
+            data.push(row);
         });
 
-        connection.execSql(Request);
+        connection.execSql(request);
     });
-};
-
-function ReportError(err)
-{
-    console.log(err);
-    throw new Error(err);
 }
