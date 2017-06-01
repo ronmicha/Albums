@@ -56,6 +56,15 @@ exports.GetAlbumsByGenre = function (genre)
         "WHERE G.Name = '{0}'").format(genre);
     return Read(query);
 };
+
+exports.SearchAlbums = function (name, artist, genre, maxPrice, year, minRating)
+{
+    let query =
+        "SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS Date_Released, Rating " +
+        "FROM Albums " +
+        "WHERE Name = {0} AND Artist = {1} AND Genre = {2} AND Price <= {3} AND Date_Released >= {4} AND Rating >= {5}".format(name, artist, genre, maxPrice, year, minRating);
+    return Read(query);
+};
 //endregion
 
 exports.Register = function (user)
@@ -75,7 +84,9 @@ exports.Register = function (user)
 exports.GetUser = function (username)
 {
     let query =
-        "SELECT * FROM Clients WHERE Username = '{0}'".format(username);
+        ("SELECT * " +
+        "FROM Clients " +
+        "WHERE Username = '{0}'").format(username);
     return Read(query);
 };
 

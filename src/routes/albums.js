@@ -29,6 +29,18 @@ router.get('/albumsByGenre', function (req, res, next)
     PromiseGetHandler(dbClient.GetAlbumsByGenre(genre), req, res, next);
 });
 
+router.get('/search', function (req, res, next)
+{
+    let name = req.query.name ? "'" + req.query.name + "'" : "Name";
+    let artist = req.query.artist ? "'" + req.query.artist + "'" : "Artist";
+    let genre = req.query.genre ? "'" + req.query.genre + "'" : "Genre";
+    let maxPrice = req.query.maxPrice ? req.query.maxPrice : "Price";
+    let year = req.query.year ? "'" + req.query.year + "-01-01'" : "Date_Released";
+    let minRating = req.query.minRating ? req.query.minRating : "Rating";
+
+    PromiseGetHandler(dbClient.SearchAlbums(name, artist, genre, maxPrice, year, minRating), req, res, next);
+});
+
 function PromiseGetHandler(promise, req, res, next)
 {
     promise.then(function (data)
