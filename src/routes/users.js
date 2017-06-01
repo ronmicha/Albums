@@ -5,6 +5,15 @@ let cookieParser = require('cookie-parser');
 let router = express.Router();
 router.use(cookieParser());
 
+router.use('/reg', function (req, res, next)
+{
+    let cookie = req.cookies['AlbumShop'];
+    if (cookie)
+        next();
+    else
+        res.redirect('/login');
+});
+
 router.post('/register', function (req, res, next)
 {
     let user = {};
@@ -19,7 +28,7 @@ router.post('/register', function (req, res, next)
 
     dbClient.Register(user).then(function ()
     {
-        res.cookie('AlbumShop', {login: user.Username, key: 'key', lastLogin: 'now'});
+        CreateCookie(res, user);
         res.send('Client added successfully');
     }).catch(function (err)
     {
@@ -32,6 +41,25 @@ router.post('/login', function (req, res, next)
     let a = req.cookies['AlbumShop'];
     res.send(a);
 });
+
+function CreateCookie(res, user)
+{
+    let date = new Date();
+    res.cookie('AlbumShop', {login: user.Username, key: user.Username.hashCode(), lastLogin: date});
+}
+
+String.prototype.hashCode = function ()
+{
+    var hash = 0, i, chr;
+    if (this.length === 0) return hash;
+    for (i = 0; i < this.length; i++)
+    {
+        chr = this.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+};
 
 function ValidateUserDetails(user)
 {
