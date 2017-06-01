@@ -72,6 +72,13 @@ exports.Register = function (user)
     return Write(query);
 };
 
+exports.GetUser = function (username)
+{
+    let query =
+        "SELECT * FROM Clients WHERE Username = {0}".format(username);
+    return Read(query);
+};
+
 function Read(query)
 {
     return new Promise(function (resolve, reject)
