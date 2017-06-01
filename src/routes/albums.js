@@ -11,6 +11,11 @@ router.get('/hottest', function (req, res, next)
     PromiseGetHandler(dbClient.GetHottestAlbums(5), req, res, next);
 });
 
+router.get('/newest', function (req, res, next)
+{
+    PromiseGetHandler(dbClient.GetNewestAlbums(5), req, res, next);
+});
+
 router.get('/genres', function (req, res, next)
 {
     PromiseGetHandler(dbClient.GetGenres(), req, res, next);
@@ -34,6 +39,5 @@ function PromiseGetHandler(promise, req, res, next)
         next(err);
     })
 }
-
 
 module.exports = router;

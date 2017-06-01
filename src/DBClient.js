@@ -12,25 +12,51 @@ var config = {
     }
 };
 
+//region Albums Functions
 exports.GetHottestAlbums = function (numOfAlbums)
 {
-    let query = "SELECT TOP " + numOfAlbums + " * " +
-        "FROM Albums A INNER JOIN Orders ";
+    let subQuery =
+        ("SELECT TOP {0} A.ID " +
+        "FROM AlbumsOrdered AO JOIN Orders O ON AO.Order_ID = O.ID " +
+        "JOIN Albums A ON AO.Album_ID = A.ID " +
+        "WHERE O.Order_Date >= DATEADD(day, -7, GETDATE()) " +
+        "GROUP BY A.ID " +
+        "ORDER BY COUNT(A.ID) DESC").format(numOfAlbums);
+    let query =
+        ("SELECT Name, Artist, Genre, Price, Date_Released, Rating " +
+        "FROM Albums " +
+        "WHERE ID IN ({0})").format(subQuery);
+    return Read(query);
+};
+
+exports.GetNewestAlbums = function (numOfAlbums)
+{
+    let query =
+        ("SELECT TOP {0} Name, Artist, Genre, Price, Date_Released, Rating " +
+        "FROM Albums " +
+        "WHERE Date_Released >= DATEADD(month, -1, GETDATE()) " +
+        "ORDER BY Date_Released DESC").format(numOfAlbums);
     return Read(query);
 };
 
 exports.GetGenres = function ()
 {
-    let query = "SELECT Name AS GenreName FROM Genres";
+    let query =
+        "SELECT Name " +
+        "FROM Genres " +
+        "ORDER BY Name DESC";
     return Read(query);
 };
 
 exports.GetAlbumsByGenre = function (genre)
 {
-    let query = "SELECT A.Name, A.Artist, G.Name AS Genre, A.Price, A.Date_Released, A.Rating" +
-        " FROM Albums A Join Genres G ON A.Genre = G.ID WHERE G.Name = '{0}'".format(genre);
+    let query =
+        ("SELECT A.Name, A.Artist, A.Genre, A.Price, A.Date_Released, A.Rating " +
+        "FROM Albums A JOIN Genres G ON A.Genre = G.Name " +
+        "WHERE G.Name = '{0}'").format(genre);
     return Read(query);
 };
+//endregion
 
 exports.Register = function (user)
 {
@@ -40,7 +66,9 @@ exports.Register = function (user)
     let q2_a = user.Q2Answer;
     let email = user.Email;
     let country = user.Country;
-    let query = "INSERT INTO Clients VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')".format(username, password, q1_a, q2_a, email, country);
+    let query =
+        ("INSERT INTO Clients " +
+        "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')").format(username, password, q1_a, q2_a, email, country);
     return Write(query);
 };
 
@@ -79,7 +107,6 @@ function Read(query)
 
             connection.execSql(request);
         });
-
     });
 }
 
@@ -105,11 +132,9 @@ function Write(query)
             connection.execSql(request);
         });
     });
-
 }
 
-
-//region General functionalities
+//region General Functionalities
 if (!String.prototype.format)
 {
     String.prototype.format = function ()
@@ -117,7 +142,7 @@ if (!String.prototype.format)
         var args = arguments;
         return this.replace(/{(\d+)}/g, function (match, number)
         {
-            return typeof args[number] != 'undefined'
+            return typeof args[number] !== 'undefined'
                 ? args[number]
                 : match
                 ;

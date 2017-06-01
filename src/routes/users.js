@@ -16,7 +16,7 @@ router.post('/register', function (req, res, next)
 
     ValidateUserDetails(user);
 
-    dbClient.Register.then(function ()
+    dbClient.Register(user).then(function ()
     {
         res.send('Client added successfully');
     }).catch(function (err)
