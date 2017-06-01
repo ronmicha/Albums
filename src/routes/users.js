@@ -1,8 +1,9 @@
 let express = require('express');
 let dbClient = require('../DBClient');
 let validator = require('validator');
-let cookieSession = require('cookie-session');
+let cookieParser = require('cookie-parser');
 let router = express.Router();
+router.use(cookieParser());
 
 router.post('/register', function (req, res, next)
 {
@@ -18,11 +19,18 @@ router.post('/register', function (req, res, next)
 
     dbClient.Register(user).then(function ()
     {
+        res.cookie('AlbumShop', {login: user.Username, key: 'key', lastLogin: 'now'});
         res.send('Client added successfully');
     }).catch(function (err)
     {
         next(err);
     })
+});
+
+router.post('/login', function (req, res, next)
+{
+    let a = req.cookies['AlbumShop'];
+    res.send(a);
 });
 
 function ValidateUserDetails(user)
