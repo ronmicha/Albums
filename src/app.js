@@ -74,7 +74,6 @@ app.post('/login', function (req, res, next)
     {
         next(err);
     })
-
 });
 
 function CreateCookie(res, user)
