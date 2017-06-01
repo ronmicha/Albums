@@ -79,6 +79,14 @@ exports.GetUser = function (username)
     return Read(query);
 };
 
+exports.GetPreviousOrders = function (username)
+{
+    let query =
+        ("SELECT Order_Date AS Date, Total_Price AS Total," +
+        " Shipping_Date AS 'Shipping Date', Currency From Orders Where username = '{0}'").format(username);
+    return Read(query);
+};
+
 function Read(query)
 {
     return new Promise(function (resolve, reject)
