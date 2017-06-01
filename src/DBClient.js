@@ -12,27 +12,27 @@ var config = {
     }
 };
 
-exports.GetHottestAlbums = function (numOfAlbums, callback)
+exports.GetHottestAlbums = function (numOfAlbums)
 {
     let query = "SELECT TOP " + numOfAlbums + " * " +
         "FROM Albums A INNER JOIN Orders ";
-    Get(query, callback);
+    return Read(query);
 };
 
-exports.GetGenres = function (callback)
+exports.GetGenres = function ()
 {
     let query = "SELECT Name AS GenreName FROM Genres";
-    Get(query, callback);
+    return Read(query);
 };
 
-exports.GetAlbumsByGenre = function (genre, callback)
+exports.GetAlbumsByGenre = function (genre)
 {
     let query = "SELECT A.Name, A.Artist, G.Name AS Genre, A.Price, A.Date_Released, A.Rating" +
         " FROM Albums A Join Genres G ON A.Genre = G.ID WHERE G.Name = '{0}'".format(genre);
-    Get(query, callback);
+    return Read(query);
 };
 
-exports.Register = function (callback, user)
+exports.Register = function (user)
 {
     let username = user.Username;
     let password = user.Password;
@@ -41,66 +41,71 @@ exports.Register = function (callback, user)
     let email = user.Email;
     let country = user.Country;
     let query = "INSERT INTO Clients VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')".format(username, password, q1_a, q2_a, email, country);
-    Post(query, callback);
+    return Write(query);
 };
 
-function Get(query, callback)
+function Read(query)
 {
-    let connection = new Connection(config);
-    let data = [];
-
-    connection.on('connect', function (err)
+    return new Promise(function (resolve, reject)
     {
-        if (err)
-        {
-            callback(err);
-            return;
-        }
+        let connection = new Connection(config);
+        let data = [];
 
-        let request = new Request(query, function (err)
+        connection.on('connect', function (err)
         {
             if (err)
-                callback(err);
-            else
-                callback(null, data);
-        });
-
-        request.on('row', function (columns)
-        {
-            let row = {};
-            columns.forEach(function (column)
             {
-                row[column.metadata.colName] = column.value;
+                reject(err);
+                return;
+            }
+
+            let request = new Request(query, function (err)
+            {
+                if (err)
+                    reject(err);
+                else
+                    resolve(data);
             });
-            data.push(row);
+
+            request.on('row', function (columns)
+            {
+                let row = {};
+                columns.forEach(function (column)
+                {
+                    row[column.metadata.colName] = column.value;
+                });
+                data.push(row);
+            });
+
+            connection.execSql(request);
         });
 
-        connection.execSql(request);
     });
 }
 
-function Post(query, callback)
+function Write(query)
 {
-    let connection = new Connection(config);
-
-    connection.on('connect', function (err)
+    return new Promise(function (resolve, reject)
     {
-        if (err)
-        {
-            callback(err);
-            return;
-        }
+        let connection = new Connection(config);
 
-        let request = new Request(query, function (err)
+        connection.on('connect', function (err)
         {
             if (err)
-                callback(err);
-            else
-                callback(null);
-        });
+                reject(err);
 
-        connection.execSql(request);
+            let request = new Request(query, function (err)
+            {
+                if (err)
+                    reject(err);
+                else
+                    resolve();
+            });
+
+            connection.execSql(request);
+        });
     });
+
 }
 
 

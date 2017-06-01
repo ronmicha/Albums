@@ -4,11 +4,6 @@ let validator = require('validator');
 let cookieSession = require('cookie-session');
 let router = express.Router();
 
-router.get('/', function (req, res, next)
-{
-
-});
-
 router.post('/register', function (req, res, next)
 {
     let user = {};
@@ -21,13 +16,13 @@ router.post('/register', function (req, res, next)
 
     ValidateUserDetails(user);
 
-    dbClient.Register(function (err)
+    dbClient.Register.then(function ()
     {
-        if (err)
-            next(err);
-        else
-            res.send("Client registered successfully!");
-    }, user)
+        res.send('Client added successfully');
+    }).catch(function (err)
+    {
+        next(err);
+    })
 });
 
 function ValidateUserDetails(user)

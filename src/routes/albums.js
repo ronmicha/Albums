@@ -8,24 +8,12 @@ router.use(bodyParser.json());
 
 router.get('/hottest', function (req, res, next)
 {
-    dbClient.GetHottestAlbums(5, function (err, data)
-    {
-        if (err)
-            next(err);
-        else
-            res.send(data);
-    })
+    PromiseGetHandler(dbClient.GetHottestAlbums(5), req, res, next);
 });
 
 router.get('/genres', function (req, res, next)
 {
-    dbClient.GetGenres(function (err, data)
-    {
-        if (err)
-            next(err);
-        else
-            res.send(data);
-    })
+    PromiseGetHandler(dbClient.GetGenres(), req, res, next);
 });
 
 router.get('/albumsByGenre', function (req, res, next)
@@ -33,14 +21,19 @@ router.get('/albumsByGenre', function (req, res, next)
     let genre = req.query.genre;
     if (validator.isEmpty(genre))
         throw new Error('Genre can not be empty');
-    dbClient.GetAlbumsByGenre(genre, function (err, data)
-    {
-        if (err)
-            next(err);
-        else
-            res.send(data);
-    })
+    PromiseGetHandler(dbClient.GetAlbumsByGenre(genre), req, res, next);
 });
+
+function PromiseGetHandler(promise, req, res, next)
+{
+    promise.then(function (data)
+    {
+        res.send(data);
+    }).catch(function (err)
+    {
+        next(err);
+    })
+}
 
 
 module.exports = router;
