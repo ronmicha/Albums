@@ -75,7 +75,7 @@ exports.Register = function (user)
 exports.GetUser = function (username)
 {
     let query =
-        "SELECT * FROM Clients WHERE Username = {0}".format(username);
+        "SELECT * FROM Clients WHERE Username = '{0}'".format(username);
     return Read(query);
 };
 

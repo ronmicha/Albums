@@ -58,15 +58,23 @@ app.post('/login', function (req, res, next)
     if (!username || !password)
         throw new Error('Please enter username and password');
 
-    let user = dbClient.GetUser(username);
-    if (!user)
-        throw new Error('Username not found');
-
-    if (user.Password === password)
+    let promise = dbClient.GetUser(username);
+    if (!promise)
+        throw new Error('Problem logging in');
+    promise.then(function (users)
     {
-        CreateCookie(res, user);
+        if (!users || users.length === 0)
+            throw new Error('Username not found');
+        if (users[0].Password !== password)
+            throw new Error('Password incorrect');
+
+        CreateCookie(res, users[0]);
         res.send('Logged in successfully');
-    }
+    }).catch(function (err)
+    {
+        next(err);
+    })
+
 });
 
 function CreateCookie(res, user)
