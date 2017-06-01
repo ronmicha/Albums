@@ -87,6 +87,13 @@ exports.GetPreviousOrders = function (username)
     return Read(query);
 };
 
+exports.AddAlbumToCart = function (username, albumID)
+{
+    let query =
+        ("INSERT INTO ClientsCarts (Username,AlbumID) VALUES ('{0}',{1})").format(username, albumID);
+    return Write(query);
+};
+
 function Read(query)
 {
     return new Promise(function (resolve, reject)

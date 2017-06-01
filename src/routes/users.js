@@ -18,10 +18,31 @@ router.use(function (req, res, next)
         res.redirect('/login');
 });
 
+/**
+ * No Parameters
+ * */
 router.get('/previousOrders', function (req, res, next)
 {
     let username = req.username;
     PromiseGetHandler(dbClient.GetPreviousOrders(username), req, res, next);
+});
+
+/**
+ * @param AlbumId - sent in post parameters
+ */
+router.post('/addAlbumToCart', function (req, res, next)
+{
+    let username = req.username;
+    let albumID = req.query.albumID;
+    if (!albumID)
+        throw new Error('Album ID is required');
+    dbClient.AddAlbumToCart(username, albumID).then(function ()
+    {
+        res.send('Added Album Successfully');
+    }).catch(function (err)
+    {
+        next(err);
+    })
 });
 
 function PromiseGetHandler(promise, req, res, next)
