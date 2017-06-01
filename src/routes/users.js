@@ -44,7 +44,8 @@ router.post('/login', function (req, res, next)
 
 function CreateCookie(res, user)
 {
-    let date = new Date();
+    let today = new Date();
+    let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
     res.cookie('AlbumShop', {login: user.Username, key: user.Username.hashCode(), lastLogin: date});
 }
 
