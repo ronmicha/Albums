@@ -129,11 +129,33 @@ exports.GetPreviousOrders = function (username)
     return Read(query);
 };
 
+// ToDo: UPDATE ClientsCarts SET Amount = Amount + 1 WHERE (…)
+// IF @@ROWCOUNT = 0
+//      INSERT INTO ClientsCarts VALUES (…)
 exports.AddAlbumToCart = function (username, albumID)
 {
     let query =
-        ("INSERT INTO ClientsCarts (Username, AlbumID) " +
+        ("UPDATE ClientsCarts " +
+        "SET Amount = Amount + 1 " +
+        "WHERE Username = '{0}' AND AlbumID = {1} " +
+        "IF @@ROWCOUNT = 0 " +
+        "INSERT INTO ClientsCarts (Username, AlbumID) " +
         "VALUES ('{0}', {1})").format(username, albumID);
+    // let query =
+    //     ("INSERT INTO ClientsCarts (Username, AlbumID) " +
+    //     "VALUES ('{0}', {1})").format(username, albumID);
+    return Write(query);
+};
+
+exports.RemoveAlbumFromCart = function (username, albumID)
+{
+    let query =
+        ("UPDATE ClientsCarts " +
+        "SET Amount = Amount - 1 " +
+        "WHERE Username = '{0}' AND AlbumID = {1}; ").format(username, albumID);
+    query +=
+        "DELETE FROM ClientsCarts " +
+        "WHERE Amount = 0";
     return Write(query);
 };
 

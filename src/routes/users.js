@@ -5,6 +5,7 @@ let validator = require('validator');
 let cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
+// ToDo: If all users here are logged in, why not take username from cookie (instead req.username)?
 router.use(function (req, res, next)
 {
     let cookie = req.cookies['AlbumShop'];
@@ -41,6 +42,21 @@ router.post('/addAlbumToCart', function (req, res, next)
     dbClient.AddAlbumToCart(username, albumID).then(function ()
     {
         res.send('Album added successfully');
+    }).catch(function (err)
+    {
+        next(err);
+    })
+});
+
+router.post('/removeAlbumFromCart', function (req, res, next)
+{
+    let username = req.cookies['AlbumShop'].login;
+    let albumID = req.query.albumID;
+    if (!albumID)
+        throw new Error('Album ID is required');
+    dbClient.RemoveAlbumFromCart(username, albumID).then(function ()
+    {
+        res.send('Album removed successfully');
     }).catch(function (err)
     {
         next(err);

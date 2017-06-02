@@ -61,9 +61,12 @@ router.get('/search', function (req, res, next)
     PromiseGetHandler(dbClient.SearchAlbums(name, artist, genre, maxPrice, year, minRating), req, res, next);
 });
 
+/**
+ * @param - username. Sent in cookie
+ */
 router.get('/recommend', function (req, res, next)
 {
-    if (!req.cookies || !req.cookies['AlbumShop'])  // ToDo: Is it OK to check for cookies in albums router?
+    if (!req.cookies || !req.cookies['AlbumShop'])  // ToDo: Check cookies in albums router?
         throw new Error('Log in to get personal album recommendations');
     let username = req.cookies['AlbumShop'].login;
     PromiseGetHandler(dbClient.RecommendAlbums(username), req, res, next);
