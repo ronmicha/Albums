@@ -13,6 +13,7 @@ var config = {
 };
 
 //region Albums Functions
+// ToDo: 'Amount' column needed in AlbumsOrdered
 exports.GetHottestAlbums = function (numOfAlbums)
 {
     let subQuery =
@@ -21,7 +22,7 @@ exports.GetHottestAlbums = function (numOfAlbums)
         "JOIN Albums A ON AO.Album_ID = A.ID " +
         "WHERE O.Order_Date >= DATEADD(day, -7, GETDATE()) " +
         "GROUP BY A.ID " +
-        "ORDER BY COUNT(A.ID) DESC").format(numOfAlbums);
+        "ORDER BY SUM(Amount) DESC").format(numOfAlbums);
     let query =
         ("SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
         "FROM Albums " +
