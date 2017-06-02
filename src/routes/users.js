@@ -8,14 +8,16 @@ router.use(cookieParser());
 router.use(function (req, res, next)
 {
     let cookie = req.cookies['AlbumShop'];
-    if (cookie && cookie.login.hashCode() === cookie.key)
-    {
-        req.username = cookie.login;
-        next();
-    }
-    else
-    // ToDo what to do?
-        res.redirect('/login');
+    if (!cookie || !cookie.login.hashCode() === cookie.key)
+        res.redirect('/login');// ToDo what to do?
+
+    // Update last login to today:
+    let today = new Date();
+    let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+    res.cookie('AlbumShop', {login: cookie.login, key: cookie.key, lastLogin: date});
+    req.username = cookie.login;
+    next();
+
 });
 
 /**
