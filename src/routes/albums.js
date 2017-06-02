@@ -6,21 +6,34 @@ let dbClient = require('../DBClient');
 
 router.use(bodyParser.json());
 
+/**
+ * No parameters. Default # of albums = 5
+ */
 router.get('/hottest', function (req, res, next)
 {
     PromiseGetHandler(dbClient.GetHottestAlbums(5), req, res, next);
 });
 
+/**
+ * No parameters. Default # of albums = 5
+ */
 router.get('/newest', function (req, res, next)
 {
     PromiseGetHandler(dbClient.GetNewestAlbums(5), req, res, next);
 });
 
+/**
+ * No parameters
+ */
 router.get('/genres', function (req, res, next)
 {
     PromiseGetHandler(dbClient.GetGenres(), req, res, next);
 });
 
+/**
+ * @param - genre
+ */
+// Todo: This function is shadowed by 'search' function. Remove?
 router.get('/albumsByGenre', function (req, res, next)
 {
     let genre = req.query.genre;
@@ -29,6 +42,10 @@ router.get('/albumsByGenre', function (req, res, next)
     PromiseGetHandler(dbClient.GetAlbumsByGenre(genre), req, res, next);
 });
 
+/**
+ * @param - album name, artist, genre, max price, min publish year, min rating
+ * None of the parameters is mandatory
+ */
 router.get('/search', function (req, res, next)
 {
     let name = req.query.name ? "'" + req.query.name + "'" : "Name";

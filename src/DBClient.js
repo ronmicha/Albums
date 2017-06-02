@@ -23,7 +23,7 @@ exports.GetHottestAlbums = function (numOfAlbums)
         "GROUP BY A.ID " +
         "ORDER BY COUNT(A.ID) DESC").format(numOfAlbums);
     let query =
-        ("SELECT Name, Artist, Genre, Price, Date_Released, Rating " +
+        ("SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
         "FROM Albums " +
         "WHERE ID IN ({0})").format(subQuery);
     return Read(query);
@@ -32,7 +32,7 @@ exports.GetHottestAlbums = function (numOfAlbums)
 exports.GetNewestAlbums = function (numOfAlbums)
 {
     let query =
-        ("SELECT TOP {0} Name, Artist, Genre, Price, Date_Released, Rating " +
+        ("SELECT TOP {0} Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
         "FROM Albums " +
         "WHERE Date_Released >= DATEADD(month, -1, GETDATE()) " +
         "ORDER BY Date_Released DESC").format(numOfAlbums);
@@ -51,7 +51,7 @@ exports.GetGenres = function ()
 exports.GetAlbumsByGenre = function (genre)
 {
     let query =
-        ("SELECT A.Name, A.Artist, A.Genre, A.Price, A.Date_Released, A.Rating " +
+        ("SELECT A.Name, A.Artist, A.Genre, A.Price, Convert(varchar(10), A.Date_Released, 120) AS [Date Released], A.Rating " +
         "FROM Albums A JOIN Genres G ON A.Genre = G.Name " +
         "WHERE G.Name = '{0}'").format(genre);
     return Read(query);
@@ -60,7 +60,7 @@ exports.GetAlbumsByGenre = function (genre)
 exports.SearchAlbums = function (name, artist, genre, maxPrice, year, minRating)
 {
     let query =
-        "SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS Date_Released, Rating " +
+        "SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
         "FROM Albums " +
         "WHERE Name = {0} AND Artist = {1} AND Genre = {2} AND Price <= {3} AND Date_Released >= {4} AND Rating >= {5}".format(name, artist, genre, maxPrice, year, minRating);
     return Read(query);
@@ -77,14 +77,22 @@ exports.Register = function (user)
     let country = user.Country;
     let query =
         ("INSERT INTO Clients " +
-        "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')").format(username, password, q1_a, q2_a, email, country);
+        "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}'); ").format(username, password, q1_a, q2_a, email, country);
+    if (user.FavGenres.length > 0)
+    {
+        query +=
+            ("INSERT INTO ClientsFavGenres " +
+            "VALUES ('{0}', '{1}')").format(user.Username, user.FavGenres[0]);
+        for (let i = 1; i < user.FavGenres.length; i++)
+            query += " ,('{0}', '{1}')".format(user.Username, user.FavGenres[i]);
+    }
     return Write(query);
 };
 
 exports.GetUser = function (username)
 {
     let query =
-        ("SELECT * " +
+        ("SELECT TOP 1 * " +
         "FROM Clients " +
         "WHERE Username = '{0}'").format(username);
     return Read(query);
@@ -93,15 +101,17 @@ exports.GetUser = function (username)
 exports.GetPreviousOrders = function (username)
 {
     let query =
-        ("SELECT Order_Date AS Date, Total_Price AS Total," +
-        " Shipping_Date AS 'Shipping Date', Currency From Orders Where username = '{0}'").format(username);
+        ("SELECT Order_Date AS [Date], Total_Price AS [Total], Shipping_Date AS [Shipping Date], Currency " +
+        "FROM Orders " +
+        "WHERE username = '{0}'").format(username);
     return Read(query);
 };
 
 exports.AddAlbumToCart = function (username, albumID)
 {
     let query =
-        ("INSERT INTO ClientsCarts (Username,AlbumID) VALUES ('{0}',{1})").format(username, albumID);
+        ("INSERT INTO ClientsCarts (Username, AlbumID) " +
+        "VALUES ('{0}', {1})").format(username, albumID);
     return Write(query);
 };
 

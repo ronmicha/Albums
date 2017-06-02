@@ -9,7 +9,7 @@ router.use(function (req, res, next)
 {
     let cookie = req.cookies['AlbumShop'];
     if (!cookie || !cookie.login.hashCode() === cookie.key)
-        res.redirect('/login');// ToDo what to do?
+        res.redirect('/login');// ToDo: What to do?
 
     // Update last login to today:
     let today = new Date();
@@ -40,7 +40,7 @@ router.post('/addAlbumToCart', function (req, res, next)
         throw new Error('Album ID is required');
     dbClient.AddAlbumToCart(username, albumID).then(function ()
     {
-        res.send('Added Album Successfully');
+        res.send('Album added successfully');
     }).catch(function (err)
     {
         next(err);

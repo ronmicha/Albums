@@ -31,6 +31,7 @@ app.post('/register', function (req, res, next)
     user.Q2Answer = req.body.q2answer;
     user.Email = req.body.email;
     user.Country = req.body.country;
+    user.FavGenres = req.body.favGenres;
 
     ValidateUserDetails(user);
 
@@ -112,7 +113,7 @@ function ValidateUserDetails(user)
     if (validator.isEmpty(user.Email) || !validator.isEmail(user.Email))
         throw new Error('Email address is not valid');
 
-    // ToDo Check if country exists in XML file
+    // ToDo: Check if country exists in XML file
     if (validator.isEmpty(user.Country) || !validator.isAlpha(user.Country))
         throw new Error('Country name is not valid');
 }
