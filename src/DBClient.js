@@ -65,6 +65,28 @@ exports.SearchAlbums = function (name, artist, genre, maxPrice, year, minRating)
         "WHERE Name = {0} AND Artist = {1} AND Genre = {2} AND Price <= {3} AND Date_Released >= {4} AND Rating >= {5}".format(name, artist, genre, maxPrice, year, minRating);
     return Read(query);
 };
+
+// Recommendation: Other purchased albums of users who purchased the same albums the user did
+exports.RecommendAlbums = function (username)
+{
+    let albumsUserOrdered =
+        ("SELECT DISTINCT Album_ID " +
+        "FROM AlbumsOrdered " +
+        "WHERE Username = '{0}'").format(username);
+    let usersOrderedSameAlbums =
+        ("SELECT DISTINCT Username " +
+        "FROM AlbumsOrdered " +
+        "WHERE Album_ID IN ({0}) AND Username <> '{1}'").format(albumsUserOrdered, username);
+    let recommendedAlbumsIDs =
+        ("SELECT DISTINCT Album_ID " +
+        "FROM AlbumsOrdered " +
+        "WHERE Album_ID NOT IN ({0}) AND Username IN ({1})").format(albumsUserOrdered, usersOrderedSameAlbums);
+    let query =
+        ("SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
+        "FROM Albums " +
+        "WHERE ID IN ({0})").format(recommendedAlbumsIDs);
+    return Read(query);
+};
 //endregion
 
 exports.Register = function (user)
@@ -121,7 +143,7 @@ exports.GetCartDetails = function (username)
         ("SELECT C.Username as Username, C.AlbumID as AlbumID, A.Name AS AlbumName, C.Amount as OrderAmount," +
         " A.Price as Price, A.Amount_In_Stock as AmountInStock " +
         "FROM Albums A INNER JOIN ClientsCarts C ON A.ID = C.AlbumID " +
-        "WHERE C.Username= '{0}'").format(username);
+        "WHERE C.Username = '{0}'").format(username);
     return Read(query);
 };
 
@@ -129,8 +151,8 @@ exports.CreateOrder = function (username, orderDate, totalPrice, shippingDate, c
 {
     orderDate = orderDate.getFullYear() + '-' + (orderDate.getMonth() + 1) + '-' + orderDate.getDate();
     let query =
-        ("INSERT INTO Orders(Username, Order_Date, Total_Price, Shipping_Date,Currency) " +
-        "Values('{0}', '{1}', {2}, '{3}', '{4}')").format(
+        ("INSERT INTO Orders(Username, Order_Date, Total_Price, Shipping_Date, Currency) " +
+        "VALUES('{0}', '{1}', {2}, '{3}', '{4}')").format(
             username, orderDate, totalPrice, shippingDate, currency);
     return Write(query);
 };
@@ -138,31 +160,34 @@ exports.CreateOrder = function (username, orderDate, totalPrice, shippingDate, c
 exports.GetLatestOrderID = function (username)
 {
     let query =
-        "Select MAX(ID) AS OrderID FROM Orders WHERE Username = '{0}'".format(username);
+        ("Select MAX(ID) AS OrderID " +
+        "FROM Orders " +
+        "WHERE Username = '{0}'").format(username);
     return Read(query);
 };
 
 exports.AddAlbumsOrdered = function (orderID, data)
 {
     let query =
-        "INSERT INTO AlbumsOrdered (Order_ID, Username, Album_ID) Values ";
+        "INSERT INTO AlbumsOrdered (Order_ID, Username, Album_ID) VALUES ";
     var i;
     for (i = 0; i < data.length - 1; i++)
     {
         let albumID = data[i].AlbumID;
         let username = data[i].Username;
-        query += "({0}, {1}, '{2}'),".format(orderID, username, albumID);
+        query += "({0}, '{1}', {2}),".format(orderID, username, albumID);
     }
     let albumID = data[i].AlbumID;
     let username = data[i].Username;
-    query += "({0}, '{1}', '{2}');".format(orderID, username, albumID);
+    query += "({0}, '{1}', {2});".format(orderID, username, albumID);
     return Write(query);
 };
 
 exports.ClearCart = function (username)
 {
     let query =
-        "DELETE FROM ClientsCarts WHERE Username = '{0}'".format(username);
+        ("DELETE FROM ClientsCarts " +
+        "WHERE Username = '{0}'").format(username);
     return Write(query);
 };
 

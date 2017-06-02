@@ -3,6 +3,8 @@ let bodyParser = require('body-parser');
 let validator = require('validator');
 let router = express.Router();
 let dbClient = require('../DBClient');
+let cookieParser = require('cookie-parser');
+router.use(cookieParser());
 
 router.use(bodyParser.json());
 
@@ -31,7 +33,7 @@ router.get('/genres', function (req, res, next)
 });
 
 /**
- * @param - genre
+ * @param - genre. Sent in URL
  */
 // Todo: This function is shadowed by 'search' function. Remove?
 router.get('/albumsByGenre', function (req, res, next)
@@ -43,8 +45,9 @@ router.get('/albumsByGenre', function (req, res, next)
 });
 
 /**
- * @param - album name, artist, genre, max price, min publish year, min rating
- * None of the parameters is mandatory
+ * @param - album name, artist, genre, max price, min publish year, min rating.
+ * Sent in URL.
+ * None of the parameters is mandatory.
  */
 router.get('/search', function (req, res, next)
 {
@@ -56,6 +59,14 @@ router.get('/search', function (req, res, next)
     let minRating = req.query.minRating ? req.query.minRating : "Rating";
 
     PromiseGetHandler(dbClient.SearchAlbums(name, artist, genre, maxPrice, year, minRating), req, res, next);
+});
+
+router.get('/recommend', function (req, res, next)
+{
+    if (!req.cookies || !req.cookies['AlbumShop'])  // ToDo: Is it OK to check for cookies in albums router?
+        throw new Error('Log in to get personal album recommendations');
+    let username = req.cookies['AlbumShop'].login;
+    PromiseGetHandler(dbClient.RecommendAlbums(username), req, res, next);
 });
 
 function PromiseGetHandler(promise, req, res, next)

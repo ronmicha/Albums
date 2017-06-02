@@ -61,6 +61,7 @@ router.post('/purchaseCart', function (req, res, next)
     let username = req.username;
 
     ValidateCartDetails(shippingDate, currency);
+
     dbClient.GetCartDetails(username).then(function (data)
     {
         if (!data || data.length === 0)
@@ -99,8 +100,8 @@ router.post('/purchaseCart', function (req, res, next)
 
 function ValidateCartDetails(shippingDate, currency)
 {
-    if (!currency || (currency !== 'NIS' && currency !== 'USD' ))
-        throw new Error('Currency must be NIS or USD');
+    if (!currency || !validator.isCurrency(currency))
+        throw new Error('Currency is not valid');
 
     // Set minimum order date to one week:
     let minimumOrder = new Date();
