@@ -189,21 +189,30 @@ exports.GetLatestOrderID = function (username)
     return Read(query);
 };
 
-exports.AddAlbumsOrdered = function (orderID, data)
+exports.AddAlbumsOrderedAndUpdateInventory = function (orderID, data)
 {
-    let query =
-        "INSERT INTO AlbumsOrdered (Order_ID, Username, Album_ID) VALUES ";
+    let UpdateQuery =
+        "UPDATE Albums SET Amount_In_Stock = CASE ID ";
+    let OrderQuery =
+        "INSERT INTO AlbumsOrdered (Order_ID, Username, Album_ID, Amount) VALUES ";
     var i;
     for (i = 0; i < data.length - 1; i++)
     {
         let albumID = data[i].AlbumID;
         let username = data[i].Username;
-        query += "({0}, '{1}', {2}),".format(orderID, username, albumID);
+        let amount = data[i].OrderAmount;
+        OrderQuery += "({0}, '{1}', {2}, {3}),".format(orderID, username, albumID, amount);
+        UpdateQuery += "WHEN {0} THEN (Amount_In_Stock - {1}) ".format(albumID, amount);
     }
     let albumID = data[i].AlbumID;
     let username = data[i].Username;
-    query += "({0}, '{1}', {2});".format(orderID, username, albumID);
-    return Write(query);
+    let amount = data[i].OrderAmount;
+    OrderQuery += "({0}, '{1}', {2}, {3});".format(orderID, username, albumID, amount);
+    UpdateQuery += "WHEN {0} THEN (Amount_In_Stock - {1}) ELSE Amount_In_Stock END".format(albumID, amount);
+    Write(OrderQuery).then(function ()
+    {
+        return Write(UpdateQuery);
+    });
 };
 
 exports.ClearCart = function (username)

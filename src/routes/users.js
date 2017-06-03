@@ -91,7 +91,7 @@ router.post('/purchaseCart', function (req, res, next)
             throw new Error('Error creating order');
         orderID = ordersIDs[0].OrderID;
 
-        return dbClient.AddAlbumsOrdered(orderID, cartData);
+        return dbClient.AddAlbumsOrderedAndUpdateInventory(orderID, cartData);
     }).then(function ()
     {
         dbClient.ClearCart(username).then(function ()
