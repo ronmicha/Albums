@@ -115,9 +115,14 @@ exports.GetCartDetails = function (username)
     return Read(query);
 };
 
-exports.CreateOrder = function (username, orderDate, totalPrice, shippingDate, currency)
+exports.CreateOrder = function (orderData)
 {
+    let username = orderData.Username;
+    let orderDate = orderData.OrderDate;
     orderDate = orderDate.getFullYear() + '-' + (orderDate.getMonth() + 1) + '-' + orderDate.getDate();
+    let totalPrice = orderData.TotalPrice;
+    let shippingDate = orderData.ShippingDate;
+    let currency = orderData.Currency;
     let query =
         ("INSERT INTO Orders(Username, Order_Date, Total_Price, Shipping_Date,Currency) " +
         "Values('{0}', '{1}', {2}, '{3}', '{4}')").format(
@@ -135,17 +140,19 @@ exports.GetLatestOrderID = function (username)
 exports.AddAlbumsOrdered = function (orderID, data)
 {
     let query =
-        "INSERT INTO AlbumsOrdered (Order_ID, Username, Album_ID) Values ";
+        "INSERT INTO AlbumsOrdered (Order_ID, Username, Album_ID, Amount) Values ";
     var i;
     for (i = 0; i < data.length - 1; i++)
     {
         let albumID = data[i].AlbumID;
         let username = data[i].Username;
-        query += "({0}, {1}, '{2}'),".format(orderID, username, albumID);
+        let amount = data[i].OrderAmount;
+        query += "({0}, '{1}', '{2}', {3}),".format(orderID, username, albumID, amount);
     }
     let albumID = data[i].AlbumID;
     let username = data[i].Username;
-    query += "({0}, '{1}', '{2}');".format(orderID, username, albumID);
+    let amount = data[i].OrderAmount;
+    query += "({0}, '{1}', '{2}', {3});".format(orderID, username, albumID, amount);
     return Write(query);
 };
 

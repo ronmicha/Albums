@@ -59,43 +59,63 @@ router.post('/purchaseCart', function (req, res, next)
     let shippingDate = req.body.shippingDate;
     let currency = req.body.currency;
     let username = req.username;
+    let orderID, cartData;
 
+    // Check input:
     ValidateCartDetails(shippingDate, currency);
+    // Get Cart data:
     dbClient.GetCartDetails(username).then(function (data)
     {
+        cartData = data;
+        // Check all items in cart are in stock:
+        return CheckItemsInCartAreInStock(data, username, shippingDate, currency);
+    }).then(dbClient.CreateOrder).then(function () // Create new order and get order ID
+    {
+        return dbClient.GetLatestOrderID(username);
+    }).then(function (ordersIDs)
+    {
+        if (!ordersIDs || ordersIDs.length === 0)
+            throw new Error('Error creating order');
+        orderID = ordersIDs[0].OrderID;
+
+        return dbClient.AddAlbumsOrdered(orderID, cartData);
+    }).then(function ()
+    {
+        dbClient.ClearCart(username).then(function ()
+        {
+            res.send('Order {0} submitted successfully'.format(orderID));
+        });
+    }).catch(function (err)
+    {
+        next(err);
+    });
+});
+
+function CheckItemsInCartAreInStock(data, username, shippingDate, currency)
+{
+    return new Promise(function (resolve, reject)
+    {
         if (!data || data.length === 0)
-            throw new Error('User\'s cart is empty!');
+            reject('User\'s cart is empty!');
 
         let totalPrice = 0;
         for (var i = 0; i < data.length; i++)
         {
             let record = data[i];
             if (record.OrderAmount > record.AmountInStock)
-                throw new Error("Can't order {0} copies of album {1}. Currently in stock: {2}".format(
+                reject("Can't order {0} copies of album {1}. Currently in stock: {2}".format(
                     record.OrderAmount, record.AlbumName, record.AmountInStock));
             totalPrice += record.Price;
         }
-        dbClient.CreateOrder(username, new Date(), totalPrice, shippingDate, currency).then(function ()
-        {
-            dbClient.GetLatestOrderID(username).then(function (orderids)
-            {
-                if (!orderids || orderids.length === 0)
-                    throw new Error('Error creating order');
-                let orderID = orderids[0].OrderID;
-                dbClient.AddAlbumsOrdered(orderID, data).then(function ()
-                {
-                    dbClient.ClearCart(username).then(function ()
-                    {
-                        res.send('Order {0} submitted successfully'.format(orderID));
-                    });
-                });
-            });
-        })
-    }).catch(function (err)
-    {
-        next(err);
+        let orderData = {};
+        orderData.Username = username;
+        orderData.OrderDate = new Date();
+        orderData.TotalPrice = totalPrice;
+        orderData.ShippingDate = shippingDate;
+        orderData.Currency = currency;
+        resolve(orderData);
     });
-});
+}
 
 function ValidateCartDetails(shippingDate, currency)
 {
