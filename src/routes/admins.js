@@ -34,7 +34,15 @@ router.use(function (req, res, next)
  */
 router.get('/allOrders', function (req, res, next)
 {
-    return PromiseGetHandler(dbClient.AdminGetAllOrders(), req, res, next);
+    PromiseGetHandler(dbClient.AdminGetAllOrders(), req, res, next);
+});
+
+/**
+ * No parameters
+ */
+router.get('allProducts', function (req, res, next)
+{
+    PromiseGetHandler(dbClient.AdminGetAllProducts, req, res, next);
 });
 
 function PromiseGetHandler(promise, req, res, next)

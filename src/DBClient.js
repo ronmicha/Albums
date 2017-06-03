@@ -240,6 +240,13 @@ exports.AdminGetAllOrders = function ()
     return Read(query);
 };
 
+exports.AdminGetAllProducts = function ()
+{
+    let query =
+        "SELECT * FROM Albums";
+    return Read(query);
+};
+
 //region General Functionalities
 function Read(query)
 {
