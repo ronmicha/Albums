@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let dbClient = require('../DBClient');
+let validator = require('validator');
 let cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
@@ -40,9 +41,30 @@ router.get('/allOrders', function (req, res, next)
 /**
  * No parameters
  */
-router.get('allProducts', function (req, res, next)
+router.get('/allProducts', function (req, res, next)
 {
     PromiseGetHandler(dbClient.AdminGetAllProducts, req, res, next);
+});
+
+router.post('/addProduct', function (req, res, next)
+{
+    // ToDo add parameters
+    let name = req.body.name;
+    let artist = req.body.artist;
+    let genre = req.body.genre;
+    let price = req.body.price;
+    let date = req.body.dateReleased;
+    let rating = req.body.rating;
+    let amount = req.body.amountInStock;
+    ValidateAlbumDetails(name, artist, genre, price, date, rating, amount);
+
+    dbClient.AdminAddAlbum(name, artist, genre, price, date, rating, amount).then(function ()
+    {
+        res.send('Album Added Successfully');
+    }).catch(function (err)
+    {
+        next(err);
+    });
 });
 
 function PromiseGetHandler(promise, req, res, next)
@@ -56,4 +78,21 @@ function PromiseGetHandler(promise, req, res, next)
     })
 }
 
+function ValidateAlbumDetails(name, artist, genre, price, date, rating, amount)
+{
+    if (!name || validator.isEmpty(name))
+        throw new Error('Album name is mandatory');
+    if (!artist || validator.isEmpty(artist))
+        throw new Error('Album artist is mandatory');
+    if (!genre || validator.isEmpty(genre))
+        throw new Error('Album genre is mandatory');
+    if (!price || price < 0)
+        throw new Error('Invalid or missing price');
+    if (!date || validator.isAfter(date, new Date()))
+        throw new Error('Invalid Release Date');
+    if (!rating || rating < 0 || rating > 5)
+        throw new Error('Invalid Rating');
+    if (!amount || amount < 0)
+        throw new Error('Invalid Amount In Stock');
+}
 module.exports = router;

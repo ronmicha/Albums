@@ -223,6 +223,7 @@ exports.ClearCart = function (username)
 };
 //endregion
 
+//region Admins Functions
 exports.GetAdmin = function (username)
 {
     let query =
@@ -266,6 +267,16 @@ exports.AdminGetAllProducts = function ()
         "SELECT * FROM Albums";
     return Read(query);
 };
+
+exports.AdminAddAlbum = function (name, artist, genre, price, date, rating, amount)
+{
+    // ToDo check if genre exists and update if not?
+    let query =
+        ("INSERT INTO Albums(Name, Artist, Genre, Price, Date_Released, Rating, Amount_InStock) " +
+        "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}").format(name, artist, genre, price, date, rating, amount);
+    return Write(query);
+}
+//endregion
 
 //region General Functionalities
 function Read(query)
