@@ -5,8 +5,6 @@ let validator = require('validator');
 let cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
-// ToDo: If all users here are logged in, why not take username from cookie (instead req.username)?
-// ToDo Answer: So that we won't have to use the cookie in every function we need the username. We keep the cookie usage in one place
 router.use(function (req, res, next)
 {
     let cookie = req.cookies['AlbumShop'];
@@ -51,7 +49,7 @@ router.post('/addAlbumToCart', function (req, res, next)
 
 router.post('/removeAlbumFromCart', function (req, res, next)
 {
-    let username = req.cookies['AlbumShop'].login;
+    let username = req.username;
     let albumID = req.query.albumID;
     if (!albumID)
         throw new Error('Album ID is required');
@@ -90,7 +88,7 @@ router.post('/purchaseCart', function (req, res, next)
     }).then(function (ordersIDs)
     {
         if (!ordersIDs || ordersIDs.length === 0)
-            throw new Error('Error creating order');
+            throw new Error('We had a problem submitting your order. Please try again');
         orderID = ordersIDs[0].OrderID;
         // Add to AlbumsOrdered and update inventory:
         return dbClient.AddAlbumsOrderedAndUpdateInventory(orderID, cartData);
@@ -106,12 +104,21 @@ router.post('/purchaseCart', function (req, res, next)
     });
 });
 
+/**
+ * @param - username. Sent in cookie
+ */
+router.get('/recommend', function (req, res, next)
+{
+    let username = req.cookies['AlbumShop'].login;
+    PromiseGetHandler(dbClient.RecommendAlbums(username), req, res, next);
+});
+
 function CheckItemsInCartAreInStock(data, username, shippingDate, currency)
 {
     return new Promise(function (resolve, reject)
     {
         if (!data || data.length === 0)
-            reject(new Error("User's cart is empty!"));
+            reject(new Error("Your cart is empty"));
 
         let totalPrice = 0;
         for (var i = 0; i < data.length; i++)
@@ -138,7 +145,7 @@ function CheckItemsInCartAreInStock(data, username, shippingDate, currency)
 function ValidateCartDetails(shippingDate, currency)
 {
     if (!currency || (currency !== 'NIS' && currency !== 'USD'))
-        throw new Error('Currency is not valid');
+        throw new Error('Currency may be NIS or USD only');
 
     // Set minimum order date to one week:
     let minimumOrder = new Date();
@@ -157,4 +164,5 @@ function PromiseGetHandler(promise, req, res, next)
         next(err);
     })
 }
+
 module.exports = router;

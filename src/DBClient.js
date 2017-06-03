@@ -13,21 +13,19 @@ var config = {
 };
 
 //region Albums Functions
-// ToDo: 'Amount' column needed in AlbumsOrdered
-// TODO answer: you added it, no?
 exports.GetHottestAlbums = function (numOfAlbums)
 {
-    let subQuery =
+    let lastWeekTopSellerAlbums =
         ("SELECT TOP {0} A.ID " +
         "FROM AlbumsOrdered AO JOIN Orders O ON AO.Order_ID = O.ID " +
         "JOIN Albums A ON AO.Album_ID = A.ID " +
         "WHERE O.Order_Date >= DATEADD(day, -7, GETDATE()) " +
         "GROUP BY A.ID " +
-        "ORDER BY SUM(Amount) DESC").format(numOfAlbums);
+        "ORDER BY SUM(AO.Amount) DESC").format(numOfAlbums);
     let query =
         ("SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
         "FROM Albums " +
-        "WHERE ID IN ({0})").format(subQuery);
+        "WHERE ID IN ({0})").format(lastWeekTopSellerAlbums);
     return Read(query);
 };
 
@@ -91,6 +89,7 @@ exports.RecommendAlbums = function (username)
 };
 //endregion
 
+//region Users Functions
 exports.Register = function (user)
 {
     let username = user.Username;
@@ -222,7 +221,18 @@ exports.ClearCart = function (username)
         "WHERE Username = '{0}'").format(username);
     return Write(query);
 };
+//endregion
 
+exports.GetAdmin = function (username)
+{
+    let query =
+        ("SELECT TOP 1 * " +
+        "FROM Admins " +
+        "WHERE Username = '{0}'").format(username);
+    return Read(query);
+};
+
+//region General Functionalities
 function Read(query)
 {
     return new Promise(function (resolve, reject)
@@ -285,7 +295,6 @@ function Write(query)
     });
 }
 
-//region General Functionalities
 if (!String.prototype.format)
 {
     String.prototype.format = function ()
