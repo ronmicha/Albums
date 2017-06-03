@@ -130,9 +130,6 @@ exports.GetPreviousOrders = function (username)
     return Read(query);
 };
 
-// ToDo: UPDATE ClientsCarts SET Amount = Amount + 1 WHERE (…)
-// IF @@ROWCOUNT = 0
-//      INSERT INTO ClientsCarts VALUES (…)
 exports.AddAlbumToCart = function (username, albumID)
 {
     let query =
@@ -140,11 +137,8 @@ exports.AddAlbumToCart = function (username, albumID)
         "SET Amount = Amount + 1 " +
         "WHERE Username = '{0}' AND AlbumID = {1} " +
         "IF @@ROWCOUNT = 0 " +
-        "INSERT INTO ClientsCarts (Username, AlbumID) " +
-        "VALUES ('{0}', {1})").format(username, albumID);
-    // let query =
-    //     ("INSERT INTO ClientsCarts (Username, AlbumID) " +
-    //     "VALUES ('{0}', {1})").format(username, albumID);
+        "INSERT INTO ClientsCarts " +
+        "VALUES ('{0}', {1}, 1)").format(username, albumID);
     return Write(query);
 };
 

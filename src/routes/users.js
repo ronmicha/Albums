@@ -10,7 +10,7 @@ router.use(function (req, res, next)
 {
     let cookie = req.cookies['AlbumShop'];
     if (!cookie || !cookie.login.hashCode() === cookie.key)
-        res.redirect('/login');// ToDo: What to do?
+        throw new Error('This action is available for logged-in users only');
 
     // Update last login to today:
     let today = new Date();

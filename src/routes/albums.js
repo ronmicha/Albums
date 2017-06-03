@@ -35,7 +35,7 @@ router.get('/genres', function (req, res, next)
 /**
  * @param - genre. Sent in URL
  */
-// Todo: This function is shadowed by 'search' function. Remove?
+// Todo: This middleware is shadowed by 'search' middleware. Remove?
 router.get('/albumsByGenre', function (req, res, next)
 {
     let genre = req.query.genre;
