@@ -99,22 +99,22 @@ String.prototype.hashCode = function ()
 
 function ValidateUserDetails(user)
 {
-    if (validator.isEmpty(user.Username) || !validator.isAlpha(user.Username)
+    if (!user.Username || validator.isEmpty(user.Username) || !validator.isAlpha(user.Username)
         || !validator.isLength(user.Username, {min: 3, max: 8}))
         throw new Error('Username must be 3-8 characters long containing english letters only');
 
-    if (validator.isEmpty(user.Password) || !validator.isAlphanumeric(user.Password)
+    if (!user.Password || validator.isEmpty(user.Password) || !validator.isAlphanumeric(user.Password)
         || !validator.isLength(user.Password, {min: 5, max: 10}))
         throw new Error('Password must be 5-10 characters long containing english letters or numbers only');
 
-    if (validator.isEmpty(user.Q1Answer) || validator.isEmpty(user.Q2Answer))
+    if (!user.Q1Answer || validator.isEmpty(user.Q1Answer) || !user.Q2Answer || validator.isEmpty(user.Q2Answer))
         throw new Error('Both security questions must have answers');
 
-    if (validator.isEmpty(user.Email) || !validator.isEmail(user.Email))
+    if (!user.Email || validator.isEmpty(user.Email) || !validator.isEmail(user.Email))
         throw new Error('Email address is not valid');
 
     // ToDo: Check if country exists in XML file
-    if (validator.isEmpty(user.Country) || !validator.isAlpha(user.Country))
+    if (!user.Country || validator.isEmpty(user.Country) || !validator.isAlpha(user.Country))
         throw new Error('Country name is not valid');
 }
 //endregion

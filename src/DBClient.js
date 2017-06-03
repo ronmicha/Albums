@@ -14,6 +14,7 @@ var config = {
 
 //region Albums Functions
 // ToDo: 'Amount' column needed in AlbumsOrdered
+// TODO answer: you added it, no?
 exports.GetHottestAlbums = function (numOfAlbums)
 {
     let subQuery =
@@ -164,9 +165,14 @@ exports.GetCartDetails = function (username)
     return Read(query);
 };
 
-exports.CreateOrder = function (username, orderDate, totalPrice, shippingDate, currency)
+exports.CreateOrder = function (orderData)
 {
+    let username = orderData.Username;
+    let orderDate = orderData.OrderDate;
     orderDate = orderDate.getFullYear() + '-' + (orderDate.getMonth() + 1) + '-' + orderDate.getDate();
+    let totalPrice = orderData.TotalPrice;
+    let shippingDate = orderData.ShippingDate;
+    let currency = orderData.Currency;
     let query =
         ("INSERT INTO Orders(Username, Order_Date, Total_Price, Shipping_Date, Currency) " +
         "VALUES('{0}', '{1}', {2}, '{3}', '{4}')").format(

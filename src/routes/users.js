@@ -6,6 +6,7 @@ let cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
 // ToDo: If all users here are logged in, why not take username from cookie (instead req.username)?
+// ToDo Answer: So that we won't have to use the cookie in every function we need the username. We keep the cookie usage in one place
 router.use(function (req, res, next)
 {
     let cookie = req.cookies['AlbumShop'];
@@ -64,12 +65,11 @@ router.post('/removeAlbumFromCart', function (req, res, next)
 });
 
 /**
- * @param - Shipping date * currency sent in post body as 'shippingDate' & 'currency'
+ * @param - Shipping date & currency sent in post body as 'shippingDate' & 'currency'
  */
 router.post('/purchaseCart', function (req, res, next)
 {
     /* TODO:
-     Add error handling in all promises somehow.
      Change all price to selected currency
      */
     let shippingDate = req.body.shippingDate;
@@ -112,16 +112,19 @@ function CheckItemsInCartAreInStock(data, username, shippingDate, currency)
     return new Promise(function (resolve, reject)
     {
         if (!data || data.length === 0)
-            reject('User\'s cart is empty!');
+            reject(new Error("User's cart is empty!"));
 
         let totalPrice = 0;
         for (var i = 0; i < data.length; i++)
         {
             let record = data[i];
             if (record.OrderAmount > record.AmountInStock)
-                reject("Can't order {0} copies of album {1}. Currently in stock: {2}".format(
-                    record.OrderAmount, record.AlbumName, record.AmountInStock));
-            totalPrice += record.Price;
+                reject(new Error("Can't order {0} copies of album {1}. Currently in stock: {2}".format(
+                    record.OrderAmount, record.AlbumName, record.AmountInStock)));
+            let priceInCurrency = record.Price;
+            if (currency === 'USD')
+                priceInCurrency *= 0.281962;
+            totalPrice += priceInCurrency * record.OrderAmount;
         }
         let orderData = {};
         orderData.Username = username;
@@ -135,7 +138,7 @@ function CheckItemsInCartAreInStock(data, username, shippingDate, currency)
 
 function ValidateCartDetails(shippingDate, currency)
 {
-    if (!currency || !validator.isCurrency(currency))
+    if (!currency || (currency !== 'NIS' && currency !== 'USD'))
         throw new Error('Currency is not valid');
 
     // Set minimum order date to one week:
