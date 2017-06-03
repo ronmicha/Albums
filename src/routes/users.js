@@ -17,7 +17,6 @@ router.use(function (req, res, next)
     res.cookie('AlbumShop', {login: cookie.login, key: cookie.key, lastLogin: date});
     req.username = cookie.login;
     next();
-
 });
 
 /**

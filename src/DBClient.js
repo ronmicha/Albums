@@ -252,6 +252,14 @@ exports.AdminUpdateAlbum = function (albumID, name, artist, genre, price, releas
     return Write(query);
 };
 
+exports.AdminGetAllOrders = function ()
+{
+    let query =
+        "SELECT ID, Username, Order_Date AS OrderDate, Total_Price AS TotalPrice, Shipping_Date " +
+        "As ShippingDate, Currency FROM Orders";
+    return Read(query);
+};
+
 //region General Functionalities
 function Read(query)
 {
