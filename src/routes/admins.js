@@ -32,9 +32,20 @@ router.use(function (req, res, next)
 /**
  * No parameters
  */
-router.get('/allOrders',function (req, res, next)
+router.get('/allOrders', function (req, res, next)
 {
-
+    return PromiseGetHandler(dbClient.AdminGetAllOrders(), req, res, next);
 });
+
+function PromiseGetHandler(promise, req, res, next)
+{
+    promise.then(function (data)
+    {
+        res.send(data);
+    }).catch(function (err)
+    {
+        next(err);
+    })
+}
 
 module.exports = router;

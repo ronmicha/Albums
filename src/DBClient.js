@@ -223,20 +223,20 @@ exports.ClearCart = function (username)
 };
 //endregion
 
-exports.AdminGetAllOrders = function ()
-{
-    let query =
-        "SELECT ID, Username, Order_Date AS OrderDate, Total_Price AS TotalPrice, Shipping_Date " +
-        "As ShippingDate, Currency FROM Orders";
-    return Read(query);
-};
-
 exports.GetAdmin = function (username)
 {
     let query =
         ("SELECT TOP 1 * " +
         "FROM Admins " +
         "WHERE Username = '{0}'").format(username);
+    return Read(query);
+};
+
+exports.AdminGetAllOrders = function ()
+{
+    let query =
+        "SELECT ID, Username, Order_Date AS OrderDate, Total_Price AS TotalPrice, Shipping_Date " +
+        "As ShippingDate, Currency FROM Orders";
     return Read(query);
 };
 
