@@ -236,7 +236,7 @@ exports.GetAdmin = function (username)
 /**
  * Delete album from albums table only, not from ClientsCarts or AlbumsOrdered
  */
-exports.AdminDeleteAlbum = function (albumID)
+exports.AdminDeleteProduct = function (albumID)
 {
     let query =
         ("DELETE FROM Albums " +
@@ -244,7 +244,7 @@ exports.AdminDeleteAlbum = function (albumID)
     return Write(query);
 };
 
-exports.AdminUpdateAlbum = function (albumID, name, artist, genre, price, releaseDate, rating, amount)
+exports.AdminUpdateProduct = function (albumID, name, artist, genre, price, releaseDate, rating, amount)
 {
     let query =
         ("UPDATE Albums " +
@@ -268,14 +268,24 @@ exports.AdminGetAllProducts = function ()
     return Read(query);
 };
 
-exports.AdminAddAlbum = function (name, artist, genre, price, date, rating, amount)
+exports.AdminAddProduct = function (name, artist, genre, price, date, rating, amount)
 {
     // ToDo check if genre exists and update if not?
     let query =
         ("INSERT INTO Albums(Name, Artist, Genre, Price, Date_Released, Rating, Amount_InStock) " +
         "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}").format(name, artist, genre, price, date, rating, amount);
     return Write(query);
-}
+};
+
+exports.AdminDeleteClient = function (username)
+{
+    let query =
+        ("DELETE FROM Clients WHERE Username = '{0}'; " +
+        "DELETE FROM Admins WHERE Username = '{0}'; " +
+        "DELETE FROM ClientsCarts WHERE Username = '{0}'; " +
+        "DELETE FROM ClientsFavGenres WHERE Username = '{0}';").format(username);
+    return Write(query);
+};
 //endregion
 
 //region General Functionalities

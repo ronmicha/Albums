@@ -46,6 +46,10 @@ router.get('/allProducts', function (req, res, next)
     PromiseGetHandler(dbClient.AdminGetAllProducts, req, res, next);
 });
 
+/**
+ * @param - All albums's details. Sent in post body
+ * All parameters are mandatory
+ */
 router.post('/addProduct', function (req, res, next)
 {
     // ToDo add parameters
@@ -56,15 +60,95 @@ router.post('/addProduct', function (req, res, next)
     let date = req.body.dateReleased;
     let rating = req.body.rating;
     let amount = req.body.amountInStock;
+
     ValidateAlbumDetails(name, artist, genre, price, date, rating, amount);
 
-    dbClient.AdminAddAlbum(name, artist, genre, price, date, rating, amount).then(function ()
+    dbClient.AdminAddProduct(name, artist, genre, price, date, rating, amount).then(function ()
     {
-        res.send('Album Added Successfully');
+        res.send('Album added successfully');
     }).catch(function (err)
     {
         next(err);
     });
+});
+
+/**
+ * @param - all album's details, including ID. Sent in post body
+ * Except album ID, none of the parameters are mandatory
+ */
+router.post('/updateProduct', function (req, res, next)
+{
+    let albumID = req.body.id;
+    if (!albumID)
+        throw new Error('Album ID is required');
+    let name = req.body.name ? "'" + req.body.name + "'" : "Name";
+    let artist = req.body.artist ? "'" + req.body.artist + "'" : "Artist";
+    let genre = req.body.genre ? "'" + req.body.genre + "'" : "Genre";
+    let price = req.body.price ? req.body.price : "Price";
+    let releaseDate = req.body.dateReleased ? "'" + req.body.dateReleased + "'" : "Date_Released";
+    let rating = req.body.rating ? req.body.rating : "Rating";
+    let amount = req.body.amount ? req.body.amount : "Amount_In_Stock";
+
+    dbClient.AdminUpdateProduct(albumID, name, artist, genre, price, releaseDate, rating, amount).then(function ()
+    {
+        res.send('Album details updated successfully');
+    }).catch(function (err)
+    {
+        next(err);
+    });
+});
+
+/**
+ * @param - Album ID. Sent in URL
+ */
+router.post('/deleteProduct', function (req, res, next)
+{
+    let albumID = req.query.albumID;
+    if (!albumID)
+        throw new Error('Album ID is required');
+    dbClient.AdminDeleteProduct(albumID).then(function ()
+    {
+        res.send('Album deleted successfully');
+    }).catch(function (err)
+    {
+        next(err);
+    })
+});
+
+/**
+ * @param - All client's details. Sent in post body
+ */
+router.post('/addClient', function (req, res, next)
+{
+    res.redirect('/register');
+    res.clearCookie('AlbumShop');
+});
+
+/**
+ * @param - Client's username. Sent in URL
+ */
+router.post('/deleteClient', function (req, res, next)
+{
+    let username = req.query.username;
+    if (!username)
+        throw new Error('Client username is required');
+    dbClient.GetUser(username).then(function (data)
+    {
+        if (!data || data.length === 0)
+            throw new Error('Client does not exist');
+
+        dbClient.AdminDeleteClient(username).then(function ()
+        {
+            res.send('Client deleted successfully');
+        }).catch(function (err)
+        {
+            next(err);
+        })
+
+    }).catch(function (err)
+    {
+        next(err);
+    })
 });
 
 function PromiseGetHandler(promise, req, res, next)
