@@ -19,7 +19,6 @@ router.use(function (req, res, next)
     res.cookie('AlbumShop', {login: cookie.login, key: cookie.key, lastLogin: date});
     req.username = cookie.login;
     next();
-
 });
 
 /**
@@ -51,7 +50,7 @@ router.post('/addAlbumToCart', function (req, res, next)
 
 router.post('/removeAlbumFromCart', function (req, res, next)
 {
-    let username = req.cookies['AlbumShop'].login;
+    let username = req.username;
     let albumID = req.query.albumID;
     if (!albumID)
         throw new Error('Album ID is required');

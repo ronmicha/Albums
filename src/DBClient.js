@@ -131,6 +131,7 @@ exports.GetPreviousOrders = function (username)
     return Read(query);
 };
 
+//region Cart & Order Functions
 exports.AddAlbumToCart = function (username, albumID)
 {
     let query =
@@ -221,6 +222,15 @@ exports.ClearCart = function (username)
         ("DELETE FROM ClientsCarts " +
         "WHERE Username = '{0}'").format(username);
     return Write(query);
+};
+//endregion
+
+exports.AdminGetAllOrders = function ()
+{
+    let query =
+        "SELECT ID, Username, Order_Date AS OrderDate, Total_Price AS TotalPrice, Shipping_Date " +
+        "As ShippingDate, Currency FROM Orders";
+    return Read(query);
 };
 
 function Read(query)
