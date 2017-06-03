@@ -232,6 +232,26 @@ exports.GetAdmin = function (username)
     return Read(query);
 };
 
+/**
+ * Delete album from albums table only, not from ClientsCarts or AlbumsOrdered
+ */
+exports.AdminDeleteAlbum = function (albumID)
+{
+    let query =
+        ("DELETE FROM Albums " +
+        "WHERE ID = {0}").format(albumID);
+    return Write(query);
+};
+
+exports.AdminUpdateAlbum = function (albumID, name, artist, genre, price, releaseDate, rating, amount)
+{
+    let query =
+        ("UPDATE Albums " +
+        "SET Name = {0}, Artist = {1}, Genre = {2}, Price = {3}, Date_Released = {4}, Rating = {5}, Amount_In_Stock = {6} " +
+        "WHERE ID = {7}").format(name, artist, genre, price, releaseDate, rating, amount, albumID);
+    return Write(query);
+};
+
 exports.AdminGetAllOrders = function ()
 {
     let query =
@@ -310,7 +330,6 @@ function Write(query)
     });
 }
 
-//region General Functionalities
 if (!String.prototype.format)
 {
     String.prototype.format = function ()
