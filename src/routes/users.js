@@ -82,15 +82,17 @@ router.post('/purchaseCart', function (req, res, next)
         cartData = data;
         // Check all items in cart are in stock:
         return CheckItemsInCartAreInStock(data, username, shippingDate, currency);
-    }).then(dbClient.CreateOrder).then(function () // Create new order and get order ID
+        //Create new order:
+    }).then(dbClient.CreateOrder).then(function ()
     {
+        // Get order ID:
         return dbClient.GetLatestOrderID(username);
     }).then(function (ordersIDs)
     {
         if (!ordersIDs || ordersIDs.length === 0)
             throw new Error('Error creating order');
         orderID = ordersIDs[0].OrderID;
-
+        // Add to AlbumsOrdered and update inventory:
         return dbClient.AddAlbumsOrderedAndUpdateInventory(orderID, cartData);
     }).then(function ()
     {
