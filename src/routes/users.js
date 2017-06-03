@@ -69,9 +69,6 @@ router.post('/removeAlbumFromCart', function (req, res, next)
  */
 router.post('/purchaseCart', function (req, res, next)
 {
-    /* TODO:
-     Change all price to selected currency
-     */
     let shippingDate = req.body.shippingDate;
     let currency = req.body.currency;
     let username = req.username;
