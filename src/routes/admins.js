@@ -131,8 +131,7 @@ router.post('/deleteProduct', function (req, res, next)
  */
 router.post('/addClient', function (req, res, next)
 {
-    res.redirect('/register');
-    res.clearCookie('AlbumShop');
+    require('../app').Register(req, res, next);
 });
 
 /**
