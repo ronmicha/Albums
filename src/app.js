@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.post('/register', function (req, res, next)
 {
     let user = {};
-    user.Username = req.body.username;
+    user.Username = req.body.username.toLowerCase();
     user.Password = req.body.password;
     user.Q1Answer = req.body.q1answer;
     user.Q2Answer = req.body.q2answer;
@@ -150,7 +150,6 @@ function ValidateUserDetails(user)
     if (!user.Email || validator.isEmpty(user.Email) || !validator.isEmail(user.Email))
         throw new Error('Email address is not valid');
 
-    // ToDo: Check if country exists in XML file
     if (!user.Country || validator.isEmpty(user.Country) || !validator.isAlpha(user.Country))
         throw new Error('Country name is not valid');
 }
