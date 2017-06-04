@@ -37,13 +37,30 @@ router.post('/addAlbumToCart', function (req, res, next)
     let albumID = req.query.albumID;
     if (!albumID)
         throw new Error('Album ID is required');
-    dbClient.AddAlbumToCart(username, albumID).then(function ()
+    dbClient.GetAlbumIDs().then(function (data)
     {
-        res.send('Album added successfully');
+        let found = false;
+        for (var i = 0; i < data.length; i++)
+            if (data[i]["ID"] + '' === albumID)
+            {
+                found = true;
+                break;
+            }
+        if (!found)
+            throw new Error('Album ID {0} not exist'.format(albumID));
+
+        dbClient.AddAlbumToCart(username, albumID).then(function ()
+        {
+            res.send('Album added successfully');
+        }).catch(function (err)
+        {
+            next(err);
+        })
     }).catch(function (err)
     {
         next(err);
-    })
+    });
+
 });
 
 /**
