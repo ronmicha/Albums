@@ -29,25 +29,7 @@ app.use(cookieParser());
  */
 app.post('/register', function (req, res, next)
 {
-    let user = {};
-    user.Username = req.body.username.toLowerCase();
-    user.Password = req.body.password;
-    user.Q1Answer = req.body.q1answer;
-    user.Q2Answer = req.body.q2answer;
-    user.Email = req.body.email;
-    user.Country = req.body.country;
-    user.FavGenres = req.body.favGenres;
-
-    ValidateUserDetails(user);
-
-    dbClient.Register(user).then(function ()
-    {
-        CreateCookie(res, user);
-        res.send('Client added successfully');
-    }).catch(function (err)
-    {
-        next(err);
-    })
+    module.exports.Register(req, res, next);
 });
 
 /**
@@ -132,6 +114,30 @@ String.prototype.hashCode = function ()
         hash |= 0; // Convert to 32bit integer
     }
     return hash;
+};
+
+exports.Register = function (req, res, next)
+{
+    let user = {};
+    user.Username = req.body.username.toLowerCase();
+    user.Password = req.body.password;
+    user.Q1Answer = req.body.q1answer;
+    user.Q2Answer = req.body.q2answer;
+    user.Email = req.body.email;
+    user.Country = req.body.country;
+    user.FavGenres = req.body.favGenres;
+
+    ValidateUserDetails(user);
+
+    dbClient.Register(user).then(function ()
+    {
+        if (!req.cookies['AlbumShop'])
+            CreateCookie(res, user);
+        res.send('Client added successfully');
+    }).catch(function (err)
+    {
+        next(err);
+    })
 };
 
 function ValidateUserDetails(user)
