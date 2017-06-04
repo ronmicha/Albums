@@ -77,6 +77,32 @@ app.post('/login', function (req, res, next)
     })
 });
 
+app.post('/passwordRestore', function (req, res, next)
+{
+    let username = req.body.username;
+    let q1ans = req.body.q1Answer;
+    let q2ans = req.body.q2Answer;
+    if (!username || !q1ans || !q2ans)
+        throw new Error('Missing data. Username and 2 answers are needed');
+
+    dbClient.GetAnswers(username).then(function (data)
+    {
+        if (!data || data.length === 0)
+            throw new Error('User not found!');
+        data = data[0];
+        let q1ansFromDB = data.Q1Answer;
+        let q2ansFromDB = data.Q2Answer;
+        if (q1ansFromDB === q1ans && q2ansFromDB === q2ans)
+            res.send("Welcome, {0}. Your password is: {1}", username, data.Password);
+        else
+            throw new Error('Incorrect answers!');
+
+    }).catch(function (err)
+    {
+        next(err);
+    })
+});
+
 function CreateCookie(res, user)
 {
     let today = new Date();
@@ -119,6 +145,14 @@ function ValidateUserDetails(user)
 }
 //endregion
 
+// Handle invalid path:
+app.use(function (req, res, next)
+{
+    console.log('ERROR: Invalid path: ' + req.originalUrl);
+    res.status(404).send('Page Not Found');
+});
+
+// Handle errors:
 app.use(function (err, req, res, next)
 {
     console.log(err);

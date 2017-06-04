@@ -90,6 +90,13 @@ exports.RecommendAlbums = function (username)
 //endregion
 
 //region Users Functions
+exports.GetAnswers = function (username)
+{
+    let query =
+        ("SELECT TOP 1 Q1_Answer AS Q1Answer, Q2_Answer AS Q2Answer, Password " +
+        "FROM Clients WHERE Username = '{0}'").format(username);
+    return Read(query);
+};
 exports.Register = function (user)
 {
     let username = user.Username;
