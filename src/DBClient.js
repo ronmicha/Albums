@@ -66,11 +66,12 @@ exports.SearchAlbums = function (name, artist, genre, maxPrice, year, minRating)
     return Read(query);
 };
 
-exports.GetAlbumIDs = function ()
+exports.GetAlbumID = function (albumID)
 {
     let query =
         ("SELECT ID " +
-        "FROM Albums");
+        "FROM Albums " +
+        "WHERE ID = {0}").format(albumID);
     return Read(query);
 };
 // Recommendation: Other purchased albums of users who purchased the same albums the user did

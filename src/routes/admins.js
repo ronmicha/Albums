@@ -80,7 +80,7 @@ router.post('/addProduct', function (req, res, next)
  */
 router.post('/updateProduct', function (req, res, next)
 {
-    let albumID = req.body.id;
+    let albumID = req.body.ID;
     if (!albumID)
         throw new Error('Album ID is required');
     let name = req.body.name ? "'" + req.body.name + "'" : "Name";
@@ -108,13 +108,22 @@ router.post('/deleteProduct', function (req, res, next)
     let albumID = req.query.albumID;
     if (!albumID)
         throw new Error('Album ID is required');
-    dbClient.AdminDeleteProduct(albumID).then(function ()
+    dbClient.GetAlbumID(albumID).then(function (data)
     {
-        res.send('Album deleted successfully');
-    }).catch(function (err)
+        if (!data || data.length === 0)
+            throw new Error('Album {0} not exists!'.format(albumID));
+        dbClient.AdminDeleteProduct(albumID).then(function ()
+        {
+            res.send('Album deleted successfully');
+        }).catch(function (err)
+        {
+            next(err);
+        })
+    }).catch(function (error)
     {
-        next(err);
+        next(error);
     })
+
 });
 
 /**
