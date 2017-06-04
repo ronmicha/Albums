@@ -94,9 +94,11 @@ exports.GetAnswers = function (username)
 {
     let query =
         ("SELECT TOP 1 Q1_Answer AS Q1Answer, Q2_Answer AS Q2Answer, Password " +
-        "FROM Clients WHERE Username = '{0}'").format(username);
+        "FROM Clients " +
+        "WHERE Username = '{0}'").format(username);
     return Read(query);
 };
+
 exports.Register = function (user)
 {
     let username = user.Username;
@@ -271,7 +273,8 @@ exports.AdminGetAllOrders = function ()
 exports.AdminGetAllProducts = function ()
 {
     let query =
-        "SELECT * FROM Albums";
+        "SELECT * " +
+        "FROM Albums";
     return Read(query);
 };
 
@@ -296,8 +299,8 @@ exports.AdminDeleteClient = function (username)
 exports.AdminAddGenre = function (genre)
 {
     let query =
-        ("BEGIN IF NOT EXISTS (SELECT * FROM Genres WHERE Name = '{0}') " +
-        "BEGIN INSERT INTO Genres (Name) VALUES ('{0}') END END").format(genre);
+        ("IF NOT EXISTS (SELECT * FROM Genres WHERE Name = '{0}') " +
+        "INSERT INTO Genres (Name) VALUES ('{0}')").format(genre);
     return Write(query);
 };
 //endregion

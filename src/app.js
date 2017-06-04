@@ -94,7 +94,7 @@ app.post('/passwordRecover', function (req, res, next)
     let q1ans = req.body.q1answer;
     let q2ans = req.body.q2answer;
     if (!username || !q1ans || !q2ans)
-        throw new Error('Missing data. Username and 2 answers are needed');
+        throw new Error('Missing data. Username and 2 answers are required');
 
     dbClient.GetAnswers(username).then(function (data)
     {
