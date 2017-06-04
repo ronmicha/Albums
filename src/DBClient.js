@@ -277,10 +277,9 @@ exports.AdminGetAllProducts = function ()
 
 exports.AdminAddProduct = function (name, artist, genre, price, date, rating, amount)
 {
-    // ToDo check if genre exists and update if not?
     let query =
-        ("INSERT INTO Albums(Name, Artist, Genre, Price, Date_Released, Rating, Amount_InStock) " +
-        "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}").format(name, artist, genre, price, date, rating, amount);
+        ("INSERT INTO Albums(Name, Artist, Genre, Price, Date_Released, Rating, Amount_In_Stock) " +
+        "VALUES ('{0}', '{1}', '{2}', {3}, '{4}', {5}, {6})").format(name, artist, genre, price, date, rating, amount);
     return Write(query);
 };
 
@@ -291,6 +290,14 @@ exports.AdminDeleteClient = function (username)
         "DELETE FROM Admins WHERE Username = '{0}'; " +
         "DELETE FROM ClientsCarts WHERE Username = '{0}'; " +
         "DELETE FROM ClientsFavGenres WHERE Username = '{0}';").format(username);
+    return Write(query);
+};
+
+exports.AdminAddGenre = function (genre)
+{
+    let query =
+        ("BEGIN IF NOT EXISTS (SELECT * FROM Genres WHERE Name = '{0}') " +
+        "BEGIN INSERT INTO Genres (Name) VALUES ('{0}') END END").format(genre);
     return Write(query);
 };
 //endregion

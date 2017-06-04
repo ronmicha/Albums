@@ -43,7 +43,7 @@ router.get('/allOrders', function (req, res, next)
  */
 router.get('/allProducts', function (req, res, next)
 {
-    PromiseGetHandler(dbClient.AdminGetAllProducts, req, res, next);
+    PromiseGetHandler(dbClient.AdminGetAllProducts(), req, res, next);
 });
 
 /**
@@ -52,20 +52,22 @@ router.get('/allProducts', function (req, res, next)
  */
 router.post('/addProduct', function (req, res, next)
 {
-    // ToDo add parameters
     let name = req.body.name;
     let artist = req.body.artist;
     let genre = req.body.genre;
     let price = req.body.price;
     let date = req.body.dateReleased;
     let rating = req.body.rating;
-    let amount = req.body.amountInStock;
+    let amount = req.body.amount;
 
     ValidateAlbumDetails(name, artist, genre, price, date, rating, amount);
+
+    dbClient.AdminAddGenre(genre);
 
     dbClient.AdminAddProduct(name, artist, genre, price, date, rating, amount).then(function ()
     {
         res.send('Album added successfully');
+
     }).catch(function (err)
     {
         next(err);
@@ -172,7 +174,7 @@ function ValidateAlbumDetails(name, artist, genre, price, date, rating, amount)
         throw new Error('Album genre is mandatory');
     if (!price || price < 0)
         throw new Error('Invalid or missing price');
-    if (!date || validator.isAfter(date, new Date()))
+    if (!date || validator.isAfter(date, new Date() + ''))
         throw new Error('Invalid Release Date');
     if (!rating || rating < 0 || rating > 5)
         throw new Error('Invalid Rating');

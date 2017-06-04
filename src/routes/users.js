@@ -46,6 +46,9 @@ router.post('/addAlbumToCart', function (req, res, next)
     })
 });
 
+/**
+ * @param AlbumId - sent in post parameters
+ */
 router.post('/removeAlbumFromCart', function (req, res, next)
 {
     let username = req.username;

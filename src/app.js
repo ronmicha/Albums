@@ -22,6 +22,11 @@ let validator = require('validator');
 let cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+/**
+ * Parameters in body:
+ * username, password, q1answer, q2answer, email, country - mandatory
+ * favGenres - optional
+ */
 app.post('/register', function (req, res, next)
 {
     let user = {};
@@ -45,6 +50,9 @@ app.post('/register', function (req, res, next)
     })
 });
 
+/**
+ * Parameters in body: username, password - mandatory
+ */
 app.post('/login', function (req, res, next)
 {
     let cookie = req.cookies['AlbumShop'];
@@ -77,11 +85,14 @@ app.post('/login', function (req, res, next)
     })
 });
 
-app.post('/passwordRestore', function (req, res, next)
+/**
+ * Parameters in body: username, q1answer, q2answer - mandatory
+ */
+app.post('/passwordRecover', function (req, res, next)
 {
     let username = req.body.username;
-    let q1ans = req.body.q1Answer;
-    let q2ans = req.body.q2Answer;
+    let q1ans = req.body.q1answer;
+    let q2ans = req.body.q2answer;
     if (!username || !q1ans || !q2ans)
         throw new Error('Missing data. Username and 2 answers are needed');
 
@@ -93,7 +104,7 @@ app.post('/passwordRestore', function (req, res, next)
         let q1ansFromDB = data.Q1Answer;
         let q2ansFromDB = data.Q2Answer;
         if (q1ansFromDB === q1ans && q2ansFromDB === q2ans)
-            res.send("Welcome, {0}. Your password is: {1}", username, data.Password);
+            res.send("Welcome, {0}. Your password is: {1}".format(username, data.Password));
         else
             throw new Error('Incorrect answers!');
 
@@ -149,7 +160,7 @@ function ValidateUserDetails(user)
 app.use(function (req, res, next)
 {
     console.log('ERROR: Invalid path: ' + req.originalUrl);
-    res.status(404).send('Page Not Found');
+    res.status(404).send('404: Page Not Found');
 });
 
 // Handle errors:
