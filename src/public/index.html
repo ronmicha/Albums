@@ -12,7 +12,11 @@
 <body>
     <div ng-controller="testController as ctrl">
         <label>Hello {{ctrl.name}}</label>
-        <label>{{ctrl.hottest}}</label>
+        <div ng-repeat="genre in ctrl.genres">
+            <label>{{genre.Name}}</label>
+            <br>
+        </div>
     </div>
+    <ng-view></ng-view>
 </body>
 </html>
