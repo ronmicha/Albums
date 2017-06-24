@@ -16,6 +16,8 @@ app.listen(3000, function ()
     console.log('Listening to port 3000...');
 });
 
+app.use(express.static(__dirname + '/public'));
+
 //region User Login & Register
 let dbClient = require('./DBClient');
 let validator = require('validator');
