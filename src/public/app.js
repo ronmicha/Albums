@@ -82,6 +82,9 @@ app.controller('signupController', ['UserService', function (UserService)
     }
 }]);
 
+/**
+ * Directive for checking if a username exists in DB
+ */
 app.directive('usernameAvailableValidator', ['$http', function ($http)
 {
     return {

@@ -159,6 +159,10 @@
         input:focus {
             box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);
         }
+
+        .errorMessageDiv {
+            color: wheat;
+        }
     </style>
 </head>
 <div ng-controller="signupController as ctrl">
@@ -173,17 +177,13 @@
                    ng-maxlength="8"
                    username-Available-Validator='/checkUsernameAvailable'/>
             <div ng-messages=" signUpForm.username.$touched && signUpForm.username.$error "
-                 role="alert" style="color: wheat">
+                 role="alert" class="errorMessageDiv">
                 <div ng-message="required" class="some-message">Username is required</div>
+                <div ng-message="pattern">Username must contain english letters only</div>
                 <div ng-message="minlength">Username must be minimum 3 characters long</div>
                 <div ng-message="maxlength">Username must be maximum 8 characters long</div>
-                <div ng-message="pattern">Username must contain english letters only</div>
-                <div ng-message="recordLoading">
-                    Checking database...
-                </div>
-                <div ng-message="recordAvailable">
-                    Username is already in use
-                </div>
+                <div ng-message="recordLoading"> Checking database...</div>
+                <div ng-message="recordAvailable"> Username is already in use</div>
             </div>
             <input type="password" name="password" placeholder="Password"
                    ng-model="ctrl.User.Password"
@@ -191,15 +191,35 @@
                    ng-pattern="/^[a-zA-Z0-9\s]*$/"
                    ng-minlength="5"
                    ng-maxlength="10"/>
+            <div ng-messages="signUpForm.password.$touched && signUpForm.password.$error"
+                 role="alert" class="errorMessageDiv">
+                <div ng-message="required" class="some-message">Password is required</div>
+                <div ng-message="pattern">Password must contain english letters and numbers only</div>
+                <div ng-message="minlength">Password must be minimum 5 characters long</div>
+                <div ng-message="maxlength">Password must be maximum 10 characters long</div>
+            </div>
             <input type="email" name="email" placeholder="Email"
                    ng-model="ctrl.User.Email"
                    ng-required="true"/>
+            <div ng-messages="signUpForm.email.$touched && signUpForm.email.$error"
+                 role="alert" class="errorMessageDiv">
+                <div ng-message="required" class="some-message">Email is required</div>
+                <div ng-message="email">Invalid email address</div>
+            </div>
             <input type="text" name="q1answer" placeholder="Answer to first question"
                    ng-model="ctrl.User.Q1Answer"
                    ng-required="true"/>
+            <div ng-messages="signUpForm.q1answer.$touched && signUpForm.q1answer.$error"
+                 role="alert" class="errorMessageDiv">
+                <div ng-message="required" class="some-message">Answer is required</div>
+            </div>
             <input type="text" name="q2answer" placeholder="Answer to first question"
                    ng-model="ctrl.User.Q2Answer"
                    ng-required="true"/>
+            <div ng-messages="signUpForm.q2answer.$touched && signUpForm.q2answer.$error"
+                 role="alert" class="errorMessageDiv">
+                <div ng-message="required" class="some-message">Answer is required</div>
+            </div>
             <button type="submit" ng-disabled="signUpForm.$invalid" class="btn btn-primary btn-block btn-large">
                 Join Us!
             </button>
