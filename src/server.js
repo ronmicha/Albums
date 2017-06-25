@@ -106,6 +106,21 @@ app.post('/passwordRecover', function (req, res, next)
     })
 });
 
+app.get('/checkUsernameAvailable', function (req, res, next)
+{
+    let name = req.query.name;
+    dbClient.GetUser(name).then(function (data)
+    {
+        if (data.length === 0)
+            res.send({exists: false});
+        else
+            res.send({exists: true})
+    }).catch(function (err)
+    {
+        next(err);
+    })
+});
+
 function CreateCookie(res, user)
 {
     let today = new Date();

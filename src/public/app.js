@@ -1,4 +1,4 @@
-let app = angular.module('AlbumApp', ['ngRoute', 'LocalStorageModule', 'ngCookies']);
+let app = angular.module('AlbumApp', ['ngRoute', 'LocalStorageModule', 'ngCookies', 'ngMessages']);
 
 app.config(function (localStorageServiceProvider)
 {
@@ -72,7 +72,65 @@ app.controller('loginController', ['UserService', function (UserService)
 
 app.controller('signupController', ['UserService', function (UserService)
 {
+    let vm = this;
+    vm.User = {};
 
+    vm.signUp = function (valid)
+    {
+        if (!valid)
+            return;
+    }
+}]);
+
+app.directive('usernameAvailableValidator', ['$http', function ($http)
+{
+    return {
+        require: 'ngModel',
+        link: function (scope, elements, attrs, ngModel)
+        {
+            let apiUrl = attrs.usernameAvailableValidator;
+
+            function setAsLoading(bool)
+            {
+                ngModel.$setValidity('recordLoading', !bool);
+            }
+
+            function setAsAvailable(bool)
+            {
+                ngModel.$setValidity('recordAvailable', bool);
+            }
+
+            ngModel.$parsers.push(function (value)
+            {
+                if (!value || value.length === 0) return;
+                setAsLoading(true);
+                setAsAvailable(false);
+                $http.get(apiUrl, {
+                    params: {
+                        name: value
+                    }
+                }).then(function (response)
+                {
+                    let exists = response.data['exists'];
+                    if (!exists)
+                    {
+                        setAsLoading(false);
+                        setAsAvailable(true);
+                    }
+                    else
+                    {
+                        setAsLoading(false);
+                        setAsAvailable(false);
+                    }
+                }).catch(function (err)
+                {
+                    setAsLoading(false);
+                    setAsAvailable(false);
+                });
+                return value;
+            })
+        }
+    }
 }]);
 
 app.controller('cartController', ['UserService', function (UserService)
@@ -91,7 +149,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
     /**
      * @param user: username, password, q1answer, q2answer, email, country, favGenres
      */
-    service.register = function (user)
+    service.signup = function (user)
     {
         return $http.post('/register', user).then(function ()
         {
