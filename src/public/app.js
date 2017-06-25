@@ -24,13 +24,17 @@ app.config(['$routeProvider', function ($routeProvider)
     }).when("/cart", {
         templateUrl: "views/Cart.html",
         controller: "cartController"
-    }).otherwise({
+    }).when("/", {
+            templateUrl: "views/Home.html",
+            controller: "homeController"
+        }
+    ).otherwise({
         redirect: '/'
     });
 }]);
 
 //region Controllers
-app.controller('mainPageController', ['UserService', '$scope', function (UserService, $scope)
+app.controller('mainController', ['UserService', '$scope', function (UserService, $scope)
 {
     let vm = this;
     vm.isLoggedIn = UserService.isLoggedIn;
@@ -47,6 +51,11 @@ app.controller('mainPageController', ['UserService', '$scope', function (UserSer
             alert(err.message);
         });
     };
+
+}]);
+
+app.controller('homeController', ['UserService', function (UserService)
+{
 
 }]);
 
