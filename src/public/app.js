@@ -1,4 +1,4 @@
-let app = angular.module('AlbumApp', ['ngRoute', 'LocalStorageModule']);
+let app = angular.module('AlbumApp', ['ngRoute', 'LocalStorageModule', 'ngCookies']);
 
 app.config(function (localStorageServiceProvider)
 {
@@ -34,14 +34,20 @@ app.controller('mainPageController', ['UserService', '$scope', function (UserSer
 {
     let vm = this;
     vm.isLoggedIn = UserService.isLoggedIn;
-    UserService.loginWithCookie().then(function ()
+    vm.init = function ()
     {
-        vm.isLoggedIn = UserService.isLoggedIn;
-        vm.User = UserService.User;
-    }).catch(function (err)
-    {
-        alert(err.message);
-    });
+        if (!UserService.cookieExists())
+            return;
+        UserService.loginWithCookie().then(function ()
+        {
+            vm.isLoggedIn = UserService.isLoggedIn;
+            vm.User = UserService.User;
+        }).catch(function (err)
+        {
+            alert(err.message);
+        });
+    };
+
 }]);
 
 app.controller('albumsController', ['UserService', function (UserService)
@@ -67,7 +73,7 @@ app.controller('cartController', ['UserService', function (UserService)
 //endregion
 
 //region Services
-app.factory('UserService', ['$http', function ($http)
+app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
 {
     let service = {};
     service.loggedIn = false;
@@ -116,6 +122,11 @@ app.factory('UserService', ['$http', function ($http)
         {
             return Promise.reject(err);
         })
+    };
+
+    service.cookieExists = function ()
+    {
+        return $cookies.get('AlbumShop');
     };
 
     return service;
