@@ -79,6 +79,11 @@ app.controller('signupController', ['UserService', function (UserService)
     {
         if (!valid)
             return;
+    };
+
+    vm.init = function ()
+    {
+        // ToDo load countries
     }
 }]);
 

@@ -165,7 +165,7 @@
         }
     </style>
 </head>
-<div ng-controller="signupController as ctrl">
+<div data-ng-controller="signupController as ctrl" data-ng-init="ctrl.init()">
     <div class="login">
         <h1>Sign Up</h1>
         <form name="signUpForm" ng-submit="ctrl.signUp(signUpForm.$valid)" novalidate>
