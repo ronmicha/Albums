@@ -74,6 +74,7 @@ exports.GetAlbumID = function (albumID)
         "WHERE ID = {0}").format(albumID);
     return Read(query);
 };
+
 // Recommendation: Other purchased albums of users who purchased the same albums the user did
 exports.RecommendAlbums = function (username)
 {
