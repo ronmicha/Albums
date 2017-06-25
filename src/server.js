@@ -42,7 +42,15 @@ app.post('/login', function (req, res, next)
     let cookie = req.cookies['AlbumShop'];
     if (cookie && cookie.login.hashCode() === cookie.key)
     {
-        res.send('Logged in successfully');
+        // alert('');
+        // res.send('Logged in successfully');
+        dbClient.GetUser(cookie.login).then(function (users)
+        {
+            res.send(users[0]);
+        }).catch(function (err)
+        {
+            next(err);
+        });
         return;
     }
 
@@ -62,7 +70,7 @@ app.post('/login', function (req, res, next)
             throw new Error('Password incorrect');
 
         CreateCookie(res, users[0]);
-        res.send('Logged in successfully');
+        res.send(users[0]);
     }).catch(function (err)
     {
         next(err);
