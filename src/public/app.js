@@ -86,10 +86,11 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     }
 }]);
 
-app.controller('signupController', ['UserService', function (UserService)
+app.controller('signupController', ['UserService', 'DataSource', '$scope', function (UserService, DataSource, $scope)
 {
     let vm = this;
     vm.User = {};
+    vm.Countries = [];
 
     vm.signUp = function (valid)
     {
@@ -99,7 +100,24 @@ app.controller('signupController', ['UserService', function (UserService)
 
     vm.init = function ()
     {
-        // ToDo load countries
+        let countriesFile = "/resources/countries.xml";
+        let xmlTransform = function (data)
+        {
+            console.log("transform data");
+            var x2js = new X2JS();
+            var json = x2js.xml_str2json(data);
+            return json;
+        };
+
+        let catchData = function (data)
+        {
+            vm.Countries = data.data.Countries.Country;
+        };
+
+        DataSource.get(countriesFile, catchData, xmlTransform).catch(function (err)
+        {
+            alert(err);
+        });
     }
 }]);
 
@@ -164,6 +182,9 @@ app.controller('cartController', ['UserService', function (UserService)
 //endregion
 
 //region Services
+/**
+ * User methods
+ */
 app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
 {
     let service = {};
@@ -221,5 +242,24 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
     };
 
     return service;
+}]);
+
+/**
+ * Read File
+ */
+app.factory('DataSource', ['$http', function ($http)
+{
+    return {
+        get: function (file, callback, transform)
+        {
+            $http.get(file, {transformResponse: transform}).
+
+                then(function (data)
+                {
+                    callback(data);
+                });
+
+        }
+    };
 }]);
 //endregion
