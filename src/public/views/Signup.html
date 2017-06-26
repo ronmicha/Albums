@@ -56,12 +56,12 @@
                  role="alert" class="errorMessageDiv">
                 <div ng-message="required" class="some-message">Answer is required</div>
             </div>
-            <md-select name="country"
-                       data-ng-options="c.Name as c.Name for c in ctrl.Countries"
-                       ng-required="true"
-                       ng-model="ctrl.User.Country">
+            <select name="country"
+                    data-ng-options="c.Name as c.Name for c in ctrl.Countries"
+                    ng-required="true"
+                    ng-model="ctrl.User.Country">
                 <option value="" disabled selected>Select Country</option>
-            </md-select>
+            </select>
             <div ng-messages="signUpForm.country.$touched && signUpForm.country.$error"
                  role="alert" class="errorMessageDiv">
                 <div ng-message="required" class="some-message">Country is required</div>
