@@ -76,6 +76,8 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     vm.login = function (valid)
     {
         if (valid)
+        {
+            alert('');
             UserService.login(vm.User.Username, vm.User.Password)
                 .then(function ()
                 {
@@ -85,6 +87,7 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
                 {
                     alert(err.message);
                 })
+        }
     }
 }]);
 

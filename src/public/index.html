@@ -31,10 +31,10 @@
                 <li><a href="#albums">Albums</a></li>
                 <li><a href="#cart" ng-show="ctrl.isLoggedIn">Cart</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#signup"><span class="glyphicon glyphicon-user" ng-if="!ctrl.isLoggedIn></span> Sign
+            <ul class="nav navbar-nav navbar-right" ng-if="!ctrl.isLoggedIn">
+                <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign
                     Up</a></li>
-                <li><a href="#login"><span class="glyphicon glyphicon-log-in" ng-if="!ctrl.isLoggedIn"></span>
+                <li><a href="#login"><span class="glyphicon glyphicon-log-in"></span>
                     Login</a>
                 </li>
             </ul>
