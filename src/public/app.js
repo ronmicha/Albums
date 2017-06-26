@@ -52,7 +52,6 @@ app.controller('mainController', ['UserService', function (UserService)
             alert(err.message);
         });
     };
-
 }]);
 
 app.controller('homeController', ['UserService', function (UserService)
@@ -73,7 +72,6 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     vm.login = function (valid)
     {
         if (valid)
-        {
             UserService.login(vm.User.Username, vm.User.Password)
                 .then(function ()
                 {
@@ -83,7 +81,6 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
                 {
                     alert(err.message);
                 })
-        }
     }
 }]);
 
@@ -253,12 +250,10 @@ app.factory('DataSource', ['$http', function ($http)
     return {
         get: function (file, callback, transform)
         {
-            $http.get(file, {transformResponse: transform}).
-
-                then(function (data)
-                {
-                    callback(data);
-                }).catch(function (err)
+            $http.get(file, {transformResponse: transform}).then(function (data)
+            {
+                callback(data);
+            }).catch(function (err)
             {
                 //
             });
