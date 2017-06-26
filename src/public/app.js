@@ -37,14 +37,16 @@ app.config(['$routeProvider', function ($routeProvider)
 app.controller('mainController', ['UserService', '$scope', function (UserService, $scope)
 {
     let vm = this;
-    vm.isLoggedIn = UserService.isLoggedIn;
+    vm.User = {};
+    vm.isLoggedIn = UserService.loggedIn;
     vm.init = function ()
     {
         if (!UserService.cookieExists())
             return;
         UserService.loginWithCookie().then(function ()
         {
-            vm.isLoggedIn = UserService.isLoggedIn;
+            $scope.isLoggedIn = true;
+            // vm.isLoggedIn = UserService.loggedIn;
             vm.User = UserService.User;
         }).catch(function (err)
         {
@@ -65,9 +67,23 @@ app.controller('albumsController', ['UserService', function (UserService)
     vm.User = UserService.User;
 }]);
 
-app.controller('loginController', ['UserService', function (UserService)
+app.controller('loginController', ['UserService', '$window', function (UserService, $window)
 {
-
+    let vm = this;
+    vm.User = {};
+    vm.login = function (valid)
+    {
+        if (valid)
+            UserService.login(vm.User.Username, vm.User.Password)
+                .then(function ()
+                {
+                    $window.location.href = '/';
+                })
+                .catch(function (err)
+                {
+                    alert(err.message);
+                })
+    }
 }]);
 
 app.controller('signupController', ['UserService', function (UserService)
@@ -151,8 +167,8 @@ app.controller('cartController', ['UserService', function (UserService)
 app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
 {
     let service = {};
-    service.loggedIn = false;
     service.User = {};
+    service.loggedIn = false;
 
     /**
      * @param user: username, password, q1answer, q2answer, email, country, favGenres
@@ -164,7 +180,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
             return $http.post('/register', user).then(function (response)
             {
                 service.User = user;
-                service.isLoggedIn = true;
+                service.loggedIn = true;
             }).catch(function (err)
             {
                 Promise.reject(err);
@@ -178,7 +194,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post('/login', userToSend).then(function (response)
         {
             service.User = response.data;
-            service.isLoggedIn = true;
+            service.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)
         {
@@ -191,7 +207,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post('/login', '').then(function (response)
         {
             service.User = response.data;
-            service.isLoggedIn = true;
+            service.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)
         {

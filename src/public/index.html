@@ -32,9 +32,9 @@
                 <li><a href="#cart" ng-show="ctrl.isLoggedIn">Cart</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#signup"><span class="glyphicon glyphicon-user" ng-show="!ctrl.isLoggedIn"></span> Sign
+                <li><a href="#signup"><span class="glyphicon glyphicon-user" ng-if="!ctrl.isLoggedIn></span> Sign
                     Up</a></li>
-                <li><a href="#login"><span class="glyphicon glyphicon-log-in" ng-show="!ctrl.isLoggedIn"></span>
+                <li><a href="#login"><span class="glyphicon glyphicon-log-in" ng-if="!ctrl.isLoggedIn"></span>
                     Login</a>
                 </li>
             </ul>

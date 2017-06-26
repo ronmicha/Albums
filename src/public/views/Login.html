@@ -5,9 +5,21 @@
     <div ng-controller="loginController as ctrl">
         <div class="login">
             <h1>Login</h1>
-            <form method="post">
-                <input type="text" name="u" placeholder="Username" required="required"/>
-                <input type="password" name="p" placeholder="Password" required="required"/>
+            <form name="loginForm" method="post" ng-submit="ctrl.login(loginForm.$valid)" novalidate>
+                <input type="text" name="username" placeholder="Username"
+                       ng-model="ctrl.User.Username"
+                       ng-required="true"/>
+                <div ng-messages="loginForm.username.$touched && loginForm.username.$error"
+                     role="alert" class="errorMessageDiv">
+                    <div ng-message="required" class="some-message">Username is required</div>
+                </div>
+                <input type="password" name="password" placeholder="Password"
+                       ng-model="ctrl.User.Password"
+                       ng-required="true"/>
+                <div ng-messages="loginForm.password.$touched && loginForm.password.$error"
+                     role="alert" class="errorMessageDiv">
+                    <div ng-message="required" class="some-message">Password is required</div>
+                </div>
                 <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
             </form>
         </div>
