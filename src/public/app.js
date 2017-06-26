@@ -42,13 +42,10 @@ app.controller('mainController', ['UserService', function (UserService)
     vm.init = function ()
     {
         if (!UserService.cookieExists())
-        {
-            vm.isLoggedIn = false;
             return;
-        }
         UserService.loginWithCookie().then(function ()
         {
-            vm.isLoggedIn = true;
+            vm.isLoggedIn = UserService.loggedIn;
             vm.User = UserService.User;
         }).catch(function (err)
         {
@@ -77,7 +74,6 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     {
         if (valid)
         {
-            alert('');
             UserService.login(vm.User.Username, vm.User.Password)
                 .then(function ()
                 {
