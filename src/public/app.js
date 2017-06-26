@@ -76,19 +76,17 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     vm.login = function (valid)
     {
         if (valid)
-            UserService.login(vm.User.Username, vm.User.Password)
-                .then(function ()
-                {
-                    $window.location.href = '/';
-                })
-                .catch(function (err)
-                {
-                    alert(err.message);
-                })
+            UserService.login(vm.User.Username, vm.User.Password).then(function ()
+            {
+                $window.location.href = '/';
+            }).catch(function (err)
+            {
+                alert(err.message);
+            })
     }
 }]);
 
-app.controller('signupController', ['UserService', 'DataSource', '$scope', function (UserService, DataSource, $scope)
+app.controller('signupController', ['UserService', 'DataSource', function (UserService, DataSource)
 {
     let vm = this;
     vm.User = {};
