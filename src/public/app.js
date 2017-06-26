@@ -34,7 +34,7 @@ app.config(['$routeProvider', function ($routeProvider)
 }]);
 
 //region Controllers
-app.controller('mainController', ['UserService', '$scope', function (UserService, $scope)
+app.controller('mainController', ['UserService', function (UserService)
 {
     let vm = this;
     vm.User = {};
@@ -42,11 +42,13 @@ app.controller('mainController', ['UserService', '$scope', function (UserService
     vm.init = function ()
     {
         if (!UserService.cookieExists())
+        {
+            vm.isLoggedIn = false;
             return;
+        }
         UserService.loginWithCookie().then(function ()
         {
-            $scope.isLoggedIn = true;
-            // vm.isLoggedIn = UserService.loggedIn;
+            vm.isLoggedIn = true;
             vm.User = UserService.User;
         }).catch(function (err)
         {
@@ -252,12 +254,10 @@ app.factory('DataSource', ['$http', function ($http)
     return {
         get: function (file, callback, transform)
         {
-            $http.get(file, {transformResponse: transform}).
-
-                then(function (data)
-                {
-                    callback(data);
-                });
+            $http.get(file, {transformResponse: transform}).then(function (data)
+            {
+                callback(data);
+            });
 
         }
     };
