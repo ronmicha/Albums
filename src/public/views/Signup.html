@@ -11,7 +11,7 @@
                    ng-pattern="/^[a-zA-Z\s]*$/"
                    ng-minlength="3"
                    ng-maxlength="8"
-                   username-Available-Validator='/checkUsernameAvailable'/>
+                   username-Available-Validator='./checkUsernameAvailable'/>
             <div ng-messages=" signUpForm.username.$touched && signUpForm.username.$error "
                  role="alert" class="errorMessageDiv">
                 <div ng-message="required" class="some-message">Username is required</div>
