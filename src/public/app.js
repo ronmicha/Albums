@@ -98,7 +98,7 @@ app.controller('signupController', ['UserService', 'DataSource', function (UserS
 
     vm.init = function ()
     {
-        let countriesFile = "/resources/countries.xml";
+        let countriesFile = "./resources/countries.xml";
         let xmlTransform = function (data)
         {
             console.log("transform data");
