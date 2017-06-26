@@ -56,6 +56,8 @@
                  role="alert" class="errorMessageDiv">
                 <div ng-message="required" class="some-message">Answer is required</div>
             </div>
+            <select ng-model="ctrl.User.Country" data-ng-options="c.Name as c.Name for c in ctrl.Countries">
+            </select>
             <button type="submit" ng-disabled="signUpForm.$invalid" class="btn btn-primary btn-block btn-large">
                 Join Us!
             </button>
