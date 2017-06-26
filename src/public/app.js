@@ -254,9 +254,14 @@ app.factory('DataSource', ['$http', function ($http)
     return {
         get: function (file, callback, transform)
         {
-            $http.get(file, {transformResponse: transform}).then(function (data)
+            $http.get(file, {transformResponse: transform}).
+
+                then(function (data)
+                {
+                    callback(data);
+                }).catch(function (err)
             {
-                callback(data);
+                //
             });
 
         }
