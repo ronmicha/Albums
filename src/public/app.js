@@ -87,7 +87,7 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     }
 }]);
 
-app.controller('signupController', ['UserService', 'DataSource', '$scope', function (UserService, DataSource, $scope)
+app.controller('signupController', ['UserService', 'DataSource', function (UserService, DataSource)
 {
     let vm = this;
     vm.User = {};
@@ -253,9 +253,14 @@ app.factory('DataSource', ['$http', function ($http)
     return {
         get: function (file, callback, transform)
         {
-            $http.get(file, {transformResponse: transform}).then(function (data)
+            $http.get(file, {transformResponse: transform}).
+
+                then(function (data)
+                {
+                    callback(data);
+                }).catch(function (err)
             {
-                callback(data);
+                //
             });
 
         }

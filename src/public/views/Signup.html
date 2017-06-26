@@ -56,8 +56,16 @@
                  role="alert" class="errorMessageDiv">
                 <div ng-message="required" class="some-message">Answer is required</div>
             </div>
-            <select ng-model="ctrl.User.Country" data-ng-options="c.Name as c.Name for c in ctrl.Countries">
-            </select>
+            <md-select name="country"
+                       data-ng-options="c.Name as c.Name for c in ctrl.Countries"
+                       ng-required="true"
+                       ng-model="ctrl.User.Country">
+                <option value="" disabled selected>Select Country</option>
+            </md-select>
+            <div ng-messages="signUpForm.country.$touched && signUpForm.country.$error"
+                 role="alert" class="errorMessageDiv">
+                <div ng-message="required" class="some-message">Country is required</div>
+            </div>
             <button type="submit" ng-disabled="signUpForm.$invalid" class="btn btn-primary btn-block btn-large">
                 Join Us!
             </button>
