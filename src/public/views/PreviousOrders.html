@@ -1,0 +1,8 @@
+<div data-ng-controller="previousOrdersController as ctrl" data-ng-init="ctrl.init()">
+    <div ng-repeat="o in ctrl.Orders">
+        <h3 style="font-weight: bold">Order #{{o.ID}}:</h3>
+        <p>Total price: {{o.Total}} {{o.Currency}}</p>
+        <p>Order date: {{o.Date}}</p>
+        <p>Shipping date: {{o['Shipping Date']}}</p>
+    </div>
+</div>
