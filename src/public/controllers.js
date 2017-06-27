@@ -18,15 +18,36 @@ app.controller('mainController', ['UserService', function (UserService)
     };
 }]);
 
-app.controller('homeController', ['AlbumsService', '$scope', function (AlbumsService, $scope)
+app.controller('homeController', ['AlbumsService','UserService', '$scope', function (AlbumsService, UserService,$scope)
 {
     let vm = this;
     vm.hottestAlbums = {};
     vm.newestAlbums = {};
+    vm.isLoggedIn = UserService.loggedIn;
+    vm.getHottestAlbums = function ()
+    {
+        AlbumsService.getHottest()
+            .then(function (response)
+            {
+                vm.hottestAlbums = response.data;
+            })
+            .catch(function (err)
+            {
+                alert(err.message);
+            })
+    };
     vm.getNewestAlbums = function ()
     {
-
-    }
+        AlbumsService.getNewest()
+            .then(function (response)
+            {
+                vm.newestAlbums = response.data;
+            })
+            .catch(function (err)
+            {
+                alert(err.message);
+            })
+    };
 }]);
 
 app.controller('albumsController', ['UserService', 'AlbumsService', function (UserService, AlbumsService)

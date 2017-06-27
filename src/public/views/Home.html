@@ -1,19 +1,36 @@
-<div ng-controller="homeController" as ctrl>
-    <div class="gallery-info" ng-repeat="">
-        <div class="col-md-3 gallery-grid wow flipInY animated" data-wow-delay=".5s">
-            <a href=""><img src="" class="img-responsive" alt=""/></a>
-            <div class="gallery-text simpleCart_shelfItem">
-                <h5><a class="name" href=""></a></h5>
-                <p><span class="item_price"></span></p>
-                <ul>
-                    <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                    <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart"
-                                                           aria-hidden="true"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty"
-                                          aria-hidden="true"></span></a></li>
-                </ul>
+<div ng-controller="homeController as ctrl" ng-init="ctrl.getHottestAlbums()">
+    <div>
+        <h1>Hottest Albums</h1>
+        <div class="hottestAlbums" style="display: inline-flex">
+            <div ng-repeat="album in ctrl.hottestAlbums">
+                <img ng-src="{{album.Pic_Link}}"/>
+                <div>
+                    <h5>{{album.Name}}</h5>
+                    <p>{{album.Price}} NIS</p>
+                    <ul>
+                        <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart"
+                                                               aria-hidden="true"></span></a></li>
+                    </ul>
+                </div>
             </div>
+            <!--<div class="clearfix"></div>-->
         </div>
-        <div class="clearfix"></div>
+    </div>
+    <div ng-if="ctrl.isLoggedIn" ng-init="ctrl.getNewestAlbums()">
+        <h1>Newest Albums</h1>
+        <div class="newestAlbums" style="display: inline-flex">
+            <div ng-repeat="album in ctrl.newestAlbums">
+                <img ng-src="{{album.Pic_Link}}"/>
+                <div>
+                    <h5>{{album.Name}}</h5>
+                    <p>{{album.Price}} NIS</p>
+                    <ul>
+                        <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart"
+                                                               aria-hidden="true"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--<div class="clearfix"></div>-->
+        </div>
     </div>
 </div>
