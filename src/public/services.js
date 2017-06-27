@@ -136,5 +136,16 @@ app.factory('AlbumsService', ['$http', function ($http)
             return Promise.reject(err);
         });
     };
+
+    service.getAllAlbums = function ()
+    {
+        return $http.get(url + '/search').then(function (data)
+        {
+            return Promise.resolve(data);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        })
+    };
     return service
 }]);

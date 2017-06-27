@@ -1,3 +1,36 @@
-<div ng-controller="albumsController as ctrl">
-    <label>Albums</label>
+<div data-ng-controller="albumsController as ctrl" data-ng-init="ctrl.init()">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">{{ctrl.SelectedGenre == '' ? 'All Genres' : ctrl.SelectedGenre}}<span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ng-click="ctrl.changeGenre('')"><a href="">All Genres</a></li>
+                            <li ng-repeat="genre in ctrl.Genres" ng-click="ctrl.changeGenre(genre)">
+                                <a href="">{{genre}}</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">{{ctrl.SelectedFilter == '' ? 'Sort By...' : ctrl.SelectedFilter}}<span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="filter in ctrl.Filters" ng-click="ctrl.changeFilter(filter)">
+                                <a href="">{{filter}}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div ng-repeat="genre in ctrl.Genres" ng-if="ctrl.SelectedGenre == '' || ctrl.SelectedGenre == genre">
+        <h2>{{genre}}</h2>
+        <div style="display: inline-flex">
+            <album ng-repeat="(num,album) in ctrl.Albums" ng-if="album.Genre == genre" thisalbum="album"></album>
+        </div>
+    </div>
 </div>

@@ -18,7 +18,7 @@ app.controller('mainController', ['UserService', function (UserService)
     };
 }]);
 
-app.controller('homeController', ['AlbumsService', 'UserService', function (AlbumsService, UserService)
+app.controller('homeController', ['AlbumsService', 'UserService', '$scope', function (AlbumsService, UserService, $scope)
 {
     let vm = this;
     vm.hottestAlbums = {};
@@ -26,34 +26,62 @@ app.controller('homeController', ['AlbumsService', 'UserService', function (Albu
     vm.isLoggedIn = UserService.loggedIn;
     vm.getHottestAlbums = function ()
     {
-        AlbumsService.getHottest()
-            .then(function (response)
-            {
-                vm.hottestAlbums = response.data;
-            })
-            .catch(function (err)
-            {
-                alert(err.message);
-            })
+        AlbumsService.getHottest().then(function (response)
+        {
+            vm.hottestAlbums = response.data;
+        }).catch(function (err)
+        {
+            alert(err.message);
+        })
     };
     vm.getNewestAlbums = function ()
     {
-        AlbumsService.getNewest()
-            .then(function (response)
-            {
-                vm.newestAlbums = response.data;
-            })
-            .catch(function (err)
-            {
-                alert(err.message);
-            })
+        AlbumsService.getNewest().then(function (response)
+        {
+            vm.newestAlbums = response.data;
+        }).catch(function (err)
+        {
+            alert(err.message);
+        })
     };
 }]);
 
-app.controller('albumsController', ['UserService', function (UserService)
+app.controller('albumsController', ['UserService', 'AlbumsService', function (UserService, AlbumsService)
 {
     let vm = this;
     vm.User = UserService.User;
+    vm.Genres = [];
+    vm.SelectedGenre = "";
+    vm.Filters = ['Name', 'Artist', 'Price', 'Rating', 'Genre'];
+    vm.SelectedFilter = "";
+
+    vm.init = function ()
+    {
+        AlbumsService.getGenres().then(function (data)
+        {
+            vm.Genres = data;
+            return Promise.resolve();
+        }).then(function ()
+        {
+            AlbumsService.getAllAlbums().then(function (response)
+            {
+                vm.Albums = response.data;
+            });
+        }).catch(function (err)
+        {
+            alert(err);
+        });
+    };
+
+    vm.changeGenre = function (genre)
+    {
+        vm.SelectedGenre = genre;
+    };
+
+    vm.changeFilter = function (filter)
+    {
+        vm.SelectedFilter = filter;
+    };
 }]);
 
 app.controller('loginController', ['UserService', '$window', function (UserService, $window)
@@ -134,10 +162,7 @@ app.controller('signupController',
 
             AlbumsService.getGenres().then(function (data)
             {
-                vm.Genres = data.map(function (g)
-                {
-                    return g.Name;
-                });
+                vm.Genres = data;
                 DataSource.get(countriesFile, catchData, xmlTransform);
             }).catch(function (err)
             {
