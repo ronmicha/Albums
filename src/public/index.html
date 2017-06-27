@@ -28,13 +28,13 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Album Shop</a>
-                <p class="navbar-text">Welcome, {{ctrl.isLoggedIn ? ctrl.User.Username : 'Guest'}}</p>
+                <p class="navbar-text">Welcome, {{ctrl.model.loggedIn ? ctrl.User.Username : 'Guest'}}</p>
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="#albums">Albums</a></li>
-                <li><a href="#cart" ng-show="ctrl.isLoggedIn">Cart</a></li>
+                <li><a href="#cart" ng-show="ctrl.model.loggedIn">Cart</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right" ng-if="!ctrl.isLoggedIn">
+            <ul class="nav navbar-nav navbar-right" ng-if="!ctrl.model.loggedIn">
                 <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign
                     Up</a></li>
                 <li><a href="#login"><span class="glyphicon glyphicon-log-in"></span>

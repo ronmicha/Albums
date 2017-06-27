@@ -5,7 +5,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
 {
     let service = {};
     service.User = {};
-    service.loggedIn = false;
+    service.model = {loggedIn: false};
     let url = '/api';
 
     /**
@@ -22,7 +22,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post(url + '/register', body).then(function ()
         {
             service.User = user;
-            service.loggedIn = true;
+            service.model.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)
         {
@@ -36,7 +36,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post(url + '/login', userToSend).then(function (response)
         {
             service.User = response.data;
-            service.loggedIn = true;
+            service.model.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)
         {
@@ -49,7 +49,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post(url + '/login', '').then(function (response)
         {
             service.User = response.data;
-            service.loggedIn = true;
+            service.model.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)
         {

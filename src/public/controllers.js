@@ -2,14 +2,13 @@ app.controller('mainController', ['UserService', function (UserService)
 {
     let vm = this;
     vm.User = {};
-    vm.isLoggedIn = UserService.loggedIn;
+    vm.model = UserService.model;
     vm.init = function ()
     {
         if (!UserService.cookieExists())
             return;
         UserService.loginWithCookie().then(function ()
         {
-            vm.isLoggedIn = UserService.loggedIn;
             vm.User = UserService.User;
         }).catch(function (err)
         {
@@ -23,7 +22,7 @@ app.controller('homeController', ['UserService', 'AlbumsService', function (User
     let vm = this;
     vm.hottestAlbums = {};
     vm.newestAlbums = {};
-    vm.isLoggedIn = false;
+    vm.model = UserService.model;
     vm.getHottestAlbums = function ()
     {
         AlbumsService.getHottest().then(function (response)
@@ -38,7 +37,6 @@ app.controller('homeController', ['UserService', 'AlbumsService', function (User
     {
         AlbumsService.getNewest().then(function (response)
         {
-            vm.isLoggedIn = UserService.loggedIn;
             vm.newestAlbums = response.data;
         }).catch(function (err)
         {

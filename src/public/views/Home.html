@@ -16,7 +16,7 @@
             <!--<div class="clearfix"></div>-->
         </div>
     </div>
-    <div ng-if="ctrl.isLoggedIn">
+    <div ng-if="ctrl.model.loggedIn">
         <h1>Newest Albums</h1>
         <div class="newestAlbums" style="display: inline-flex">
             <div ng-repeat="album in ctrl.newestAlbums">
