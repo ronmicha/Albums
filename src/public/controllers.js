@@ -210,6 +210,7 @@ app.controller('previousOrdersController', ['UserService', function (UserService
 {
     let vm = this;
     vm.Orders = {};
+    vm.ShownOrder = {};
 
     vm.init = function ()
     {
@@ -224,7 +225,14 @@ app.controller('previousOrdersController', ['UserService', function (UserService
 
     vm.ShowOrder = function (order)
     {
-
+        vm.ShownOrder = order;
+        UserService.getOrderAlbums(order.ID).then(function (data)
+        {
+            vm.OrderAlbums = data;
+        }).catch(function (err)
+        {
+            alert(err);
+        })
     };
 }]);
 

@@ -244,8 +244,8 @@ exports.AlbumsOfOrder = function (orderID)
 {
     let query =
         ("SELECT A.Name as Name, A.Artist as Artist, A.Genre as Genre, A.Price as Price, A.Rating as Rating " +
-        "FROM Albums A INNER JOIN AlbumsOrdered AO ON AO.Album_ID = A.ID" +
-        "WHERE AO.Order_ID = {0} ").format(orderID);
+        "FROM Albums A INNER JOIN AlbumsOrdered O ON O.Album_ID = A.ID " +
+        "WHERE O.Order_ID = {0} ").format(orderID);
     return Read(query);
 };
 //endregion

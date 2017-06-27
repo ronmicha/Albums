@@ -1,8 +1,92 @@
 <div data-ng-controller="previousOrdersController as ctrl" data-ng-init="ctrl.init()">
     <div ng-repeat="o in ctrl.Orders">
-        <h3 style="font-weight: bold"><a ng-click="ctrl.ShowOrder(o)">Order #{{o.ID}}:</a></h3>
+        <h3 style="font-weight: bold"><a ng-click="ctrl.ShowOrder(o)" href="" data-target="#orderModal"
+                                         data-toggle="modal">Order #{{o.ID}}:</a></h3>
         <p>Total price: {{o.Total}} {{o.Currency}}</p>
         <p>Order date: {{o.Date}}</p>
         <p>Shipping date: {{o['Shipping Date']}}</p>
+    </div>
+</div>
+
+<div id="orderModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+     ng-controller="previousOrdersController as ctrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">Order #{{ctrl.ShownOrder.ID}}</h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>No worries, it happens to the best.</p>
+                                <p>Answer the following questions to recover your password.</p>
+                                <div class="panel-body">
+                                    <form name="forgotForm" method="post"
+                                          ng-submit="ctrl.recoverPassword(forgotForm.$valid)"
+                                          novalidate>
+                                        <div class="form-group">
+                                            <input class="form-control input-lg" placeholder="Your username"
+                                                   name="username"
+                                                   ng-model="ctrl.username"
+                                                   ng-required="true"/>
+                                            <div ng-messages="(forgotForm.username.$touched || forgotForm.$submitted) && forgotForm.username.$error"
+                                                 role="alert"
+                                                 class="signupPageText">
+                                                <div ng-message="required"
+                                                     class="some-message"
+                                                     style="color: black">Username is required
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control input-lg"
+                                                   placeholder="Where did you go to school?"
+                                                   name="q1a"
+                                                   ng-model="ctrl.q1a"
+                                                   ng-required="true"/>
+                                            <div ng-messages="(forgotForm.q1a.$touched || forgotForm.$submitted) && forgotForm.q1a.$error"
+                                                 role="alert"
+                                                 class="signupPageText">
+                                                <div ng-message="required"
+                                                     class="some-message"
+                                                     style="color: black">This answer is required
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control input-lg"
+                                                   placeholder="What was your first pet's name?"
+                                                   name="q2a"
+                                                   ng-model="ctrl.q2a"
+                                                   ng-required="true"/>
+                                            <div ng-messages="(forgotForm.q2a.$touched || forgotForm.$submitted) && forgotForm.q2a.$error"
+                                                 role="alert"
+                                                 class="signupPageText">
+                                                <div ng-message="required"
+                                                     class="some-message"
+                                                     style="color: black">This answer is required
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input class="btn btn-lg btn-primary btn-block" value="Show My Password"
+                                               type="submit">
+                                        <br/>
+                                        <div ng-if="ctrl.response">{{ctrl.response}}</div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
