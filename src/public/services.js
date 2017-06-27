@@ -89,10 +89,30 @@ app.factory('AlbumsService', ['$http', function ($http)
     {
         return $http.get(url + '/genres').then(function (data)
         {
-            Promise.resolve(data);
+            return Promise.resolve(data);
         }).catch(function (err)
         {
-            Promise.reject(err);
+            return Promise.reject(err);
+        });
+    };
+    service.getHottest = function ()
+    {
+        return $http.get(url + '/hottest').then(function (data)
+        {
+            return Promise.resolve(data);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        });
+    };
+    service.getNewest = function ()
+    {
+        return $http.get(url + '/newest').then(function (data)
+        {
+            return Promise.resolve(data);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
         });
     };
     return service

@@ -23,7 +23,7 @@ exports.GetHottestAlbums = function (numOfAlbums)
         "GROUP BY A.ID " +
         "ORDER BY SUM(AO.Amount) DESC").format(numOfAlbums);
     let query =
-        ("SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
+        ("SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating, Pic_Link " +
         "FROM Albums " +
         "WHERE ID IN ({0})").format(lastWeekTopSellerAlbums);
     return Read(query);
@@ -32,7 +32,7 @@ exports.GetHottestAlbums = function (numOfAlbums)
 exports.GetNewestAlbums = function (numOfAlbums)
 {
     let query =
-        ("SELECT TOP {0} Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
+        ("SELECT TOP {0} Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating, Pic_Link " +
         "FROM Albums " +
         "WHERE Date_Released >= DATEADD(month, -1, GETDATE()) " +
         "ORDER BY Date_Released DESC").format(numOfAlbums);
@@ -51,7 +51,7 @@ exports.GetGenres = function ()
 exports.GetAlbumsByGenre = function (genre)
 {
     let query =
-        ("SELECT A.Name, A.Artist, A.Genre, A.Price, Convert(varchar(10), A.Date_Released, 120) AS [Date Released], A.Rating " +
+        ("SELECT A.Name, A.Artist, A.Genre, A.Price, Convert(varchar(10), A.Date_Released, 120) AS [Date Released], A.Rating, A.Pic_Link " +
         "FROM Albums A JOIN Genres G ON A.Genre = G.Name " +
         "WHERE G.Name = '{0}'").format(genre);
     return Read(query);
@@ -60,7 +60,7 @@ exports.GetAlbumsByGenre = function (genre)
 exports.SearchAlbums = function (name, artist, genre, maxPrice, year, minRating)
 {
     let query =
-        "SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
+        "SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating, Pic_Link " +
         "FROM Albums " +
         "WHERE Name = {0} AND Artist = {1} AND Genre = {2} AND Price <= {3} AND Date_Released >= {4} AND Rating >= {5}".format(name, artist, genre, maxPrice, year, minRating);
     return Read(query);
@@ -91,7 +91,7 @@ exports.RecommendAlbums = function (username)
         "FROM AlbumsOrdered " +
         "WHERE Album_ID NOT IN ({0}) AND Username IN ({1})").format(albumsUserOrdered, usersOrderedSameAlbums);
     let query =
-        ("SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating " +
+        ("SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating, Pic_Link " +
         "FROM Albums " +
         "WHERE ID IN ({0})").format(recommendedAlbumsIDs);
     return Read(query);
