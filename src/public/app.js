@@ -39,13 +39,11 @@ app.config(['$routeProvider', function ($routeProvider)
 app.directive('album', function ()
 {
     return {
-        restrict: 'AE', //attribute or element
+        restrict: 'E', //attribute or element
         scope: {
-            myalbum: '='
+            thisalbum: '='
         },
         replace: true,
-        // template: '<div class="some">' +
-        // '<input ng-model="thisAlbum"></div>',
         templateUrl: "views/AlbumDirective.html",
         link: function ($scope, elem, attr, ctrl)
         {
