@@ -60,7 +60,17 @@ app.controller('albumsController', ['UserService', 'AlbumsService', function (Us
         AlbumsService.getGenres().then(function (data)
         {
             vm.Genres = data;
-        })
+            return Promise.resolve();
+        }).then(function ()
+        {
+            AlbumsService.getAllAlbums().then(function (response)
+            {
+                vm.Albums = response.data;
+            });
+        }).catch(function (err)
+        {
+            alert(err);
+        });
     };
 
     vm.changeGenre = function (genre)

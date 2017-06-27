@@ -27,7 +27,10 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div ng-repeat="genre in ctrl.Genres" ng-show="ctrl.SelectedGenre == '' || ctrl.SelectedGenre == genre">
-        <h1>{{genre}}</h1>
+    <div style="display: inline-flex">
+        <album ng-repeat="(num,album) in ctrl.Albums" thisalbum="album"></album>
     </div>
+
+    <!--<div ng-repeat="genre in ctrl.Genres" ng-show="ctrl.SelectedGenre == '' || ctrl.SelectedGenre == genre">-->
+    <!--</div>-->
 </div>
