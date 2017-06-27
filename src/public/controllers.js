@@ -208,5 +208,6 @@ app.controller('signupController',
 
 app.controller('cartController', ['UserService', function (UserService)
 {
-
+    let vm = this;
+    vm.orderedAlbums = {};
 }]);

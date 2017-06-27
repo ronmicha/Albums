@@ -159,3 +159,19 @@ app.factory('AlbumsService', ['$http', function ($http)
     };
     return service
 }]);
+
+app.factory('CartService', ['$http', function ($http)
+{
+    let service = {};
+    let url = '/api/users';
+    service.getPreviousOrders = function (username)
+    {
+        return $http.get(url + '/previousOrders')
+            .then(function ()
+            {
+
+            })
+            .catch()
+    };
+    return service;
+}]);
