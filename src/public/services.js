@@ -6,15 +6,16 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
     let service = {};
     service.User = {};
     service.loggedIn = false;
+    let url = '/api';
 
     /**
      * @param user: username, password, q1answer, q2answer, email, country, favGenres
      */
     service.signup = function (user)
     {
-        return $http.post('/api/register', user).then(function ()
+        return $http.post(url + '/register', user).then(function ()
         {
-            return $http.post('/api/register', user).then(function (response)
+            return $http.post(url + '/register', user).then(function (response)
             {
                 service.User = user;
                 service.loggedIn = true;
@@ -28,7 +29,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
     service.login = function (username, password)
     {
         let userToSend = {username: username, password: password};
-        return $http.post('/api/login', userToSend).then(function (response)
+        return $http.post(url + '/login', userToSend).then(function (response)
         {
             service.User = response.data;
             service.loggedIn = true;
@@ -41,7 +42,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
 
     service.loginWithCookie = function ()
     {
-        return $http.post('/api/login', '').then(function (response)
+        return $http.post(url + '/login', '').then(function (response)
         {
             service.User = response.data;
             service.loggedIn = true;
@@ -78,4 +79,21 @@ app.factory('DataSource', ['$http', function ($http)
 
         }
     };
+}]);
+
+app.factory('AlbumsService', ['$http', function ($http)
+{
+    let service = {};
+    let url = '/api/albums';
+    service.getGenres = function ()
+    {
+        return $http.get(url + '/genres').then(function (data)
+        {
+            Promise.resolve(data);
+        }).catch(function (err)
+        {
+            Promise.reject(err);
+        });
+    };
+    return service
 }]);

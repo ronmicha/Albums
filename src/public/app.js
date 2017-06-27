@@ -34,7 +34,7 @@ app.config(['$routeProvider', function ($routeProvider)
 }]);
 
 /**
- * Directive for checking if a username exists in DB
+ * Validation directive which checks if a username exists in DB
  */
 app.directive('usernameAvailableValidator', ['$http', function ($http)
 {
