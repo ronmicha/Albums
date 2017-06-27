@@ -18,7 +18,7 @@ app.controller('mainController', ['UserService', function (UserService)
     };
 }]);
 
-app.controller('homeController', ['AlbumsService', function (AlbumsService)
+app.controller('homeController', ['AlbumsService', '$scope', function (AlbumsService, $scope)
 {
     let vm = this;
     vm.hottestAlbums = {};
@@ -29,10 +29,25 @@ app.controller('homeController', ['AlbumsService', function (AlbumsService)
     }
 }]);
 
-app.controller('albumsController', ['UserService', function (UserService)
+app.controller('albumsController', ['UserService', 'AlbumsService', function (UserService, AlbumsService)
 {
     let vm = this;
     vm.User = UserService.User;
+    vm.Genres = [];
+    vm.SelectedGenre = "";
+
+    vm.init = function ()
+    {
+        AlbumsService.getGenres().then(function (data)
+        {
+            vm.Genres = data;
+        })
+    };
+
+    vm.changeGenre = function (genre)
+    {
+        vm.SelectedGenre = genre;
+    }
 }]);
 
 app.controller('loginController', ['UserService', '$window', function (UserService, $window)
@@ -91,10 +106,7 @@ app.controller('signupController',
 
             AlbumsService.getGenres().then(function (data)
             {
-                vm.Genres = data.map(function (g)
-                {
-                    return g.Name;
-                });
+                vm.Genres = data;
                 DataSource.get(countriesFile, catchData, xmlTransform);
             }).catch(function (err)
             {
