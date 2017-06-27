@@ -142,7 +142,7 @@ exports.GetUser = function (username)
 exports.GetPreviousOrders = function (username)
 {
     let query =
-        ("SELECT Order_Date AS [Date], Total_Price AS [Total], Shipping_Date AS [Shipping Date], Currency " +
+        ("SELECT ID as [ID], Order_Date AS [Date], Total_Price AS [Total], Shipping_Date AS [Shipping Date], Currency " +
         "FROM Orders " +
         "WHERE username = '{0}'").format(username);
     return Read(query);

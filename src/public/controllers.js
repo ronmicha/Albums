@@ -206,6 +206,23 @@ app.controller('signupController',
         }
     }]);
 
+app.controller('previousOrdersController', ['UserService', function (UserService)
+{
+    let vm = this;
+    vm.Orders = {};
+
+    vm.init = function ()
+    {
+        UserService.getPreviousOrders().then(function (data)
+        {
+            vm.Orders = data;
+        }).catch(function (err)
+        {
+            alert(err);
+        })
+    };
+}]);
+
 app.controller('cartController', ['UserService', function (UserService)
 {
     let vm = this;

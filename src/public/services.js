@@ -96,6 +96,18 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         });
     };
 
+    service.getPreviousOrders = function ()
+    {
+        let thisUrl = url + '/users';
+        return $http.get(thisUrl + '/previousOrders').then(function (response)
+        {
+            return Promise.resolve(response.data);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        });
+    };
+
     return service;
 }]);
 
@@ -176,12 +188,10 @@ app.factory('CartService', ['$http', function ($http)
     let url = '/api/users';
     service.getPreviousOrders = function (username)
     {
-        return $http.get(url + '/previousOrders')
-            .then(function ()
-            {
+        return $http.get(url + '/previousOrders').then(function ()
+        {
 
-            })
-            .catch()
+        }).catch()
     };
     return service;
 }]);
