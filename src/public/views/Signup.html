@@ -2,8 +2,8 @@
     <link rel="stylesheet" type="text/css" href="./Assets/style.css">
 </head>
 <div data-ng-controller="signupController as ctrl" data-ng-init="ctrl.init()">
-    <div class="login">
-        <h1>Sign Up</h1>
+    <div class="signup">
+        <h2>Sign Up</h2>
         <form name="signUpForm" ng-submit="ctrl.signUp(signUpForm.$valid)" novalidate>
             <input type="text" name="username" placeholder="Username"
                    ng-model="ctrl.User.Username"
@@ -13,7 +13,7 @@
                    ng-maxlength="8"
                    username-Available-Validator='/api/checkUsernameAvailable'/>
             <div ng-messages=" signUpForm.username.$touched && signUpForm.username.$error "
-                 role="alert" class="errorMessageDiv">
+                 role="alert" class="signupPageText">
                 <div ng-message="required" class="some-message">Username is required</div>
                 <div ng-message="pattern">Username must contain english letters only</div>
                 <div ng-message="minlength">Username must be minimum 3 characters long</div>
@@ -28,7 +28,7 @@
                    ng-minlength="5"
                    ng-maxlength="10"/>
             <div ng-messages="signUpForm.password.$touched && signUpForm.password.$error"
-                 role="alert" class="errorMessageDiv">
+                 role="alert" class="signupPageText">
                 <div ng-message="required" class="some-message">Password is required</div>
                 <div ng-message="pattern">Password must contain english letters and numbers only</div>
                 <div ng-message="minlength">Password must be minimum 5 characters long</div>
@@ -38,22 +38,25 @@
                    ng-model="ctrl.User.Email"
                    ng-required="true"/>
             <div ng-messages="signUpForm.email.$touched && signUpForm.email.$error"
-                 role="alert" class="errorMessageDiv">
+                 role="alert" class="signupPageText">
                 <div ng-message="required" class="some-message">Email is required</div>
                 <div ng-message="email">Invalid email address</div>
             </div>
-            <input type="text" name="q1answer" placeholder="Answer to first question"
-                   ng-model="ctrl.User.Q1Answer"
-                   ng-required="true"/>
+            <label class="signupPageText"> Where did you go to school?
+                <input type="text" name="q1answer" placeholder="Answer to first question"
+                       ng-model="ctrl.User.Q1Answer"
+                       ng-required="true"/>
+            </label>
             <div ng-messages="signUpForm.q1answer.$touched && signUpForm.q1answer.$error"
-                 role="alert" class="errorMessageDiv">
+                 role="alert" class="signupPageText">
                 <div ng-message="required" class="some-message">Answer is required</div>
             </div>
-            <input type="text" name="q2answer" placeholder="Answer to second question"
-                   ng-model="ctrl.User.Q2Answer"
-                   ng-required="true"/>
+            <label class="signupPageText"> What was your first pet's name?
+                <input type="text" name="q2answer" placeholder="Answer to second question"
+                       ng-model="ctrl.User.Q2Answer"
+                       ng-required="true"/></label>
             <div ng-messages="signUpForm.q2answer.$touched && signUpForm.q2answer.$error"
-                 role="alert" class="errorMessageDiv">
+                 role="alert" class="signupPageText">
                 <div ng-message="required" class="some-message">Answer is required</div>
             </div>
             <select name="country"
@@ -63,9 +66,14 @@
                 <option value="" disabled selected>Select Country</option>
             </select>
             <div ng-messages="signUpForm.country.$touched && signUpForm.country.$error"
-                 role="alert" class="errorMessageDiv">
+                 role="alert" class="signupPageText">
                 <div ng-message="required" class="some-message">Country is required</div>
             </div>
+            <select multiple
+                    data-ng-options="g as g for g in ctrl.Genres"
+                    ng-model="ctrl.User.Genres"
+                    ng-required="false">
+            </select>
             <button type="submit" ng-disabled="signUpForm.$invalid" class="btn btn-primary btn-block btn-large">
                 Join Us!
             </button>

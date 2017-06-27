@@ -82,7 +82,7 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     }
 }]);
 
-app.controller('signupController', ['UserService', 'DataSource', function (UserService, DataSource)
+app.controller('signupController', ['UserService', 'DataSource'/*, 'AlbumsService'*/, function (UserService, DataSource/*, AlbumsService*/)
 {
     let vm = this;
     vm.User = {};
@@ -108,9 +108,19 @@ app.controller('signupController', ['UserService', 'DataSource', function (UserS
         let catchData = function (data)
         {
             vm.Countries = data.data.Countries.Country;
+            Promise.resolve();
         };
 
-        DataSource.get(countriesFile, catchData, xmlTransform).catch(function (err)
+        DataSource.get(countriesFile, catchData, xmlTransform)/*.then(function ()
+         {
+         AlbumsService.getGenres().then(function (data)
+         {
+         vm.Genres = objArray.map(function (data)
+         {
+         return a.Name;
+         });
+         });
+         })*/.catch(function (err)
         {
             alert(err);
         });
