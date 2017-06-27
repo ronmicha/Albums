@@ -18,12 +18,12 @@ app.controller('mainController', ['UserService', function (UserService)
     };
 }]);
 
-app.controller('homeController', ['AlbumsService', 'UserService', '$scope', function (AlbumsService, UserService, $scope)
+app.controller('homeController', ['UserService', 'AlbumsService', function (UserService, AlbumsService)
 {
     let vm = this;
     vm.hottestAlbums = {};
     vm.newestAlbums = {};
-    vm.isLoggedIn = UserService.loggedIn;
+    vm.isLoggedIn = false;
     vm.getHottestAlbums = function ()
     {
         AlbumsService.getHottest().then(function (response)
@@ -38,6 +38,7 @@ app.controller('homeController', ['AlbumsService', 'UserService', '$scope', func
     {
         AlbumsService.getNewest().then(function (response)
         {
+            vm.isLoggedIn = UserService.loggedIn;
             vm.newestAlbums = response.data;
         }).catch(function (err)
         {
@@ -125,6 +126,28 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
             {
                 alert(err.message);
             })
+    }
+}]);
+
+app.controller('forgotMyPassController', ['UserService', function (UserService)
+{
+    let vm = this;
+    vm.username = '';
+    vm.q1a = '';
+    vm.q2a = '';
+    vm.response = undefined;
+    vm.recoverPassword = function (valid)
+    {
+        if (valid)
+            UserService.recoverPassword(vm.username, vm.q1a, vm.q2a)
+                .then(function (response)
+                {
+                    vm.response = "Answers are correct! Your password is: " + response.data;
+                })
+                .catch(function (err)
+                {
+                    vm.response = "Answers are incorrect";
+                })
     }
 }]);
 

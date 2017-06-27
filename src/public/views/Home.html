@@ -1,4 +1,4 @@
-<div ng-controller="homeController as ctrl" ng-init="ctrl.getHottestAlbums()">
+<div ng-controller="homeController as ctrl" ng-init="ctrl.getHottestAlbums(); ctrl.getNewestAlbums()">
     <div>
         <h1>Hottest Albums</h1>
         <div class="hottestAlbums" style="display: inline-flex">
@@ -16,7 +16,7 @@
             <!--<div class="clearfix"></div>-->
         </div>
     </div>
-    <div ng-if="ctrl.isLoggedIn" ng-init="ctrl.getNewestAlbums()">
+    <div ng-if="ctrl.isLoggedIn">
         <h1>Newest Albums</h1>
         <div class="newestAlbums" style="display: inline-flex">
             <div ng-repeat="album in ctrl.newestAlbums">

@@ -62,6 +62,20 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $cookies.get('AlbumShop');
     };
 
+    service.recoverPassword = function (username, q1a, q2a)
+    {
+        let userDetails = {username: username, q1answer: q1a, q2answer: q2a};
+        return $http.post(url + '/passwordRecover', userDetails)
+            .then(function (response)
+            {
+                return Promise.resolve(response);
+            })
+            .catch(function (err)
+            {
+                return Promise.reject(err);
+            })
+    };
+
     return service;
 }]);
 
