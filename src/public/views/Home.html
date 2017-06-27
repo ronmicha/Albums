@@ -3,15 +3,7 @@
         <h1>Hottest Albums</h1>
         <div class="hottestAlbums" style="display: inline-flex">
             <div ng-repeat="album in ctrl.hottestAlbums">
-                <img ng-src="{{album.Pic_Link}}"/>
-                <div>
-                    <h5>{{album.Name}}</h5>
-                    <p>{{album.Price}} NIS</p>
-                    <ul>
-                        <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart"
-                                                               aria-hidden="true"></span></a></li>
-                    </ul>
-                </div>
+                <album thisalbum="album"></album>
             </div>
             <!--<div class="clearfix"></div>-->
         </div>
@@ -20,17 +12,10 @@
         <h1>Newest Albums</h1>
         <div class="newestAlbums" style="display: inline-flex">
             <div ng-repeat="album in ctrl.newestAlbums">
-                <img ng-src="{{album.Pic_Link}}"/>
-                <div>
-                    <h5>{{album.Name}}</h5>
-                    <p>{{album.Price}} NIS</p>
-                    <ul>
-                        <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart"
-                                                               aria-hidden="true"></span></a></li>
-                    </ul>
-                </div>
+                <album thisalbum="album"></album>
             </div>
-            <!--<div class="clearfix"></div>-->
         </div>
+        <!--<div class="clearfix"></div>-->
     </div>
+</div>
 </div>
