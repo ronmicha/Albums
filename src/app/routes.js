@@ -188,7 +188,7 @@ module.exports = function (app)
     // redirect to index.html
     app.get('*', function (req, res)
     {
-        res.sendfile('./public/index.html');
+        res.sendFile('/public/index.html');
     });
 
     // Handle errors:
