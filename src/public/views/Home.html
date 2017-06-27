@@ -1,21 +1,19 @@
-<div ng-controller="homeController as ctrl" ng-init="ctrl.getHottestAlbums(); ctrl.getNewestAlbums()">
+<div ng-controller="homeController as ctrl" ng-init="ctrl.getHottestAlbums()">
     <div>
         <h1>Hottest Albums</h1>
         <div class="hottestAlbums" style="display: inline-flex">
             <div ng-repeat="album in ctrl.hottestAlbums">
                 <album thisalbum="album"></album>
             </div>
-            <!--<div class="clearfix"></div>-->
         </div>
     </div>
-    <div ng-if="ctrl.model.loggedIn">
+    <div ng-if="ctrl.model.loggedIn" ng-init="ctrl.getNewestAlbums()">
         <h1>Newest Albums</h1>
         <div class="newestAlbums" style="display: inline-flex">
             <div ng-repeat="album in ctrl.newestAlbums">
                 <album thisalbum="album"></album>
             </div>
         </div>
-        <!--<div class="clearfix"></div>-->
     </div>
 </div>
 </div>
