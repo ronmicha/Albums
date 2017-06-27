@@ -5,8 +5,15 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
 {
     let service = {};
     service.User = {};
-    service.model = {loggedIn: false};
+    service.model = {loggedIn: false, lastLoggedIn: null};
     let url = '/api';
+
+    let updateLastLogin = function ()
+    {
+        let cookie = $cookies.get('AlbumShop');
+        let lastTime = cookie.split('\"')[9];
+        service.model.lastLoggedIn = lastTime;
+    };
 
     /**
      * @param user: username, password, q1answer, q2answer, email, country, favGenres
@@ -22,6 +29,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post(url + '/register', body).then(function ()
         {
             service.User = user;
+            updateLastLogin();
             service.model.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)
@@ -36,6 +44,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post(url + '/login', userToSend).then(function (response)
         {
             service.User = response.data;
+            updateLastLogin();
             service.model.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)
@@ -49,6 +58,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post(url + '/login', '').then(function (response)
         {
             service.User = response.data;
+            updateLastLogin();
             service.model.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)

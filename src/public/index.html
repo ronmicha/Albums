@@ -34,6 +34,8 @@
                 <li><a href="#albums">Albums</a></li>
                 <li><a href="#cart" ng-if="ctrl.model.loggedIn"><span
                         class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                <p class="navbar-text" ng-if="ctrl.model.loggedIn">We havn't seen you since
+                    {{ctrl.model.lastLoggedIn}}</p>
             </ul>
             <ul class="nav navbar-nav navbar-right" ng-if="!ctrl.model.loggedIn">
                 <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign
