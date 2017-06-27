@@ -106,7 +106,7 @@ module.exports = function (app)
             let q1ansFromDB = data.Q1Answer;
             let q2ansFromDB = data.Q2Answer;
             if (q1ansFromDB === q1ans && q2ansFromDB === q2ans)
-                res.send("Welcome, {0}. Your password is: {1}".format(username, data.Password));
+                res.send(data.Password);
             else
                 throw new Error('Incorrect answers!');
 

@@ -73,6 +73,28 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     }
 }]);
 
+app.controller('forgotMyPassController', ['UserService', function (UserService)
+{
+    let vm = this;
+    vm.username = '';
+    vm.q1a = '';
+    vm.q2a = '';
+    vm.response = undefined;
+    vm.recoverPassword = function (valid)
+    {
+        if (valid)
+            UserService.recoverPassword(vm.username, vm.q1a, vm.q2a)
+                .then(function (response)
+                {
+                    vm.response = "Answers are correct! Your password is: " + response.data;
+                })
+                .catch(function (err)
+                {
+                    vm.response = "Answers are incorrect";
+                })
+    }
+}]);
+
 app.controller('signupController',
     ['UserService', 'DataSource', 'AlbumsService', '$window', function (UserService, DataSource, AlbumsService, $window)
     {
