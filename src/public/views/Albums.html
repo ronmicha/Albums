@@ -1,7 +1,9 @@
+<head>
+    <link rel="stylesheet" href="../Assets/albumStyle.css">
+</head>
 <div data-ng-controller="albumsController as ctrl" data-ng-init="ctrl.init()">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="margin-bottom: 0">
         <div class="container-fluid">
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
@@ -27,12 +29,17 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div ng-repeat="genre in ctrl.Genres" ng-if="ctrl.SelectedGenre == '' || ctrl.SelectedGenre == genre">
-        <h2>{{genre}}</h2>
-        <div style="display: inline-flex">
-            <album ng-repeat="(num,album) in ctrl.Albums | orderObjectBy : ctrl.SelectedFilter"
-                   ng-if="album.Genre == genre"
-                   thisalbum="album"></album>
+    <section class="container">
+        <div class="left">
+            <div ng-repeat="genre in ctrl.Genres" ng-if="ctrl.SelectedGenre == '' || ctrl.SelectedGenre == genre">
+                <h2>{{genre}}</h2>
+                <div style="display: inline-flex">
+                    <album ng-repeat="(num,album) in ctrl.Albums | orderObjectBy : ctrl.SelectedFilter"
+                           ng-if="album.Genre == genre"
+                           thisalbum="album"></album>
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="right"></div>
+    </section>
 </div>
