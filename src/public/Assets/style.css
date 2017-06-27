@@ -177,5 +177,9 @@ input:focus {
 /*endregion*/
 
 .signupPageText {
-    color: #fff;
+    color: rgb(255, 255, 255);
+}
+
+.signupErrorText {
+    color: rgba(235, 69, 65, 0.85);
 }

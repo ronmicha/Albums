@@ -13,16 +13,20 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
      */
     service.signup = function (user)
     {
-        return $http.post(url + '/register', user).then(function ()
+        /* username, password, q1answer, q2answer, email, country - mandatory
+         * favGenres - optional*/
+        let body = {
+            username: user.username, password: user.password, q1answer: user.q1answer,
+            q2answer: user.q2answer, email: user.email, country: user.country, favGenres: user.favGenres
+        };
+        return $http.post(url + '/register', body).then(function ()
         {
-            return $http.post(url + '/register', user).then(function (response)
-            {
-                service.User = user;
-                service.loggedIn = true;
-            }).catch(function (err)
-            {
-                Promise.reject(err);
-            })
+            service.User = user;
+            service.loggedIn = true;
+            return Promise.resolve();
+        }).catch(function (err)
+        {
+            return Promise.reject(err.data);
         })
     };
 
@@ -74,7 +78,6 @@ app.factory('DataSource', ['$http', function ($http)
                 callback(data);
             }).catch(function (err)
             {
-                //
             });
 
         }
@@ -87,9 +90,13 @@ app.factory('AlbumsService', ['$http', function ($http)
     let url = '/api/albums';
     service.getGenres = function ()
     {
-        return $http.get(url + '/genres').then(function (data)
+        return $http.get(url + '/genres', '').then(function (response)
         {
-            return Promise.resolve(data);
+            let genres = response.data.map(function (g)
+            {
+                return g.Name;
+            });
+            return Promise.resolve(genres);
         }).catch(function (err)
         {
             return Promise.reject(err);
