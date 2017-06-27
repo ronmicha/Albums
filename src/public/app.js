@@ -12,32 +12,47 @@ app.config(['$locationProvider', function ($locationProvider)
 
 app.config(['$routeProvider', function ($routeProvider)
 {
-    $routeProvider
-        .when("/albums", {
-            templateUrl: "views/Albums.html",
-            controller: "albumsController"
-        })
-        .when("/login", {
-            templateUrl: "views/Login.html",
-            controller: "loginController"
-        })
-        .when("/signup", {
-            templateUrl: "views/Signup.html",
-            controller: "signupController"
-        })
-        .when("/cart", {
-            templateUrl: "views/Cart.html",
-            controller: "cartController"
-        })
-        // .when("/", {
-        //     templateUrl: "views/Home.html",
-        //     controller: "homeController"
-        // })
+    $routeProvider.when("/albums", {
+        templateUrl: "views/Albums.html",
+        controller: "albumsController"
+    }).when("/login", {
+        templateUrl: "views/Login.html",
+        controller: "loginController"
+    }).when("/signup", {
+        templateUrl: "views/Signup.html",
+        controller: "signupController"
+    }).when("/cart", {
+        templateUrl: "views/Cart.html",
+        controller: "cartController"
+    })
+    // .when("/", {
+    //     templateUrl: "views/Home.html",
+    //     controller: "homeController"
+    // })
         .otherwise({
             templateUrl: "views/Home.html",
             controller: "homeController"
         });
 }]);
+
+
+app.directive('album', function ()
+{
+    return {
+        restrict: 'AE', //attribute or element
+        scope: {
+            myalbum: '='
+        },
+        replace: true,
+        // template: '<div class="some">' +
+        // '<input ng-model="thisAlbum"></div>',
+        templateUrl: "views/AlbumDirective.html",
+        link: function ($scope, elem, attr, ctrl)
+        {
+            console.debug($scope);
+        }
+    };
+});
 
 /**
  * Validation directive which checks if a username exists in DB
