@@ -52,7 +52,7 @@ app.controller('albumsController', ['UserService', 'AlbumsService', function (Us
     vm.User = UserService.User;
     vm.Genres = [];
     vm.SelectedGenre = "";
-    vm.Filters = ['Name', 'Artist', 'Price', 'Rating', 'Genre'];
+    vm.Filters = ['Name', 'Artist', 'Price', 'Rating'];
     vm.SelectedFilter = "";
 
     vm.init = function ()
@@ -83,6 +83,33 @@ app.controller('albumsController', ['UserService', 'AlbumsService', function (Us
         vm.SelectedFilter = filter;
     };
 }]);
+
+/**
+ * Order by filter by given property
+ */
+app.filter('orderObjectBy', function ()
+{
+    return function (input, attribute)
+    {
+        if (!angular.isObject(input)) return input;
+
+        var array = [];
+        for (var objectKey in input)
+        {
+            array.push(input[objectKey]);
+        }
+        if (!attribute || attribute === '')
+            return array;
+
+        array.sort(function (a, b)
+        {
+            a = (a[attribute]);
+            b = (b[attribute]);
+            return a < b ? -1 : 1;
+        });
+        return array;
+    }
+});
 
 app.controller('loginController', ['UserService', '$window', function (UserService, $window)
 {
