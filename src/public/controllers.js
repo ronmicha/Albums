@@ -35,6 +35,8 @@ app.controller('albumsController', ['UserService', 'AlbumsService', function (Us
     vm.User = UserService.User;
     vm.Genres = [];
     vm.SelectedGenre = "";
+    vm.Filters = ['Name', 'Artist', 'Price', 'Rating', 'Genre'];
+    vm.SelectedFilter = "";
 
     vm.init = function ()
     {
@@ -47,7 +49,12 @@ app.controller('albumsController', ['UserService', 'AlbumsService', function (Us
     vm.changeGenre = function (genre)
     {
         vm.SelectedGenre = genre;
-    }
+    };
+
+    vm.changeFilter = function (filter)
+    {
+        vm.SelectedFilter = filter;
+    };
 }]);
 
 app.controller('loginController', ['UserService', '$window', function (UserService, $window)
