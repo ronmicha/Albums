@@ -34,13 +34,14 @@
                 <div ng-message="minlength">Password must be minimum 5 characters long</div>
                 <div ng-message="maxlength">Password must be maximum 10 characters long</div>
             </div>
-            <input type="email" name="email" placeholder="Email"
+            <input type="text" name="email" placeholder="Email"
                    ng-model="ctrl.User.email"
+                   ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{1,5}$/"
                    ng-required="true"/>
             <div ng-messages="signUpForm.email.$touched && signUpForm.email.$error"
                  role="alert" class="signupPageText">
                 <div ng-message="required" class="some-message">Email is required</div>
-                <div ng-message="email">Invalid email address</div>
+                <div ng-message="pattern">Invalid email address</div>
             </div>
             <label class="signupPageText"> Where did you go to school?
                 <input type="text" name="q1answer" placeholder="Answer to first question"
