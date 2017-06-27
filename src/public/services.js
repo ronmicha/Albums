@@ -92,7 +92,11 @@ app.factory('AlbumsService', ['$http', function ($http)
     {
         return $http.get(url + '/genres', '').then(function (response)
         {
-            return Promise.resolve(response.data);
+            let genres = response.data.map(function (g)
+            {
+                return g.Name;
+            });
+            return Promise.resolve(genres);
         }).catch(function (err)
         {
             Promise.reject(err);
