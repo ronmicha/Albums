@@ -47,7 +47,7 @@ app.directive('album', function ()
         templateUrl: "views/AlbumDirective.html",
         link: function ($scope, elem, attr, ctrl)
         {
-            console.debug($scope);
+            // console.debug($scope);
         }
     };
 });
