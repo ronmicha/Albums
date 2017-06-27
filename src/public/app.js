@@ -72,15 +72,13 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     vm.login = function (valid)
     {
         if (valid)
-            UserService.login(vm.User.Username, vm.User.Password)
-                .then(function ()
-                {
-                    $window.location.href = '/';
-                })
-                .catch(function (err)
-                {
-                    alert(err.message);
-                })
+            UserService.login(vm.User.Username, vm.User.Password).then(function ()
+            {
+                $window.location.href = '/';
+            }).catch(function (err)
+            {
+                alert(err.message);
+            })
     }
 }]);
 
@@ -164,7 +162,7 @@ app.directive('usernameAvailableValidator', ['$http', function ($http)
                     }
                 }).catch(function (err)
                 {
-                    setAsLoading(false);
+                    setAsLoading(true);
                     setAsAvailable(false);
                 });
                 return value;
