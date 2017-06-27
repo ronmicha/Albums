@@ -92,6 +92,7 @@ app.controller('signupController', ['UserService', 'DataSource'/*, 'AlbumsServic
     {
         if (!valid)
             return;
+        UserService.signup(vm.User);
     };
 
     vm.init = function ()

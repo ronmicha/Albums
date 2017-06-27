@@ -6,7 +6,7 @@
         <h2>Sign Up</h2>
         <form name="signUpForm" ng-submit="ctrl.signUp(signUpForm.$valid)" novalidate>
             <input type="text" name="username" placeholder="Username"
-                   ng-model="ctrl.User.Username"
+                   ng-model="ctrl.User.username"
                    ng-required="true"
                    ng-pattern="/^[a-zA-Z\s]*$/"
                    ng-minlength="3"
@@ -22,7 +22,7 @@
                 <div ng-message="recordAvailable"> Username is already in use</div>
             </div>
             <input type="password" name="password" placeholder="Password"
-                   ng-model="ctrl.User.Password"
+                   ng-model="ctrl.User.password"
                    ng-required="true"
                    ng-pattern="/^[a-zA-Z0-9\s]*$/"
                    ng-minlength="5"
@@ -35,7 +35,7 @@
                 <div ng-message="maxlength">Password must be maximum 10 characters long</div>
             </div>
             <input type="email" name="email" placeholder="Email"
-                   ng-model="ctrl.User.Email"
+                   ng-model="ctrl.User.email"
                    ng-required="true"/>
             <div ng-messages="signUpForm.email.$touched && signUpForm.email.$error"
                  role="alert" class="signupPageText">
@@ -44,7 +44,7 @@
             </div>
             <label class="signupPageText"> Where did you go to school?
                 <input type="text" name="q1answer" placeholder="Answer to first question"
-                       ng-model="ctrl.User.Q1Answer"
+                       ng-model="ctrl.User.q1answer"
                        ng-required="true"/>
             </label>
             <div ng-messages="signUpForm.q1answer.$touched && signUpForm.q1answer.$error"
@@ -53,7 +53,7 @@
             </div>
             <label class="signupPageText"> What was your first pet's name?
                 <input type="text" name="q2answer" placeholder="Answer to second question"
-                       ng-model="ctrl.User.Q2Answer"
+                       ng-model="ctrl.User.q2answer"
                        ng-required="true"/></label>
             <div ng-messages="signUpForm.q2answer.$touched && signUpForm.q2answer.$error"
                  role="alert" class="signupPageText">
@@ -62,7 +62,7 @@
             <select name="country"
                     data-ng-options="c.Name as c.Name for c in ctrl.Countries"
                     ng-required="true"
-                    ng-model="ctrl.User.Country">
+                    ng-model="ctrl.User.country">
                 <option value="" disabled selected>Select Country</option>
             </select>
             <div ng-messages="signUpForm.country.$touched && signUpForm.country.$error"
@@ -71,7 +71,7 @@
             </div>
             <select multiple
                     data-ng-options="g as g for g in ctrl.Genres"
-                    ng-model="ctrl.User.Genres"
+                    ng-model="ctrl.User.favGenres"
                     ng-required="false">
             </select>
             <button type="submit" ng-disabled="signUpForm.$invalid" class="btn btn-primary btn-block btn-large">
