@@ -1,4 +1,5 @@
 <div data-ng-controller="previousOrdersController as ctrl" data-ng-init="ctrl.init()">
+    <p ng-model="ctrl.OrderShown.ID"></p>
     <div ng-repeat="o in ctrl.Orders">
         <h3 style="font-weight: bold"><a ng-click="ctrl.ShowOrder(o)" href="" data-target="#orderModal"
                                          data-toggle="modal">Order #{{o.ID}}:</a></h3>
@@ -14,7 +15,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h1 class="text-center">Order #{{ctrl.ShownOrder.ID}}</h1>
+                <h1 class="text-center">Order #{{ctrl.ShownOrder}}</h1>
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
