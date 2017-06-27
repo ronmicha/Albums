@@ -49,6 +49,7 @@ app.controller('albumsController', ['UserService', 'AlbumsService', function (Us
 {
     let vm = this;
     vm.User = UserService.User;
+    vm.model = UserService.model;
     vm.Genres = [];
     vm.SelectedGenre = "";
     vm.Filters = ['Name', 'Artist', 'Price', 'Rating'];
@@ -65,7 +66,15 @@ app.controller('albumsController', ['UserService', 'AlbumsService', function (Us
             AlbumsService.getAllAlbums().then(function (response)
             {
                 vm.Albums = response.data;
+                return Promise.resolve();
             });
+        }).then(function ()
+        {
+            if (vm.model.loggedIn)
+                UserService.getRecommendations().then(function (data)
+                {
+                    vm.Recommendations = data;
+                })
         }).catch(function (err)
         {
             alert(err);
@@ -137,15 +146,13 @@ app.controller('forgotMyPassController', ['UserService', function (UserService)
     vm.recoverPassword = function (valid)
     {
         if (valid)
-            UserService.recoverPassword(vm.username, vm.q1a, vm.q2a)
-                .then(function (response)
-                {
-                    vm.response = "Answers are correct! Your password is: " + response.data;
-                })
-                .catch(function (err)
-                {
-                    vm.response = "Answers are incorrect";
-                })
+            UserService.recoverPassword(vm.username, vm.q1a, vm.q2a).then(function (response)
+            {
+                vm.response = "Answers are correct! Your password is: " + response.data;
+            }).catch(function (err)
+            {
+                vm.response = "Answers are incorrect";
+            })
     }
 }]);
 

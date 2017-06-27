@@ -65,15 +65,25 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
     service.recoverPassword = function (username, q1a, q2a)
     {
         let userDetails = {username: username, q1answer: q1a, q2answer: q2a};
-        return $http.post(url + '/passwordRecover', userDetails)
-            .then(function (response)
-            {
-                return Promise.resolve(response);
-            })
-            .catch(function (err)
-            {
-                return Promise.reject(err);
-            })
+        return $http.post(url + '/passwordRecover', userDetails).then(function (response)
+        {
+            return Promise.resolve(response);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        })
+    };
+
+    service.getRecommendations = function ()
+    {
+        let thisUrl = url + '/users';
+        return $http.get(thisUrl + '/recommend', '').then(function (response)
+        {
+            return Promise.resolve(response.data);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        });
     };
 
     return service;
