@@ -53,7 +53,7 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
 }]);
 
 app.controller('signupController',
-    ['UserService', 'DataSource', 'AlbumsService', function (UserService, DataSource, AlbumsService)
+    ['UserService', 'DataSource', 'AlbumsService', '$window', function (UserService, DataSource, AlbumsService, $window)
     {
         let vm = this;
         vm.User = {};
@@ -64,6 +64,13 @@ app.controller('signupController',
         {
             if (!valid)
                 return;
+            UserService.signup(vm.User).then(function ()
+            {
+                $window.location.href = '/';
+            }).catch(function (err)
+            {
+                alert(err);
+            });
         };
 
         vm.init = function ()

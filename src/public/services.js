@@ -13,16 +13,20 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
      */
     service.signup = function (user)
     {
-        return $http.post(url + '/register', user).then(function ()
+        /* username, password, q1answer, q2answer, email, country - mandatory
+         * favGenres - optional*/
+        let body = {
+            username: user.username, password: user.password, q1answer: user.q1answer,
+            q2answer: user.q2answer, email: user.email, country: user.country, favGenres: user.favGenres
+        };
+        return $http.post(url + '/register', body).then(function ()
         {
-            return $http.post(url + '/register', user).then(function (response)
-            {
-                service.User = user;
-                service.loggedIn = true;
-            }).catch(function (err)
-            {
-                Promise.reject(err);
-            })
+            service.User = user;
+            service.loggedIn = true;
+            return Promise.resolve();
+        }).catch(function (err)
+        {
+            return Promise.reject(err.data);
         })
     };
 
