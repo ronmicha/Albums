@@ -52,8 +52,6 @@ module.exports = function (app)
         let cookie = req.cookies['AlbumShop'];
         if (cookie && cookie.login.hashCode() === cookie.key)
         {
-            // alert('');
-            // res.send('Logged in successfully');
             dbClient.GetUser(cookie.login).then(function (users)
             {
                 res.send(users[0]);

@@ -24,15 +24,13 @@ app.config(['$routeProvider', function ($routeProvider)
     }).when("/cart", {
         templateUrl: "views/Cart.html",
         controller: "cartController"
-    })
-    // .when("/", {
-    //     templateUrl: "views/Home.html",
-    //     controller: "homeController"
-    // })
-        .otherwise({
-            templateUrl: "views/Home.html",
-            controller: "homeController"
-        });
+    }).when("/previousOrders", {
+        templateUrl: "views/PreviousOrders.html",
+        controller: "previousOrdersController"
+    }).otherwise({
+        templateUrl: "views/Home.html",
+        controller: "homeController"
+    });
 }]);
 
 

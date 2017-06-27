@@ -142,7 +142,7 @@ exports.GetUser = function (username)
 exports.GetPreviousOrders = function (username)
 {
     let query =
-        ("SELECT Order_Date AS [Date], Total_Price AS [Total], Shipping_Date AS [Shipping Date], Currency " +
+        ("SELECT ID as [ID], Order_Date AS [Date], Total_Price AS [Total], Shipping_Date AS [Shipping Date], Currency " +
         "FROM Orders " +
         "WHERE username = '{0}'").format(username);
     return Read(query);
@@ -238,6 +238,15 @@ exports.ClearCart = function (username)
         ("DELETE FROM ClientsCarts " +
         "WHERE Username = '{0}'").format(username);
     return Write(query);
+};
+
+exports.AlbumsOfOrder = function (orderID)
+{
+    let query =
+        ("SELECT A.Name as Name, A.Artist as Artist, A.Genre as Genre, A.Price as Price, A.Rating as Rating " +
+        "FROM Albums A INNER JOIN AlbumsOrdered O ON O.Album_ID = A.ID " +
+        "WHERE O.Order_ID = {0} ").format(orderID);
+    return Read(query);
 };
 //endregion
 

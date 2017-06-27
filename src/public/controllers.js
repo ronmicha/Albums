@@ -204,6 +204,36 @@ app.controller('signupController',
         }
     }]);
 
+app.controller('previousOrdersController', ['UserService', function (UserService)
+{
+    let vm = this;
+    vm.Orders = {};
+    vm.ShownOrder = {};
+
+    vm.init = function ()
+    {
+        UserService.getPreviousOrders().then(function (data)
+        {
+            vm.Orders = data;
+        }).catch(function (err)
+        {
+            alert(err);
+        })
+    };
+
+    vm.ShowOrder = function (order)
+    {
+        vm.ShownOrder = order;
+        UserService.getOrderAlbums(order.ID).then(function (data)
+        {
+            vm.OrderAlbums = data;
+        }).catch(function (err)
+        {
+            alert(err);
+        })
+    };
+}]);
+
 app.controller('cartController', ['CartService', 'UserService', function (CartService, UserService)
 {
     let vm = this;

@@ -96,6 +96,35 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         });
     };
 
+    service.getPreviousOrders = function ()
+    {
+        let thisUrl = url + '/users';
+        return $http.get(thisUrl + '/previousOrders').then(function (response)
+        {
+            return Promise.resolve(response.data);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        });
+    };
+
+    service.getOrderAlbums = function (orderID)
+    {
+        let thisUrl = url + '/users';
+        let config = {
+            params: {
+                orderID: orderID
+            }
+        };
+        return $http.get(thisUrl + '/albumsOfOrder', config).then(function (response)
+        {
+            return Promise.resolve(response.data);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        });
+    };
+
     return service;
 }]);
 
