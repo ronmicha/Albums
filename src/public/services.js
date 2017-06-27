@@ -74,7 +74,6 @@ app.factory('DataSource', ['$http', function ($http)
                 callback(data);
             }).catch(function (err)
             {
-                //
             });
 
         }
@@ -87,9 +86,9 @@ app.factory('AlbumsService', ['$http', function ($http)
     let url = '/api/albums';
     service.getGenres = function ()
     {
-        return $http.get(url + '/genres').then(function (data)
+        return $http.get(url + '/genres', '').then(function (response)
         {
-            Promise.resolve(data);
+            return Promise.resolve(response.data);
         }).catch(function (err)
         {
             Promise.reject(err);

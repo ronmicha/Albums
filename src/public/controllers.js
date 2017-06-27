@@ -52,40 +52,51 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
     }
 }]);
 
-app.controller('signupController', ['UserService', 'DataSource', function (UserService, DataSource)
-{
-    let vm = this;
-    vm.User = {};
-    vm.Countries = [];
-
-    vm.signUp = function (valid)
+app.controller('signupController',
+    ['UserService', 'DataSource', 'AlbumsService', function (UserService, DataSource, AlbumsService)
     {
-        if (!valid)
-            return;
-    };
+        let vm = this;
+        vm.User = {};
+        vm.Countries = [];
+        vm.Genres = [];
 
-    vm.init = function ()
-    {
-        let countriesFile = "./resources/countries.xml";
-        let xmlTransform = function (data)
+        vm.signUp = function (valid)
         {
-            console.log("transform data");
-            var x2js = new X2JS();
-            var json = x2js.xml_str2json(data);
-            return json;
+            if (!valid)
+                return;
         };
 
-        let catchData = function (data)
+        vm.init = function ()
         {
-            vm.Countries = data.data.Countries.Country;
-        };
+            let countriesFile = "./resources/countries.xml";
+            let xmlTransform = function (data)
+            {
+                console.log("transform data");
+                var x2js = new X2JS();
+                var json = x2js.xml_str2json(data);
+                return json;
+            };
 
-        DataSource.get(countriesFile, catchData, xmlTransform).catch(function (err)
-        {
-            alert(err);
-        });
-    }
-}]);
+            let catchData = function (data)
+            {
+                vm.Countries = data.data.Countries.Country;
+            };
+
+            AlbumsService.getGenres().then(function (data)
+            {
+                vm.Genres = data.map(function (g)
+                {
+                    return g.Name;
+                });
+                DataSource.get(countriesFile, catchData, xmlTransform);
+            }).catch(function (err)
+            {
+                alert(err);
+            });
+
+
+        }
+    }]);
 
 app.controller('cartController', ['UserService', function (UserService)
 {
