@@ -13,7 +13,7 @@
                    ng-maxlength="8"
                    username-Available-Validator='/api/checkUsernameAvailable'/>
             <div ng-messages=" signUpForm.username.$touched && signUpForm.username.$error "
-                 role="alert" class="signupPageText">
+                 role="alert" class="signupErrorText">
                 <div ng-message="required" class="some-message">Username is required</div>
                 <div ng-message="pattern">Username must contain english letters only</div>
                 <div ng-message="minlength">Username must be minimum 3 characters long</div>
@@ -28,7 +28,7 @@
                    ng-minlength="5"
                    ng-maxlength="10"/>
             <div ng-messages="signUpForm.password.$touched && signUpForm.password.$error"
-                 role="alert" class="signupPageText">
+                 role="alert" class="signupErrorText">
                 <div ng-message="required" class="some-message">Password is required</div>
                 <div ng-message="pattern">Password must contain english letters and numbers only</div>
                 <div ng-message="minlength">Password must be minimum 5 characters long</div>
@@ -39,7 +39,7 @@
                    ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{1,5}$/"
                    ng-required="true"/>
             <div ng-messages="signUpForm.email.$touched && signUpForm.email.$error"
-                 role="alert" class="signupPageText">
+                 role="alert" class="signupErrorText">
                 <div ng-message="required" class="some-message">Email is required</div>
                 <div ng-message="pattern">Invalid email address</div>
             </div>
@@ -49,7 +49,7 @@
                        ng-required="true"/>
             </label>
             <div ng-messages="signUpForm.q1answer.$touched && signUpForm.q1answer.$error"
-                 role="alert" class="signupPageText">
+                 role="alert" class="signupErrorText">
                 <div ng-message="required" class="some-message">Answer is required</div>
             </div>
             <label class="signupPageText"> What was your first pet's name?
@@ -57,7 +57,7 @@
                        ng-model="ctrl.User.q2answer"
                        ng-required="true"/></label>
             <div ng-messages="signUpForm.q2answer.$touched && signUpForm.q2answer.$error"
-                 role="alert" class="signupPageText">
+                 role="alert" class="signupErrorText">
                 <div ng-message="required" class="some-message">Answer is required</div>
             </div>
             <select name="country"
@@ -67,7 +67,7 @@
                 <option value="" disabled selected>Select Country</option>
             </select>
             <div ng-messages="signUpForm.country.$touched && signUpForm.country.$error"
-                 role="alert" class="signupPageText">
+                 role="alert" class="signupErrorText">
                 <div ng-message="required" class="some-message">Country is required</div>
             </div>
             <select multiple
