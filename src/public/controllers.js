@@ -221,6 +221,11 @@ app.controller('previousOrdersController', ['UserService', function (UserService
             alert(err);
         })
     };
+
+    vm.ShowOrder = function (order)
+    {
+
+    };
 }]);
 
 app.controller('cartController', ['UserService', function (UserService)

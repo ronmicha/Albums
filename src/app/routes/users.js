@@ -29,6 +29,17 @@ router.get('/previousOrders', function (req, res, next)
 });
 
 /**
+ * @param orderID
+ */
+router.get('/albumsOfOrder', function (req, res, next)
+{
+    if (!req.query.orderID)
+        throw new Error('Missing Order ID');
+    let orderId = req.query.orderID;
+    PromiseGetHandler(dbClient.AlbumsOfOrder(orderId), req, res, next);
+});
+
+/**
  * @param AlbumId - sent in post parameters
  */
 router.post('/addAlbumToCart', function (req, res, next)

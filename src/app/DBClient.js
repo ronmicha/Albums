@@ -239,6 +239,15 @@ exports.ClearCart = function (username)
         "WHERE Username = '{0}'").format(username);
     return Write(query);
 };
+
+exports.AlbumsOfOrder = function (orderID)
+{
+    let query =
+        ("SELECT A.Name as Name, A.Artist as Artist, A.Genre as Genre, A.Price as Price, A.Rating as Rating " +
+        "FROM Albums A INNER JOIN AlbumsOrdered AO ON AO.Album_ID = A.ID" +
+        "WHERE AO.Order_ID = {0} ").format(orderID);
+    return Read(query);
+};
 //endregion
 
 //region Admins Functions
