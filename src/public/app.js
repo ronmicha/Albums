@@ -192,9 +192,9 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
      */
     service.signup = function (user)
     {
-        return $http.post('/register', user).then(function ()
+        return $http.post('/api/register', user).then(function ()
         {
-            return $http.post('/register', user).then(function (response)
+            return $http.post('/api/register', user).then(function (response)
             {
                 service.User = user;
                 service.loggedIn = true;
@@ -208,7 +208,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
     service.login = function (username, password)
     {
         let userToSend = {username: username, password: password};
-        return $http.post('/login', userToSend).then(function (response)
+        return $http.post('/api/login', userToSend).then(function (response)
         {
             service.User = response.data;
             service.loggedIn = true;
@@ -221,7 +221,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
 
     service.loginWithCookie = function ()
     {
-        return $http.post('/login', '').then(function (response)
+        return $http.post('/api/login', '').then(function (response)
         {
             service.User = response.data;
             service.loggedIn = true;

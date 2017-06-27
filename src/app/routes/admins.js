@@ -131,7 +131,7 @@ router.post('/deleteProduct', function (req, res, next)
  */
 router.post('/addClient', function (req, res, next)
 {
-    require('../server').Register(req, res, next);
+    require('../../server').Register(req, res, next);
 });
 
 /**
