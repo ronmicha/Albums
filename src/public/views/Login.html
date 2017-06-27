@@ -9,14 +9,14 @@
                 <input type="text" name="username" placeholder="Username"
                        ng-model="ctrl.User.Username"
                        ng-required="true"/>
-                <div ng-messages="loginForm.username.$touched && loginForm.username.$error"
+                <div ng-messages="(loginForm.username.$touched || loginForm.$submitted) && loginForm.username.$error"
                      role="alert" class="signupPageText">
                     <div ng-message="required" class="some-message">Username is required</div>
                 </div>
                 <input type="password" name="password" placeholder="Password"
                        ng-model="ctrl.User.Password"
                        ng-required="true"/>
-                <div ng-messages="loginForm.password.$touched && loginForm.password.$error"
+                <div ng-messages="(loginForm.password.$touched || loginForm.$submitted) && loginForm.password.$error"
                      role="alert" class="signupPageText">
                     <div ng-message="required" class="some-message">Password is required</div>
                 </div>
@@ -52,7 +52,7 @@
                                                    name="username"
                                                    ng-model="ctrl.username"
                                                    ng-required="true"/>
-                                            <div ng-messages="forgotForm.username.$touched && forgotForm.username.$error"
+                                            <div ng-messages="(forgotForm.username.$touched || forgotForm.$submitted) && forgotForm.username.$error"
                                                  role="alert"
                                                  class="signupPageText">
                                                 <div ng-message="required"
@@ -67,7 +67,7 @@
                                                    name="q1a"
                                                    ng-model="ctrl.q1a"
                                                    ng-required="true"/>
-                                            <div ng-messages="forgotForm.q1a.$touched && forgotForm.q1a.$error"
+                                            <div ng-messages="(forgotForm.q1a.$touched || forgotForm.$submitted) && forgotForm.q1a.$error"
                                                  role="alert"
                                                  class="signupPageText">
                                                 <div ng-message="required"
@@ -82,7 +82,7 @@
                                                    name="q2a"
                                                    ng-model="ctrl.q2a"
                                                    ng-required="true"/>
-                                            <div ng-messages="forgotForm.q2a.$touched && forgotForm.q2a.$error"
+                                            <div ng-messages="(forgotForm.q2a.$touched || forgotForm.$submitted) && forgotForm.q2a.$error"
                                                  role="alert"
                                                  class="signupPageText">
                                                 <div ng-message="required"
