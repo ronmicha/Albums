@@ -4,8 +4,8 @@
         <h3 style="font-weight: bold"><a ng-click="ctrl.ShowOrder(o)" href="" data-target="#orderModal"
                                          data-toggle="modal">Order #{{o.ID}}:</a></h3>
         <p>Total price: {{o.Total}} {{o.Currency}}</p>
-        <p>Order date: {{o.Date}}</p>
-        <p>Shipping date: {{o['Shipping Date']}}</p>
+        <p>Order date: {{o.Date | date}}</p>
+        <p>Shipping date: {{o['Shipping Date'] | date}}</p>
     </div>
 </div>
 
