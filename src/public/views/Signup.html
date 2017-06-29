@@ -24,13 +24,14 @@
             <input type="password" name="password" placeholder="Password"
                    ng-model="ctrl.User.password"
                    ng-required="true"
-                   ng-pattern="/^[a-zA-Z0-9\s]*$/"
+                   ng-pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/"
                    ng-minlength="5"
                    ng-maxlength="10"/>
             <div ng-messages="(signUpForm.password.$touched || signUpForm.$submitted) && signUpForm.password.$error"
                  role="alert" class="signupErrorText">
                 <div ng-message="required" class="some-message">Password is required</div>
-                <div ng-message="pattern">Password must contain english letters and numbers only</div>
+                <div ng-message="pattern">Password must contain english letters and numbers only - minumum one of each
+                </div>
                 <div ng-message="minlength">Password must be minimum 5 characters long</div>
                 <div ng-message="maxlength">Password must be maximum 10 characters long</div>
             </div>
