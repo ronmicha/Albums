@@ -201,8 +201,6 @@ app.controller('signupController',
             {
                 alert(err);
             });
-
-
         }
     }]);
 
@@ -237,8 +235,21 @@ app.controller('previousOrdersController', ['UserService', function (UserService
     };
 }]);
 
-app.controller('cartController', ['UserService', function (UserService)
+app.controller('cartController', ['CartService', 'UserService', function (CartService, UserService)
 {
     let vm = this;
+    vm.User = UserService.User;
     vm.orderedAlbums = {};
+    vm.getCart = function ()
+    {
+        CartService.getPreviousOrders(vm.User.username)
+            .then(function (response)
+            {
+                vm.orderedAlbums = response.data;
+            })
+            .catch(function (err)
+            {
+                alert(err.message);
+            });
+    }
 }]);

@@ -205,10 +205,15 @@ app.factory('CartService', ['$http', function ($http)
     let url = '/api/users';
     service.getPreviousOrders = function (username)
     {
-        return $http.get(url + '/previousOrders').then(function ()
-        {
-
-        }).catch()
+        return $http.get(url + '/getCart', username)
+            .then(function (data)
+            {
+                return Promise.resolve(data);
+            })
+            .catch(function (err)
+            {
+                return Promise.reject(err);
+            })
     };
     return service;
 }]);

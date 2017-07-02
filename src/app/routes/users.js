@@ -28,6 +28,12 @@ router.get('/previousOrders', function (req, res, next)
     PromiseGetHandler(dbClient.GetPreviousOrders(username), req, res, next);
 });
 
+router.get('/getCart', function (req, res, next)
+{
+    let username = req.username;
+    PromiseGetHandler(dbClient.GetCartDetails(username), req, res, next);
+});
+
 /**
  * @param orderID
  */

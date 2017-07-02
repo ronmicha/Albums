@@ -176,7 +176,7 @@ exports.GetCartDetails = function (username)
 {
     let query =
         ("SELECT C.Username as Username, C.AlbumID as AlbumID, A.Name AS AlbumName, C.Amount as OrderAmount," +
-        " A.Price as Price, A.Amount_In_Stock as AmountInStock " +
+        " A.Price as Price, A.Amount_In_Stock as AmountInStock, A.Pic_Link, A.Genre " +
         "FROM Albums A INNER JOIN ClientsCarts C ON A.ID = C.AlbumID " +
         "WHERE C.Username = '{0}'").format(username);
     return Read(query);
