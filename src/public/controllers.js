@@ -211,6 +211,7 @@ app.controller('previousOrdersController', ['UserService', function (UserService
     let vm = this;
     vm.Orders = {};
     vm.ShownOrder = {};
+    vm.OrderAlbums = [];
 
     vm.init = function ()
     {
