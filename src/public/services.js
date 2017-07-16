@@ -11,8 +11,7 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
     let updateLastLogin = function ()
     {
         let cookie = $cookies.get('AlbumShop');
-        let lastTime = cookie.split('\"')[9];
-        service.model.lastLoggedIn = lastTime;
+        service.model.lastLoggedIn = cookie.split('\"')[9];
     };
 
     /**
@@ -205,15 +204,27 @@ app.factory('CartService', ['$http', function ($http)
     let url = '/api/users';
     service.getPreviousOrders = function (username)
     {
-        return $http.get(url + '/getCart', username)
-            .then(function (data)
-            {
-                return Promise.resolve(data);
-            })
-            .catch(function (err)
-            {
-                return Promise.reject(err);
-            })
+        return $http.get(url + '/getCart', username).then(function (data)
+        {
+            return Promise.resolve(data);
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        })
+    };
+    service.addAlbumToCart = function (albumID)
+    {
+        return $http({
+            url: url + '/addAlbumToCart',
+            method: 'POST',
+            params: {albumID: albumID}
+        }).then(function ()
+        {
+            return Promise.resolve();
+        }).catch(function (err)
+        {
+            return Promise.reject(err);
+        })
     };
     return service;
 }]);

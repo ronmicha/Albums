@@ -37,16 +37,14 @@ app.config(['$routeProvider', function ($routeProvider)
 app.directive('album', function ()
 {
     return {
-        restrict: 'E', //attribute or element
+        restrict: 'E', // element
         scope: {
             thisalbum: '='
         },
         replace: true,
-        templateUrl: "views/AlbumDirective.html",
-        link: function ($scope, elem, attr, ctrl)
-        {
-            // console.debug($scope);
-        }
+        templateUrl: "views/AlbumDirective.html"
+        // ,controller: cartController,
+        // controllerAs: 'ctrl1'
     };
 });
 

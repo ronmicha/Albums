@@ -242,14 +242,23 @@ app.controller('cartController', ['CartService', 'UserService', function (CartSe
     vm.orderedAlbums = {};
     vm.getCart = function ()
     {
-        CartService.getPreviousOrders(vm.User.username)
-            .then(function (response)
-            {
-                vm.orderedAlbums = response.data;
-            })
-            .catch(function (err)
-            {
-                alert(err.message);
-            });
+        CartService.getPreviousOrders(vm.User.username).then(function (response)
+        {
+            vm.orderedAlbums = response.data;
+        }).catch(function (err)
+        {
+            alert(err.message);
+        });
+    };
+    vm.addAlbumToCart = function (album)
+    {
+        let albumID = album.ID;
+        CartService.addAlbumToCart(albumID).then(function ()
+        {
+            alert('Album added to cart');
+        }).catch(function (err)
+        {
+            alert(err.message);
+        })
     }
 }]);

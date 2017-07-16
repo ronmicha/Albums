@@ -60,7 +60,7 @@ exports.GetAlbumsByGenre = function (genre)
 exports.SearchAlbums = function (name, artist, genre, maxPrice, year, minRating)
 {
     let query =
-        "SELECT Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating, Pic_Link " +
+        "SELECT ID, Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating, Pic_Link " +
         "FROM Albums " +
         "WHERE Name = {0} AND Artist = {1} AND Genre = {2} AND Price <= {3} AND Date_Released >= {4} AND Rating >= {5}".format(name, artist, genre, maxPrice, year, minRating);
     return Read(query);
@@ -323,7 +323,7 @@ exports.AdminAddGenre = function (genre)
 };
 //endregion
 
-//region General Functionalities
+//region General Functionalists
 function Read(query)
 {
     return new Promise(function (resolve, reject)
