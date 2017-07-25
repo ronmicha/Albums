@@ -241,7 +241,7 @@ app.controller('cartController', ['CartService', 'UserService', function (CartSe
     vm.orderedAlbums = {};
     vm.getCart = function ()
     {
-        CartService.getPreviousOrders(vm.User.username).then(function (response)
+        CartService.getCart(vm.User.username).then(function (response)
         {
             vm.orderedAlbums = response.data;
         }).catch(function (err)
@@ -255,6 +255,16 @@ app.controller('cartController', ['CartService', 'UserService', function (CartSe
         CartService.addAlbumToCart(albumID).then(function ()
         {
             alert('Album added to cart');
+        }).catch(function (err)
+        {
+            alert(err.data);
+        })
+    };
+    vm.removeFromCart = function (albumID)
+    {
+        CartService.removeFromCart(albumID).then(function ()
+        {
+            vm.getCart();
         }).catch(function (err)
         {
             alert(err.data);

@@ -1,5 +1,6 @@
 <div ng-controller="cartController as ctrl" ng-init="ctrl.getCart()">
     <h1>cart</h1>
+    <a href="#/previousOrders">Previous Orders</a>
     <table style="width:100%">
         <tr>
             <th></th>
@@ -9,11 +10,15 @@
             <th>Amount</th>
         </tr>
         <tr ng-repeat="album in ctrl.orderedAlbums">
-            <td><img ng-src="{{album.Pic_Link}}" syt/></td>
+            <td><img ng-src="{{album.Pic_Link}}"/></td>
             <td>{{album.AlbumName}}</td>
             <td>{{album.Genre}}</td>
             <td>{{album.Price}}</td>
             <td>{{album.OrderAmount}}</td>
+            <td>
+                <button data-ng-click="ctrl.removeFromCart(album.AlbumID)">Remove</button>
+            </td>
         </tr>
     </table>
+
 </div>
