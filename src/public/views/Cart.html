@@ -1,5 +1,5 @@
 <div ng-controller="cartController as ctrl" ng-init="ctrl.getCart()">
-    <h1>cart</h1>
+    <h1>Cart</h1>
     <a href="#/previousOrders">Previous Orders</a>
     <table style="width:100%">
         <tr>
@@ -20,5 +20,5 @@
             </td>
         </tr>
     </table>
-
+    <div>Total price: {{ctrl.cartTotal | number: 2}}</div>
 </div>

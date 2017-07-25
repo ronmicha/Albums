@@ -238,12 +238,15 @@ app.controller('cartController', ['CartService', 'UserService', function (CartSe
 {
     let vm = this;
     vm.User = UserService.User;
-    vm.orderedAlbums = {};
+    vm.orderedAlbums = [];
+    vm.cartTotal = 0;
     vm.getCart = function ()
     {
         CartService.getCart(vm.User.username).then(function (response)
         {
             vm.orderedAlbums = response.data;
+            for (var i = 0; i < vm.orderedAlbums.length; i++)
+                vm.cartTotal += vm.orderedAlbums[i].Price * vm.orderedAlbums[i].OrderAmount;
         }).catch(function (err)
         {
             alert(err.data);
