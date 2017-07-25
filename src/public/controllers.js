@@ -131,7 +131,7 @@ app.controller('loginController', ['UserService', '$window', function (UserServi
                 $window.location.href = '/';
             }).catch(function (err)
             {
-                alert(err.message);
+                alert(err.data);
             })
     }
 }]);
@@ -156,53 +156,52 @@ app.controller('forgotMyPassController', ['UserService', function (UserService)
     }
 }]);
 
-app.controller('signupController',
-    ['UserService', 'DataSource', 'AlbumsService', '$window', function (UserService, DataSource, AlbumsService, $window)
-    {
-        let vm = this;
-        vm.User = {};
-        vm.Countries = [];
-        vm.Genres = [];
+app.controller('signupController', ['UserService', 'DataSource', 'AlbumsService', '$window', function (UserService, DataSource, AlbumsService, $window)
+{
+    let vm = this;
+    vm.User = {};
+    vm.Countries = [];
+    vm.Genres = [];
 
-        vm.signUp = function (valid)
+    vm.signUp = function (valid)
+    {
+        if (!valid)
+            return;
+        UserService.signup(vm.User).then(function ()
         {
-            if (!valid)
-                return;
-            UserService.signup(vm.User).then(function ()
-            {
-                $window.location.href = '/';
-            }).catch(function (err)
-            {
-                alert(err);
-            });
+            $window.location.href = '/';
+        }).catch(function (err)
+        {
+            alert(err);
+        });
+    };
+
+    vm.init = function ()
+    {
+        let countriesFile = "./resources/countries.xml";
+        let xmlTransform = function (data)
+        {
+            console.log("transform data");
+            var x2js = new X2JS();
+            var json = x2js.xml_str2json(data);
+            return json;
         };
 
-        vm.init = function ()
+        let catchData = function (data)
         {
-            let countriesFile = "./resources/countries.xml";
-            let xmlTransform = function (data)
-            {
-                console.log("transform data");
-                var x2js = new X2JS();
-                var json = x2js.xml_str2json(data);
-                return json;
-            };
+            vm.Countries = data.data.Countries.Country;
+        };
 
-            let catchData = function (data)
-            {
-                vm.Countries = data.data.Countries.Country;
-            };
-
-            AlbumsService.getGenres().then(function (data)
-            {
-                vm.Genres = data;
-                DataSource.get(countriesFile, catchData, xmlTransform);
-            }).catch(function (err)
-            {
-                alert(err);
-            });
-        }
-    }]);
+        AlbumsService.getGenres().then(function (data)
+        {
+            vm.Genres = data;
+            DataSource.get(countriesFile, catchData, xmlTransform);
+        }).catch(function (err)
+        {
+            alert(err);
+        });
+    }
+}]);
 
 app.controller('previousOrdersController', ['UserService', function (UserService)
 {

@@ -7,8 +7,8 @@
         <p>Shipping date: {{o['Shipping Date'] | date}}</p>
     </div>
 
-    <div id="orderModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width: 80%">
-        <div class="modal-dialog">
+    <div id="orderModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width: 100%">
+        <div class="modal-dialog" style="width: 70%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -19,8 +19,10 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-left">
-                                    <p>Order date: {{ctrl.ShownOrder.Date | date}}</p>
-                                    <p>Shipping date: {{ctrl.ShownOrder['Shipping Date'] | date}}</p>
+                                    <div class="container">
+                                        <p>Order date: {{ctrl.ShownOrder.Date | date}}</p>
+                                        <p>Shipping date: {{ctrl.ShownOrder['Shipping Date'] | date}}</p>
+                                    </div>
 
                                     <div class="container">
                                         <h2>Album in order:</h2>
@@ -45,7 +47,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p>Total: {{ctrl.ShownOrder.Total }}{{o.ShownOrder.Currency}}</p>
+                                        <p>Total: {{ctrl.ShownOrder.Total}} {{ctrl.ShownOrder.Currency}}</p>
                                     </div>
                                 </div>
                             </div>
