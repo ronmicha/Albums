@@ -12,7 +12,7 @@ app.controller('mainController', ['UserService', function (UserService)
             vm.User = UserService.User;
         }).catch(function (err)
         {
-            alert(err.message);
+            alert(err.data);
         });
     };
 }]);
@@ -30,7 +30,7 @@ app.controller('homeController', ['UserService', 'AlbumsService', function (User
             vm.hottestAlbums = response.data;
         }).catch(function (err)
         {
-            alert(err.message);
+            alert(err.data);
         })
     };
     vm.getNewestAlbums = function ()
@@ -40,7 +40,7 @@ app.controller('homeController', ['UserService', 'AlbumsService', function (User
             vm.newestAlbums = response.data;
         }).catch(function (err)
         {
-            alert(err.message);
+            alert(err.data);
         })
     };
 }]);
@@ -77,7 +77,7 @@ app.controller('albumsController', ['UserService', 'AlbumsService', function (Us
                 })
         }).catch(function (err)
         {
-            alert(err);
+            alert(err.data);
         });
     };
 
@@ -172,7 +172,7 @@ app.controller('signupController', ['UserService', 'DataSource', 'AlbumsService'
             $window.location.href = '/';
         }).catch(function (err)
         {
-            alert(err);
+            alert(err.data);
         });
     };
 
@@ -198,7 +198,7 @@ app.controller('signupController', ['UserService', 'DataSource', 'AlbumsService'
             DataSource.get(countriesFile, catchData, xmlTransform);
         }).catch(function (err)
         {
-            alert(err);
+            alert(err.data);
         });
     }
 }]);
@@ -217,7 +217,7 @@ app.controller('previousOrdersController', ['UserService', function (UserService
             vm.Orders = data;
         }).catch(function (err)
         {
-            alert(err);
+            alert(err.data);
         })
     };
 
@@ -229,7 +229,7 @@ app.controller('previousOrdersController', ['UserService', function (UserService
             vm.OrderAlbums = data;
         }).catch(function (err)
         {
-            alert(err);
+            alert(err.data);
         })
     };
 }]);
@@ -246,7 +246,7 @@ app.controller('cartController', ['CartService', 'UserService', function (CartSe
             vm.orderedAlbums = response.data;
         }).catch(function (err)
         {
-            alert(err.message);
+            alert(err.data);
         });
     };
     vm.addAlbumToCart = function (album)
@@ -257,7 +257,7 @@ app.controller('cartController', ['CartService', 'UserService', function (CartSe
             alert('Album added to cart');
         }).catch(function (err)
         {
-            alert(err.message);
+            alert(err.data);
         })
     }
 }]);
