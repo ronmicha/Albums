@@ -162,11 +162,16 @@ app.controller('signupController', ['UserService', 'DataSource', 'AlbumsService'
     vm.User = {};
     vm.Countries = [];
     vm.Genres = [];
+    vm.SelectedGenres = {};
 
     vm.signUp = function (valid)
     {
         if (!valid)
             return;
+        vm.User.favGenres = [];
+        for (var genre in vm.SelectedGenres)
+            if (vm.SelectedGenres[genre])
+                vm.User.favGenres.push(genre);
         UserService.signup(vm.User).then(function ()
         {
             $window.location.href = '/';

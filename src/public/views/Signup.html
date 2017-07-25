@@ -72,12 +72,12 @@
                 <div ng-message="required" class="some-message">Country is required</div>
             </div>
             <label class="signupPageText" style="display: block">Select your favorite genres</label>
-            <select multiple
-                    style="display: block"
-                    data-ng-options="g as g for g in ctrl.Genres"
-                    ng-model="ctrl.User.favGenres"
-                    ng-required="false">
-            </select>
+            <div ng-repeat="g in ctrl.Genres">
+                <label class="signupPageText">
+                    <input type="checkbox" id="{{g}}" ng-model="ctrl.SelectedGenres[g]"/>
+                    {{g}}
+                </label>
+            </div>
             <button type="submit" ng-disabled="signUpForm.$invalid" class="btn btn-primary btn-block btn-large">
                 Join Us!
             </button>
