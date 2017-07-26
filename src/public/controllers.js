@@ -7,6 +7,7 @@ app.controller('mainController', ['UserService', function (UserService)
     {
         if (!UserService.cookieExists())
             return;
+
         UserService.loginWithCookie().then(function ()
         {
             vm.User = UserService.User;
@@ -148,10 +149,10 @@ app.controller('forgotMyPassController', ['UserService', function (UserService)
         if (valid)
             UserService.recoverPassword(vm.username, vm.q1a, vm.q2a).then(function (response)
             {
-                vm.response = "Answers are correct! Your password is: " + response.data;
+                vm.response = "Your password is: " + response.data;
             }).catch(function (err)
             {
-                vm.response = "Answers are incorrect";
+                vm.response = "Details are incorrect";
             })
     }
 }]);
@@ -174,7 +175,7 @@ app.controller('signupController', ['UserService', 'DataSource', 'AlbumsService'
                 vm.User.favGenres.push(genre);
         UserService.signup(vm.User).then(function ()
         {
-            $window.location.href = '/';
+            $window.location.href = '/#/login';
         }).catch(function (err)
         {
             alert(err.data);

@@ -11,14 +11,14 @@
                        ng-required="true"/>
                 <div ng-messages="(loginForm.username.$touched || loginForm.$submitted) && loginForm.username.$error"
                      role="alert" class="signupPageText">
-                    <div ng-message="required" class="some-message">Username is required</div>
+                    <div ng-message="required" class="signupErrorText">Username is required</div>
                 </div>
                 <input type="password" name="password" placeholder="Password"
                        ng-model="ctrl.User.Password"
                        ng-required="true"/>
                 <div ng-messages="(loginForm.password.$touched || loginForm.$submitted) && loginForm.password.$error"
                      role="alert" class="signupPageText">
-                    <div ng-message="required" class="some-message">Password is required</div>
+                    <div ng-message="required" class="signupErrorText">Password is required</div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
             </form>

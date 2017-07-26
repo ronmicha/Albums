@@ -13,7 +13,7 @@ router.use(function (req, res, next)
 
     // Update last login to today:
     let today = new Date();
-    let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+    let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + ' ' + today.getHours() + ':' + today.getMinutes();
     res.cookie('AlbumShop', {login: cookie.login, key: cookie.key, lastLogin: date});
     req.username = cookie.login;
     next();

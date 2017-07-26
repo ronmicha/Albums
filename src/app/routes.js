@@ -31,12 +31,12 @@ module.exports = function (app)
         user.Country = req.body.country;
         user.FavGenres = req.body.favGenres;
 
-        ValidateUserDetails(user);
+        // ValidateUserDetails(user);
 
         dbClient.Register(user).then(function ()
         {
-            if (!req.cookies['AlbumShop'])
-                CreateCookie(res, user);
+            // if (!req.cookies['AlbumShop'])
+            //     CreateCookie(res, user);
             res.send('Client added successfully');
         }).catch(function (err)
         {
@@ -132,8 +132,16 @@ module.exports = function (app)
     function CreateCookie(res, user)
     {
         let today = new Date();
-        let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
-        res.cookie('AlbumShop', {login: user.Username, key: user.Username.hashCode(), lastLogin: date});
+        let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + ' ' + today.getHours() + ':' + today.getMinutes();
+        let expire = new Date();
+        expire = new Date(expire.getTime() + 1000 * 60 * 60 * 24 * 365); // Set expire to one year
+        expire = expire.toGMTString();
+        res.cookie('AlbumShop', {
+            login: user.Username,
+            key: user.Username.hashCode(),
+            lastLogin: date,
+            expires: expire
+        });
     }
 
     String.prototype.hashCode = function ()

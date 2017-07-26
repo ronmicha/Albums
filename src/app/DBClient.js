@@ -19,7 +19,7 @@ exports.GetHottestAlbums = function (numOfAlbums)
         ("SELECT TOP {0} A.ID " +
         "FROM AlbumsOrdered AO JOIN Orders O ON AO.Order_ID = O.ID " +
         "JOIN Albums A ON AO.Album_ID = A.ID " +
-        "WHERE O.Order_Date >= DATEADD(day, -7, GETDATE()) " +
+        "WHERE O.Order_Date BETWEEN DATEADD(DAY, -7, GETDATE()) AND GETDATE() " +
         "GROUP BY A.ID " +
         "ORDER BY SUM(AO.Amount) DESC").format(numOfAlbums);
     let query =
@@ -34,7 +34,7 @@ exports.GetNewestAlbums = function (numOfAlbums)
     let query =
         ("SELECT TOP {0} Name, Artist, Genre, Price, Convert(varchar(10), Date_Released, 120) AS [Date Released], Rating, Pic_Link " +
         "FROM Albums " +
-        "WHERE Date_Released >= DATEADD(month, -1, GETDATE()) " +
+        "WHERE Date_Released BETWEEN DATEADD(month, -1, GETDATE()) AND GETDATE() " +
         "ORDER BY Date_Released DESC").format(numOfAlbums);
     return Read(query);
 };

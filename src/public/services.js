@@ -28,12 +28,12 @@ app.factory('UserService', ['$http', '$cookies', function ($http, $cookies)
         return $http.post(url + '/register', body).then(function ()
         {
             service.User = user;
-            updateLastLogin();
-            service.model.loggedIn = true;
+            // updateLastLogin();
+            // service.model.loggedIn = true;
             return Promise.resolve();
         }).catch(function (err)
         {
-            return Promise.reject(err.data);
+            return Promise.reject(err);
         })
     };
 
