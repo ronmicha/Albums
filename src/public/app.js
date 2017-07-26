@@ -27,6 +27,8 @@ app.config(['$routeProvider', function ($routeProvider)
     }).when("/previousOrders", {
         templateUrl: "views/PreviousOrders.html",
         controller: "previousOrdersController"
+    }).when("/about", {
+        templateUrl: "views/About.html"
     }).otherwise({
         templateUrl: "views/Home.html",
         controller: "homeController"
