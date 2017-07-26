@@ -1,24 +1,49 @@
 <div ng-controller="cartController as ctrl" ng-init="ctrl.getCart()">
-    <h1>Cart</h1>
-    <a href="#/previousOrders">Previous Orders</a>
-    <table style="width:100%">
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Genre</th>
-            <th>Price</th>
-            <th>Amount</th>
-        </tr>
-        <tr ng-repeat="album in ctrl.orderedAlbums">
-            <td><img ng-src="{{album.Pic_Link}}"/></td>
-            <td>{{album.AlbumName}}</td>
-            <td>{{album.Genre}}</td>
-            <td>{{album.Price}}</td>
-            <td>{{album.OrderAmount}}</td>
-            <td>
-                <button data-ng-click="ctrl.removeFromCart(album.AlbumID)">Remove</button>
-            </td>
-        </tr>
-    </table>
-    <div>Total price: {{ctrl.cartTotal | number: 2}}</div>
+    <div>
+        <h1>Cart</h1>
+        <a href="#/previousOrders">Previous Orders</a>
+        <table style="width: 50%">
+            <tr>
+                <!--<th></th>-->
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Price</th>
+                <th>Amount</th>
+            </tr>
+            <tr ng-repeat="album in ctrl.orderedAlbums">
+                <!--<td><img ng-src="{{album.Pic_Link}}"/></td>-->
+                <td><a href="" data-target="#albumModal" data-toggle="modal" data-ng-click="ctrl.ShowAlbum(album)">{{album.Name}}</a>
+                </td>
+                <td>{{album.Genre}}</td>
+                <td>{{album.Price}}</td>
+                <td>{{album.Amount}}</td>
+                <td>
+                    <button data-ng-click="ctrl.removeFromCart(album.AlbumID)">Remove</button>
+                </td>
+            </tr>
+        </table>
+        <div>Total price: {{ctrl.cartTotal | number: 2}}</div>
+    </div>
+
+    <div id="albumModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width: 100%">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body text-center">
+                        <h3>Album Details</h3>
+                        <img ng-src="{{ctrl.shownAlbum.Pic_Link}}"/>
+                        <p><b>Name:</b> {{ctrl.shownAlbum.Name}}</p>
+                        <p><b>Artist:</b> {{ctrl.shownAlbum.Artist}}</p>
+                        <p><b>Genre:</b> {{ctrl.shownAlbum.Genre}}</p>
+                        <p><b>Price:</b> {{ctrl.shownAlbum.Price}}</p>
+                        <p><b>Date Released:</b> {{ctrl.shownAlbum.Date_Released | date}}</p>
+                        <p><b>Rating:</b> {{ctrl.shownAlbum.Rating}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

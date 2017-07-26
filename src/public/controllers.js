@@ -245,6 +245,7 @@ app.controller('cartController', ['CartService', 'UserService', function (CartSe
     let vm = this;
     vm.User = UserService.User;
     vm.orderedAlbums = [];
+    vm.shownAlbum = {};
     vm.cartTotal = 0;
     vm.getCart = function ()
     {
@@ -278,5 +279,9 @@ app.controller('cartController', ['CartService', 'UserService', function (CartSe
         {
             alert(err.data);
         })
-    }
+    };
+    vm.ShowAlbum = function (album)
+    {
+        vm.shownAlbum = album;
+    };
 }]);
