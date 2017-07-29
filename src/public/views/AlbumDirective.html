@@ -1,14 +1,31 @@
-<div>
-    <img ng-src="{{thisalbum.Pic_Link}}"/>
-    <div>
-        <h5>{{thisalbum.Name}}</h5>
-        <p>{{thisalbum.Price}} NIS</p>
-        <ul data-ng-controller="cartController as cartCtrl">
-            <li><a class="item_add">
-                <button ng-click="cartCtrl.addAlbumToCart(thisalbum)"
-                        class="glyphicon glyphicon glyphicon-shopping-cart"
-                        aria-hidden="true"></button>
-            </a></li>
+<!--<div>-->
+<!--<img ng-src="{{thisalbum.Pic_Link}}"/>-->
+<!--<div>-->
+<!--<h5>{{thisalbum.Name}}</h5>-->
+<!--<p>{{thisalbum.Price}} NIS</p>-->
+<!--<ul data-ng-controller="cartController as cartCtrl"  style="list-style-type: none">-->
+<!--<li><a class="item_add">-->
+<!--<button ng-click="cartCtrl.addAlbumToCart(thisalbum)"-->
+<!--class="glyphicon glyphicon glyphicon-shopping-cart"-->
+<!--aria-hidden="true"></button>-->
+<!--</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="media" style="margin-top: 0">
+    <div class="media-top media-middle">
+        <img class="media-object" ng-src="{{thisalbum.Pic_Link}}" height="64" width="64"
+             style="display: block;margin: 0 auto">
+    </div>
+    <div class="media-body" data-ng-controller="cartController as cartCtrl" style="text-align: center">
+        <h4 class="media-heading">{{thisalbum.Name}}</h4>
+        <p>Price: {{thisalbum.Price}} NIS</p>
+        <a class="item_add">
+            <button ng-click="cartCtrl.addAlbumToCart(thisalbum)"
+                    class="glyphicon glyphicon glyphicon-shopping-cart"
+                    aria-hidden="true"></button>
+        </a>
         </ul>
     </div>
 </div>

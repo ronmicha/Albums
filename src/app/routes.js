@@ -186,11 +186,11 @@ module.exports = function (app)
         res.status(404).send('404: Page Not Found');
     });
 
-    // redirect to index.html
-    app.get('*', function (req, res)
-    {
-        res.sendFile('./public/index.html');
-    });
+    // // redirect to index.html
+    // app.get('*', function (req, res)
+    // {
+    //     res.sendFile('./public/index.html');
+    // });
 
     // Handle errors:
     app.use(function (err, req, res, next)
