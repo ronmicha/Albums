@@ -1,4 +1,4 @@
-<div data-ng-controller="previousOrdersController as ctrl" data-ng-init="ctrl.init()">
+<div  data-ng-init="ctrl.init()">
     <div ng-repeat="o in ctrl.Orders">
         <h3 style="font-weight: bold"><a ng-click="ctrl.ShowOrder(o)" href="" data-target="#orderModal"
                                          data-toggle="modal">Order #{{o.ID}}:</a></h3>

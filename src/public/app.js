@@ -14,24 +14,30 @@ app.config(['$routeProvider', function ($routeProvider)
 {
     $routeProvider.when("/albums", {
         templateUrl: "views/Albums.html",
-        controller: "albumsController"
+        controller: "albumsController",
+        controllerAs: "ctrl"
     }).when("/login", {
         templateUrl: "views/Login.html",
-        controller: "loginController"
+        controller: "loginController",
+        controllerAs: "ctrl"
     }).when("/signup", {
         templateUrl: "views/Signup.html",
-        controller: "signupController"
+        controller: "signupController",
+        controllerAs: "ctrl"
     }).when("/cart", {
         templateUrl: "views/Cart.html",
-        controller: "cartController"
+        controller: "cartController",
+        controllerAs: "ctrl"
     }).when("/previousOrders", {
         templateUrl: "views/PreviousOrders.html",
-        controller: "previousOrdersController"
+        controller: "previousOrdersController",
+        controllerAs: "ctrl"
     }).when("/about", {
         templateUrl: "views/About.html"
     }).otherwise({
         templateUrl: "views/Home.html",
-        controller: "homeController"
+        controller: "homeController",
+        controllerAs: "ctrl"
     });
 }]);
 
