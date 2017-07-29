@@ -43,7 +43,7 @@
         <div class="right" ng-if="ctrl.model.loggedIn">
             <h5>Recommended for you</h5>
             <div ng-repeat="recomm in ctrl.Recommendations">
-                <p>{{recomm.Name}}</p>
+                <album thisalbum="recomm"></album>
             </div>
         </div>
     </section>
