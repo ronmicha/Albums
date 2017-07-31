@@ -9,7 +9,7 @@ module.exports = function (app)
     app.use('/api/admins', admins);
 
 
-//region User Login & Register
+    //region User Login & Register
     let dbClient = require('./DBClient');
     let validator = require('validator');
     let cookieParser = require('cookie-parser');
@@ -177,7 +177,7 @@ module.exports = function (app)
             throw new Error('Country name is not valid');
     }
 
-//endregion
+    //endregion
 
     // Handle invalid api path:
     app.use('/api', function (req, res, next)
