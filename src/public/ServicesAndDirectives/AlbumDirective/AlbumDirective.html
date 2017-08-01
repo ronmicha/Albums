@@ -84,13 +84,15 @@
 
                     </div>
 
-                    <div class="product-info smart-form">
+                    <div class="product-info smart-form"  data-ng-controller="cartController as cartCtrl">
 
                         <div class="row">
 
                             <div class="col-md-12">
 
-                                <a class="btn btn-danger">Add to cart</a>
+                                <a class="btn btn-danger"
+                                   ng-click="cartCtrl.addAlbumToCart(thisalbum)"
+                                >Add to cart</a>
 
                             </div>
 
