@@ -13,19 +13,109 @@
 <!--</div>-->
 <!--</div>-->
 
-<div class="media" style="margin-top: 0">
-    <div class="media-top media-middle">
-        <img class="media-object" ng-src="{{thisalbum.Pic_Link}}" height="128" width="128"
-             style="display: block;margin: 0 auto">
-    </div>
-    <div class="media-body" data-ng-controller="cartController as cartCtrl" style="text-align: center">
-        <h4 class="media-heading">{{thisalbum.Name}}</h4>
-        <p>Price: {{thisalbum.Price}} NIS</p>
-        <a class="item_add">
-            <button ng-click="cartCtrl.addAlbumToCart(thisalbum)"
-                    class="glyphicon glyphicon glyphicon-shopping-cart"
-                    aria-hidden="true"></button>
-        </a>
-        </ul>
+<!--<div class="media" style="margin-top: 0">-->
+<!--<div class="media-top media-middle">-->
+<!--<img class="media-object" ng-src="{{thisalbum.Pic_Link}}" height="128" width="128"-->
+<!--style="display: block;margin: 0 auto">-->
+<!--</div>-->
+<!--<div class="media-body" data-ng-controller="cartController as cartCtrl" style="text-align: center">-->
+<!--<h4 class="media-heading">{{thisalbum.Name}}</h4>-->
+<!--<p>Price: {{thisalbum.Price}} NIS</p>-->
+<!--<a class="item_add">-->
+<!--<button ng-click="cartCtrl.addAlbumToCart(thisalbum)"-->
+<!--class="glyphicon glyphicon glyphicon-shopping-cart"-->
+<!--aria-hidden="true"></button>-->
+<!--</a>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="container">
+    <div class="col-xs-12 col-md-6">
+
+        <!-- First product box start here-->
+        <div class="prod-info-main prod-wrap clearfix">
+
+            <div class="row">
+
+                <div id="albumImageDiv" class="col-md-5 col-sm-12 col-xs-12">
+
+                    <div class="product-image">
+
+                        <img class="media-object" ng-src="{{thisalbum.Pic_Link}}" class="img-responsive">
+
+                    </div>
+
+                </div>
+
+                <div id="albumDescriptionDiv" class="col-md-7 col-sm-12 col-xs-12">
+
+                    <div class="product-deatil">
+
+                        <h5 class="name">
+
+                            <a>
+
+                                {{thisalbum.Name}}
+
+                            </a>
+
+                            <a>
+
+                                <span>{{thisalbum.Genre}}</span>
+
+                            </a>
+
+                        </h5>
+
+                        <p class="price-container">
+
+                            <span>{{thisalbum.Price}} NIS</span>
+
+                        </p>
+
+                        <span class="tag1"></span>
+
+                    </div>
+
+                    <div class="description">
+
+                        <p>Released In {{thisalbum["Date Released"] | date : "dd.MM.y"}}</p>
+
+                    </div>
+
+                    <div class="product-info smart-form">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <a class="btn btn-danger">Add to cart</a>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <div class="rating">Rating:
+
+                                    {{thisalbum.Rating}}/5
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- end product -->
+
     </div>
 </div>
+
+<!--</div>-->
