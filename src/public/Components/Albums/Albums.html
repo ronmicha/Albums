@@ -52,7 +52,7 @@
 <div class="right" ng-if="ctrl.model.loggedIn">
     <h2 class="viewHeader">Recommended for you</h2>
     <div ng-repeat="recomm in ctrl.Recommendations">
-        <album ng-if="ctrl.SelectedAlbumInRecommendations == $index" thisalbum="recomm"></album>
+        <album style="height: 300px;" ng-if="ctrl.SelectedAlbumInRecommendations == $index" thisalbum="recomm"></album>
     </div>
     <button ng-click="ctrl.ScrollInRecommendations(-1)" ng-if="ctrl.Recommendations.length">&#10094;</button>
     <button ng-click="ctrl.ScrollInRecommendations(1)" ng-if="ctrl.Recommendations.length">&#10095;</button>
