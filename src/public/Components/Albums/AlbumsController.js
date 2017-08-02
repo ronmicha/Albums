@@ -5,8 +5,10 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
     vm.model = UserService.model;
     vm.Genres = [];
     vm.SelectedGenre = "";
+    vm.Albums = {};
     vm.Filters = ['Name', 'Artist', 'Price', 'Rating'];
     vm.SelectedFilter = "";
+    vm.SelectedAlbumInGenre = {};
 
     vm.init = function ()
     {
@@ -18,7 +20,7 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
         {
             AlbumsService.getAllAlbums().then(function (response)
             {
-                vm.Albums = response.data;
+                setByGenre(response.data);
                 return Promise.resolve();
             });
         }).then(function ()
@@ -43,6 +45,32 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
     {
         vm.SelectedFilter = filter;
     };
+
+    vm.ScrollLeft = function (genre)
+    {
+        if (vm.SelectedAlbumInGenre[genre] > 0)
+            vm.SelectedAlbumInGenre[genre]--;
+    };
+
+    vm.ScrollRight = function (genre)
+    {
+        if (vm.SelectedAlbumInGenre[genre] < vm.Albums[genre].length-1)
+            vm.SelectedAlbumInGenre[genre]++;
+    };
+
+    function setByGenre(albums)
+    {
+        for (var i in albums)
+        {
+            let genre = albums[i].Genre;
+            if (!(genre in vm.Albums))
+            {
+                vm.Albums[genre] = [];
+                vm.SelectedAlbumInGenre[genre] = 0;
+            }
+            vm.Albums[genre].push(albums[i]);
+        }
+    }
 }]);
 
 /**
