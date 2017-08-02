@@ -3,7 +3,7 @@
         <h2 class="viewHeader">Hottest Albums</h2>
         <div class="hottestAlbums">
             <div ng-repeat="album in ctrl.hottestAlbums">
-                <album ng-if="ctrl.selectedHotAlbum == $index" thisalbum="album"></album>
+                <album ng-if="ctrl.selectedHotAlbum == $index" thisalbum="album" style="width: 50%"></album>
             </div>
             <button ng-click="ctrl.scrollInHot(-1)">&#10094;</button>
             <button ng-click="ctrl.scrollInHot(1)">&#10095;</button>
@@ -13,7 +13,7 @@
         <h2 class="viewHeader">Newest Albums</h2>
         <div class="newestAlbums">
             <div ng-repeat="album in ctrl.newestAlbums">
-                <album ng-if="ctrl.selectedNewAlbum == $index" thisalbum="album"></album>
+                <album ng-if="ctrl.selectedNewAlbum == $index" thisalbum="album" style="width: 50%"></album>
             </div>
             <button ng-click="ctrl.scrollInNew(-1)">&#10094;</button>
             <button ng-click="ctrl.scrollInNew(1)">&#10095;</button>
