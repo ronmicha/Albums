@@ -39,13 +39,14 @@
              ng-if="ctrl.SelectedGenre == '' || ctrl.SelectedGenre == genre">
             <h2 class="viewHeader">{{genre}}</h2>
             <div>
-                <div ng-repeat="album in ctrl.Albums[genre] | filter : ctrl.SearchQuery |orderObjectBy : ctrl.SelectedFilter">
+                <div ng-repeat="album in filteredAlbums= (ctrl.Albums[genre] | filter : ctrl.SearchQuery |orderObjectBy : ctrl.SelectedFilter)">
                     <album ng-if="ctrl.SelectedAlbumInGenre[genre]==$index"
                            thisalbum="album"></album>
                 </div>
             </div>
-            <button ng-click="ctrl.Scroll(genre,-1)">&#10094;</button>
-            <button ng-click="ctrl.Scroll(genre,1)">&#10095;</button>
+            <button ng-click="ctrl.Scroll(genre,-1)" ng-if="filteredAlbums.length">&#10094;</button>
+            <button ng-click="ctrl.Scroll(genre,1)" ng-if="filteredAlbums.length">&#10095;</button>
+            <h4 class="viewHeader" ng-if="!filteredAlbums.length">No albums found</h4>
         </div>
     </div>
 </div>
@@ -54,6 +55,7 @@
     <div ng-repeat="recomm in ctrl.Recommendations">
         <album ng-if="ctrl.SelectedAlbumInRecommendations == $index" thisalbum="recomm"></album>
     </div>
-    <button ng-click="ctrl.ScrollInRecommendations(-1)">&#10094;</button>
-    <button ng-click="ctrl.ScrollInRecommendations(1)">&#10095;</button>
+    <button ng-click="ctrl.ScrollInRecommendations(-1)" ng-if="ctrl.Recommendations.length">&#10094;</button>
+    <button ng-click="ctrl.ScrollInRecommendations(1)" ng-if="ctrl.Recommendations.length">&#10095;</button>
+    <h4 class="viewHeader" ng-if="!ctrl.Recommendations.length">No recommendations found</h4>
 </div>
