@@ -1,0 +1,10 @@
+#body {
+    background-image: url(Resources/sativaBG.png)
+}
+
+.viewHeader{
+    color: rgb(118, 118, 118);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+    text-align: center;
+}

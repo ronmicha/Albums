@@ -1,7 +1,8 @@
-<div  data-ng-init="ctrl.init()">
+<div data-ng-init="ctrl.init()" style="text-align: center">
+    <h1 class="viewHeader">Your Previous Orders</h1>
     <div ng-repeat="o in ctrl.Orders">
-        <h3 style="font-weight: bold"><a ng-click="ctrl.ShowOrder(o)" href="" data-target="#orderModal"
-                                         data-toggle="modal">Order #{{o.ID}}:</a></h3>
+        <h2 style="font-weight: bold"><u><a ng-click="ctrl.ShowOrder(o)" href="" data-target="#orderModal"
+                                            data-toggle="modal">Order #{{o.ID}}:</a></u></h2>
         <p>Total price: {{o.Total}} {{o.Currency}}</p>
         <p>Order date: {{o.Date | date}}</p>
         <p>Shipping date: {{o['Shipping Date'] | date}}</p>

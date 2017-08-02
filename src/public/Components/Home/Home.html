@@ -1,6 +1,6 @@
 <div ng-init="ctrl.getHottestAlbums()" style="text-align: center">
     <div>
-        <h1 style="margin: 0">Hottest Albums</h1>
+        <h2 class="viewHeader">Hottest Albums</h2>
         <div class="hottestAlbums">
             <div ng-repeat="album in ctrl.hottestAlbums">
                 <album ng-if="ctrl.selectedHotAlbum == $index" thisalbum="album"></album>
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div ng-if="ctrl.model.loggedIn" ng-init="ctrl.getNewestAlbums()">
-        <h1>Newest Albums</h1>
+        <h2 class="viewHeader">Newest Albums</h2>
         <div class="newestAlbums">
             <div ng-repeat="album in ctrl.newestAlbums">
                 <album ng-if="ctrl.selectedNewAlbum == $index" thisalbum="album"></album>

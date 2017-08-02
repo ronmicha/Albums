@@ -33,7 +33,7 @@
     <div class="left">
         <div class="genreDiv" ng-repeat="genre in ctrl.Genres"
              ng-if="ctrl.SelectedGenre == '' || ctrl.SelectedGenre == genre">
-            <h2>{{genre}}</h2>
+            <h2 class="viewHeader">{{genre}}</h2>
             <div>
                 <div ng-repeat="album in ctrl.Albums[genre] | orderObjectBy : ctrl.SelectedFilter">
                     <album ng-if="ctrl.SelectedAlbumInGenre[genre]==$index"
@@ -46,7 +46,7 @@
     </div>
 </div>
 <div class="right" ng-if="ctrl.model.loggedIn">
-    <h2>Recommended for you</h2>
+    <h2 class="viewHeader">Recommended for you</h2>
     <div ng-repeat="recomm in ctrl.Recommendations">
         <album ng-if="ctrl.SelectedAlbumInRecommendations == $index" thisalbum="recomm"></album>
     </div>
