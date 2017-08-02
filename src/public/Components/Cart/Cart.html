@@ -5,15 +5,15 @@
     <div>
         <div class="table-title">
             <h1>Cart</h1>
-            <a href="#/previousOrders">Previous Orders</a>
+            <h4><a href="#/previousOrders">Previous Orders</a></h4>
         </div>
         <table class="table-fill">
             <tr>
                 <th></th>
                 <th>Name</th>
                 <th>Genre</th>
-                <th>Price</th>
                 <th>Amount</th>
+                <th>Price</th>
                 <th>Remove One</th>
             </tr>
             <tr ng-repeat="album in ctrl.orderedAlbums">
@@ -21,14 +21,21 @@
                 <td><a href="" data-target="#albumModal" data-toggle="modal" data-ng-click="ctrl.ShowAlbum(album)">{{album.Name}}</a>
                 </td>
                 <td>{{album.Genre}}</td>
-                <td>{{album.Price}}</td>
-                <td>{{album.Amount}}</td>
+                <td class="text-center">{{album.Amount}}</td>
+                <td class="text-center">{{album.Price}}</td>
                 <td>
                     <button data-ng-click="ctrl.removeFromCart(album.AlbumID)">Remove</button>
                 </td>
             </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total price:</td>
+                <td>{{ctrl.cartTotal | number: 2}}</td>
+                <td></td>
+            </tr>
         </table>
-        <div>Total price: {{ctrl.cartTotal | number: 2}}</div>
     </div>
 
     <div id="albumModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width: 100%">
