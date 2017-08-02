@@ -132,7 +132,11 @@ module.exports = function (app)
     function CreateCookie(res, user)
     {
         let today = new Date();
-        let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + ' ' + today.getHours() + ':' + today.getMinutes();
+        let hours = today.getHours();
+        hours = hours.length < 2 ? '0' + hours : hours;
+        let minutes = today.getMinutes();
+        minutes = minutes.length < 2 ? '0' + minutes : minutes;
+        let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + ' ' + hours + ':' + minutes;
         let expire = new Date();
         expire = new Date(expire.getTime() + 1000 * 60 * 60 * 24 * 365); // Set expire to one year
         expire = expire.toGMTString();
