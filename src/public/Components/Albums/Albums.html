@@ -38,7 +38,7 @@
              ng-if="ctrl.SelectedGenre == '' || ctrl.SelectedGenre == genre">
             <h2 class="viewHeader">{{genre}}</h2>
             <div>
-                <div ng-repeat="album in filteredAlbums= (ctrl.Albums[genre] | filter : ctrl.SearchQuery |orderObjectBy : ctrl.SelectedFilter)">
+                <div ng-repeat="album in filteredAlbums= (ctrl.Albums[genre] | filter : {'Name' : ctrl.SearchQuery} | orderObjectBy : ctrl.SelectedFilter)">
                     <album ng-if="ctrl.SelectedAlbumInGenre[genre]==$index"
                            thisalbum="album"></album>
                 </div>
