@@ -328,20 +328,17 @@
 
 }
 
-
 .product-deatil .glyphicon {
 
     color: #3276b1
 
 }
 
-
 .product-deatil .product-image {
 
     border-right: 0px solid #fff !important
 
 }
-
 
 .product-deatil .name {
 
@@ -351,20 +348,17 @@
 
 }
 
-
 .product-deatil .name small {
 
     display: block
 
 }
 
-
 .product-deatil .name a {
 
     margin-left: 0
 
 }
-
 
 .product-deatil .price-container {
 
@@ -375,19 +369,16 @@
     font-weight: 300;
 }
 
-
 .product-deatil .price-container small {
 
     font-size: 12px;
 }
-
 
 .product-deatil .fa-2x {
 
     font-size: 16px !important
 
 }
-
 
 .product-deatil .fa-2x > h5 {
 
@@ -397,7 +388,6 @@
 
 }
 
-
 .product-deatil .fa-2x + a,
 .product-deatil .fa-2x + a + a {
 
@@ -405,13 +395,11 @@
 
 }
 
-
 .product-deatil .certified {
 
     margin-top: 10px
 
 }
-
 
 .product-deatil .certified ul {
 
@@ -419,13 +407,11 @@
 
 }
 
-
 .product-deatil .certified ul li:not(first-child) {
 
     margin-left: -3px
 
 }
-
 
 .product-deatil .certified ul li {
 
@@ -437,13 +423,11 @@
 
 }
 
-
 .product-deatil .certified ul li:first-child {
 
     border-right: none
 
 }
-
 
 .product-deatil .certified ul li a {
 
@@ -459,7 +443,6 @@
 
 }
 
-
 .product-deatil .certified ul li a span {
 
     display: block;
@@ -473,7 +456,6 @@
     text-align: center
 
 }
-
 
 .product-deatil .message-text {
 
@@ -541,8 +523,7 @@
 
 }
 
-
-    /*--Button effect classes for More info*/
+/*--Button effect classes for More info*/
 .btn-info {
 
     border-radius: 0;
@@ -655,3 +636,20 @@
 #albumDescriptionDiv {
     width: 50%;
 }
+
+.product-image {
+    text-align: center;
+}
+
+.product-image:before {
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.media-object img {
+    display: inline-block;
+    vertical-align: middle;
+}
+
