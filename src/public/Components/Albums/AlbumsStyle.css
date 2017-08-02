@@ -1,25 +1,30 @@
 .container {
-    width: 100%;
     height: 100%;
 }
 
 .left {
-    width: 60%;
+    width: 50%;
     height: 100%;
     float: left;
+    text-align: center;
 }
 
 .right {
-    margin-left: 40%;
-    background: grey;
-    height: inherit;
+    margin-left: 50%;
+    background: rgba(135, 206, 235, 0.5);
+    text-align: center;
 }
 
 #albumsNavBar {
+    z-index: 2;
     margin-bottom: 0;
     opacity: 0.95;
 }
 
 #albumsMainDiv {
     background-image: url("/Resources/sativaBG.png")
+}
+
+.genreDiv {
+    width: 100%;
 }

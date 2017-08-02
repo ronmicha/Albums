@@ -1,8 +1,8 @@
-<div ng-init="ctrl.getHottestAlbums()" style="background-image: url(../../Resources/sativaBG.png)">
+<div ng-init="ctrl.getHottestAlbums()">
     <div>
         <h1 style="margin: 0">Hottest Albums</h1>
         <div class="hottestAlbums" style="display: inline-flex; height: 100vh; width: 100vw">
-            <div ng-repeat="album in ctrl.hottestAlbums" style="height: 100vh; width: 100vw"">
+            <div ng-repeat="album in ctrl.hottestAlbums" style="height: 100vh; width: 100vw">
                 <album thisalbum="album"></album>
             </div>
         </div>
@@ -11,7 +11,7 @@
         <h1>Newest Albums</h1>
         <div class="newestAlbums" style="display: inline-flex">
             <div ng-repeat="album in ctrl.newestAlbums">
-                <album thisalbum="album"></album>
+                <album thisalbum="album" ></album>
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
     vm.Filters = ['Name', 'Artist', 'Price', 'Rating'];
     vm.SelectedFilter = "";
     vm.SelectedAlbumInGenre = {};
+    vm.SelectedAlbumInRecommendations = 0;
 
     vm.init = function ()
     {
@@ -54,8 +55,20 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
 
     vm.ScrollRight = function (genre)
     {
-        if (vm.SelectedAlbumInGenre[genre] < vm.Albums[genre].length-1)
+        if (vm.SelectedAlbumInGenre[genre] < vm.Albums[genre].length - 1)
             vm.SelectedAlbumInGenre[genre]++;
+    };
+
+    vm.ScrollLeftInRecommendations = function ()
+    {
+        if (vm.SelectedAlbumInRecommendations > 0)
+            vm.SelectedAlbumInRecommendations --;
+    };
+
+    vm.ScrollRightInRecommendations = function ()
+    {
+        if (vm.SelectedAlbumInRecommendations  < vm.Recommendations.length - 1)
+            vm.SelectedAlbumInRecommendations ++;
     };
 
     function setByGenre(albums)
