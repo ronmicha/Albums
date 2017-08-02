@@ -37,7 +37,7 @@
                 <div>
                     <div ng-repeat="album in ctrl.Albums[genre] | orderObjectBy : ctrl.SelectedFilter">
                         <div ng-if="ctrl.SelectedAlbumInGenre[genre]==$index">
-                            <button ng-click="ctrl.ScrollLeft(album.Genre)">&#10094;</button>
+                            <button ng-click="ctrl.ScrollLeft(genre)">&#10094;</button>
                             <album
                                     thisalbum="album"></album>
                             <button ng-click="ctrl.ScrollRight(genre)">&#10095;</button>
