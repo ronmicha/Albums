@@ -47,28 +47,18 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
         vm.SelectedFilter = filter;
     };
 
-    vm.ScrollLeft = function (genre)
+    vm.Scroll = function (genre, direction)
     {
-        if (vm.SelectedAlbumInGenre[genre] > 0)
-            vm.SelectedAlbumInGenre[genre]--;
+        if (vm.SelectedAlbumInGenre[genre] + direction >= 0 &&
+            vm.SelectedAlbumInGenre[genre] + direction < vm.Albums[genre].length )
+            vm.SelectedAlbumInGenre[genre] += direction;
     };
 
-    vm.ScrollRight = function (genre)
+    vm.ScrollInRecommendations = function (direction)
     {
-        if (vm.SelectedAlbumInGenre[genre] < vm.Albums[genre].length - 1)
-            vm.SelectedAlbumInGenre[genre]++;
-    };
-
-    vm.ScrollLeftInRecommendations = function ()
-    {
-        if (vm.SelectedAlbumInRecommendations > 0)
-            vm.SelectedAlbumInRecommendations --;
-    };
-
-    vm.ScrollRightInRecommendations = function ()
-    {
-        if (vm.SelectedAlbumInRecommendations  < vm.Recommendations.length - 1)
-            vm.SelectedAlbumInRecommendations ++;
+        if (vm.SelectedAlbumInRecommendations + direction >= 0 &&
+            vm.SelectedAlbumInRecommendations + direction < vm.Recommendations.length)
+            vm.SelectedAlbumInRecommendations += direction;
     };
 
     function setByGenre(albums)

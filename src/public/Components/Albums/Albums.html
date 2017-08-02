@@ -40,16 +40,16 @@
                            thisalbum="album"></album>
                 </div>
             </div>
-            <button ng-click="ctrl.ScrollLeft(genre)">&#10094;</button>
-            <button ng-click="ctrl.ScrollRight(genre)">&#10095;</button>
+            <button ng-click="ctrl.Scroll(genre,-1)">&#10094;</button>
+            <button ng-click="ctrl.Scroll(genre,1)">&#10095;</button>
         </div>
     </div>
 </div>
 <div class="right" ng-if="ctrl.model.loggedIn">
     <h2>Recommended for you</h2>
     <div ng-repeat="recomm in ctrl.Recommendations">
-        <album style="height: 300px" ng-if="ctrl.SelectedAlbumInRecommendations == $index" thisalbum="recomm"></album>
+        <album ng-if="ctrl.SelectedAlbumInRecommendations == $index" thisalbum="recomm"></album>
     </div>
-    <button ng-click="ctrl.ScrollLeftInRecommendations()">&#10094;</button>
-    <button ng-click="ctrl.ScrollRightInRecommendations()">&#10095;</button>
+    <button ng-click="ctrl.ScrollInRecommendations(-1)">&#10094;</button>
+    <button ng-click="ctrl.ScrollInRecommendations(1)">&#10095;</button>
 </div>
