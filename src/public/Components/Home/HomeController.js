@@ -4,6 +4,9 @@ angular.module('AlbumApp').controller('homeController', ['UserService', 'AlbumsS
     vm.hottestAlbums = {};
     vm.newestAlbums = {};
     vm.model = UserService.model;
+    vm.selectedHotAlbum = 0;
+    vm.selectedNewAlbum = 0;
+
     vm.getHottestAlbums = function ()
     {
         AlbumsService.getHottest().then(function (response)
@@ -23,5 +26,19 @@ angular.module('AlbumApp').controller('homeController', ['UserService', 'AlbumsS
         {
             alert(err.data);
         })
+    };
+
+    // Directions is 1/(-1)
+    vm.scrollInHot = function (direction)
+    {
+        if (vm.selectedHotAlbum + direction >= 0 && vm.selectedHotAlbum + direction < vm.hottestAlbums.length)
+            vm.selectedHotAlbum += direction;
+    };
+
+    // Directions is 1/(-1)
+    vm.scrollInNew = function (direction)
+    {
+        if (vm.selectedNewAlbum + direction >= 0 && vm.selectedNewAlbum + direction < vm.newestAlbums.length)
+            vm.selectedNewAlbum += direction;
     };
 }]);

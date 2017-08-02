@@ -1,18 +1,22 @@
-<div ng-init="ctrl.getHottestAlbums()">
+<div ng-init="ctrl.getHottestAlbums()" style="text-align: center">
     <div>
         <h1 style="margin: 0">Hottest Albums</h1>
-        <div class="hottestAlbums" style="display: inline-flex; height: 100vh; width: 100vw">
-            <div ng-repeat="album in ctrl.hottestAlbums" style="height: 100vh; width: 100vw">
-                <album thisalbum="album"></album>
+        <div class="hottestAlbums">
+            <div ng-repeat="album in ctrl.hottestAlbums">
+                <album ng-if="ctrl.selectedHotAlbum == $index" thisalbum="album"></album>
             </div>
+            <button ng-click="ctrl.scrollInHot(-1)">&#10094;</button>
+            <button ng-click="ctrl.scrollInHot(1)">&#10095;</button>
         </div>
     </div>
     <div ng-if="ctrl.model.loggedIn" ng-init="ctrl.getNewestAlbums()">
         <h1>Newest Albums</h1>
-        <div class="newestAlbums" style="display: inline-flex">
+        <div class="newestAlbums">
             <div ng-repeat="album in ctrl.newestAlbums">
-                <album thisalbum="album" ></album>
+                <album ng-if="ctrl.selectedNewAlbum == $index" thisalbum="album"></album>
             </div>
+            <button ng-click="ctrl.scrollInNew(-1)">&#10094;</button>
+            <button ng-click="ctrl.scrollInNew(1)">&#10095;</button>
         </div>
     </div>
 </div>
