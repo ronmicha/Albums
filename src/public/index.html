@@ -45,13 +45,13 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Album Shop</a>
-                <p class="navbar-text">Hello, {{ctrl.model.loggedIn ? ctrl.User.Username : 'guest'}}</p>
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="#albums">Albums</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#cart" ng-if="ctrl.model.loggedIn"><span
                         class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                <p class="navbar-text" style="margin-left: 40px">Hello, {{ctrl.model.loggedIn ? ctrl.User.Username : 'guest'}}</p>
                 <p class="navbar-text" ng-if="ctrl.model.loggedIn">We haven't seen you since
                     {{ctrl.model.lastLoggedIn}}</p>
             </ul>
