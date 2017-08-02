@@ -26,7 +26,7 @@
 
     overflow: hidden;
 
-    position: relative;
+    /*position: relative;*/
 
     border: 1px solid #CEEFFF;
 
@@ -44,7 +44,7 @@
 
 }
 
-.rotprod:hover  {
+.rotprod hover  {
 
     -webkit-transform: rotate(360deg);
 
@@ -64,7 +64,7 @@
 
     padding-top: 16px;
 
-    position: relative;
+    /*position: relative;*/
 
     background: #fff
 
@@ -108,7 +108,7 @@
 
     padding: 13px 0;
 
-    position: absolute;
+    /*position: absolute;*/
 
     right: 10px;
 
@@ -328,21 +328,21 @@
 
 }
 
- 
+
 .product-deatil .glyphicon {
 
     color: #3276b1
 
 }
 
- 
+
 .product-deatil .product-image {
 
     border-right: 0px solid #fff !important
 
 }
 
- 
+
 .product-deatil .name {
 
     margin-top: 0;
@@ -351,21 +351,21 @@
 
 }
 
- 
+
 .product-deatil .name small {
 
     display: block
 
 }
 
- 
+
 .product-deatil .name a {
 
     margin-left: 0
 
 }
 
- 
+
 .product-deatil .price-container {
 
     font-size: 24px;
@@ -375,20 +375,20 @@
     font-weight: 300;
 }
 
- 
+
 .product-deatil .price-container small {
 
     font-size: 12px;
 }
 
- 
+
 .product-deatil .fa-2x {
 
     font-size: 16px !important
 
 }
 
- 
+
 .product-deatil .fa-2x > h5 {
 
     font-size: 12px;
@@ -397,7 +397,7 @@
 
 }
 
- 
+
 .product-deatil .fa-2x + a,
 .product-deatil .fa-2x + a + a {
 
@@ -405,28 +405,28 @@
 
 }
 
- 
+
 .product-deatil .certified {
 
     margin-top: 10px
 
 }
 
- 
+
 .product-deatil .certified ul {
 
     padding-left: 0
 
 }
 
- 
+
 .product-deatil .certified ul li:not(first-child) {
 
     margin-left: -3px
 
 }
 
- 
+
 .product-deatil .certified ul li {
 
     display: inline-block;
@@ -437,14 +437,14 @@
 
 }
 
- 
+
 .product-deatil .certified ul li:first-child {
 
     border-right: none
 
 }
 
- 
+
 .product-deatil .certified ul li a {
 
     text-align: left;
@@ -459,7 +459,7 @@
 
 }
 
- 
+
 .product-deatil .certified ul li a span {
 
     display: block;
@@ -474,7 +474,7 @@
 
 }
 
- 
+
 .product-deatil .message-text {
 
     width: calc(100% - 70px)
@@ -541,7 +541,7 @@
 
 }
 
- 
+
     /*--Button effect classes for More info*/
 .btn-info {
 
@@ -636,7 +636,7 @@
 
     .prod-info-main .product-info {
 
-        position: relative
+        /*position: relative*/
 
     }
 
