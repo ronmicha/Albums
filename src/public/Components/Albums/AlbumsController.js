@@ -1,4 +1,4 @@
-angular.module('AlbumApp').controller('albumsController', ['UserService', 'AlbumsService', function (UserService, AlbumsService)
+angular.module('AlbumApp').controller('albumsController', ['UserService', 'AlbumsService', '$scope', function (UserService, AlbumsService, $scope)
 {
     let vm = this;
     vm.User = UserService.User;
@@ -48,10 +48,10 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
         vm.SelectedFilter = filter;
     };
 
-    vm.Scroll = function (genre, direction)
+    vm.Scroll = function (albums, genre, direction)
     {
         if (vm.SelectedAlbumInGenre[genre] + direction >= 0 &&
-            vm.SelectedAlbumInGenre[genre] + direction < vm.Albums[genre].length )
+            vm.SelectedAlbumInGenre[genre] + direction < albums.length)
             vm.SelectedAlbumInGenre[genre] += direction;
     };
 
@@ -74,6 +74,12 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
             }
             vm.Albums[genre].push(albums[i]);
         }
+    }
+
+    vm.resetIndexes = function ()
+    {
+        for (var genre in vm.SelectedAlbumInGenre)
+            vm.SelectedAlbumInGenre[genre] = 0;
     }
 }]);
 
