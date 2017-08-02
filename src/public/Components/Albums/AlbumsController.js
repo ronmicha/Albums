@@ -10,6 +10,7 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
     vm.SelectedFilter = "";
     vm.SelectedAlbumInGenre = {};
     vm.SelectedAlbumInRecommendations = 0;
+    vm.SearchQuery = "";
 
     vm.init = function ()
     {
