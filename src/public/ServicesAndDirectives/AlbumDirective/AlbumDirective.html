@@ -27,9 +27,10 @@
                     </div>
                     <div class="product-info smart-form" data-ng-controller="cartController as cartCtrl">
                         <div class="row">
-                            <div class="col-md-12">
-                                <a class="btn btn-danger"
-                                   ng-click="cartCtrl.addAlbumToCart(thisalbum)"
+                            <div class="col-md-12" style="display: flex">
+                                <input style="width: 50%" type="number" placeholder="#" ng-model="amount"
+                                       onkeydown="return false" min="1">
+                                <a class="btn btn-danger" ng-click="cartCtrl.addAlbumToCart(thisalbum,amount)"
                                 >Add to cart</a>
                             </div>
                             <br><br>

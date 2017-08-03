@@ -148,24 +148,24 @@ exports.GetPreviousOrders = function (username)
     return Read(query);
 };
 
-exports.AddAlbumToCart = function (username, albumID)
+exports.AddAlbumToCart = function (username, albumID, amount)
 {
     let query =
         ("UPDATE ClientsCarts " +
-        "SET Amount = Amount + 1 " +
+        "SET Amount = Amount + {2} " +
         "WHERE Username = '{0}' AND AlbumID = {1} " +
         "IF @@ROWCOUNT = 0 " +
         "INSERT INTO ClientsCarts " +
-        "VALUES ('{0}', {1}, 1)").format(username, albumID);
+        "VALUES ('{0}', {1}, {2})").format(username, albumID, amount);
     return Write(query);
 };
 
-exports.RemoveAlbumFromCart = function (username, albumID)
+exports.RemoveAlbumFromCart = function (username, albumID, amount)
 {
     let query =
         ("UPDATE ClientsCarts " +
-        "SET Amount = Amount - 1 " +
-        "WHERE Username = '{0}' AND AlbumID = {1}; ").format(username, albumID);
+        "SET Amount = Amount - {2} " +
+        "WHERE Username = '{0}' AND AlbumID = {1}; ").format(username, albumID, amount);
     query +=
         "DELETE FROM ClientsCarts " +
         "WHERE Amount = 0";

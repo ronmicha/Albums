@@ -52,14 +52,17 @@ router.post('/addAlbumToCart', function (req, res, next)
 {
     let username = req.username;
     let albumID = req.query.albumID;
+    let amount = req.query.amount;
     if (!albumID)
         throw new Error('Album ID is required');
+    if (amount <= 0)
+        throw new Error('Amount must be greater than 0');
     dbClient.GetAlbumID(albumID).then(function (data)
     {
         if (!data || data.length === 0)
             throw new Error('Album ID {0} not exist'.format(albumID));
 
-        dbClient.AddAlbumToCart(username, albumID).then(function ()
+        dbClient.AddAlbumToCart(username, albumID, amount).then(function ()
         {
             res.send('Album added successfully');
         }).catch(function (err)
@@ -80,9 +83,12 @@ router.post('/removeAlbumFromCart', function (req, res, next)
 {
     let username = req.username;
     let albumID = req.query.albumID;
+    let amount = req.query.amount;
     if (!albumID)
         throw new Error('Album ID is required');
-    dbClient.RemoveAlbumFromCart(username, albumID).then(function ()
+    if (amount <= 0)
+        throw new Error('Amount must be greater than 0');
+    dbClient.RemoveAlbumFromCart(username, albumID, amount).then(function ()
     {
         res.send('Album removed successfully');
     }).catch(function (err)

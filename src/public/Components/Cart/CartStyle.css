@@ -76,7 +76,7 @@ tr {
 
 tr:hover td {
     background: #4E5066;
-    color: #FFFFFF;
+    color: #1b1b1b;
     border-top: 1px solid #22262e;
     border-bottom: 1px solid #22262e;
 }
@@ -142,4 +142,8 @@ td.text-center {
 
 td.text-right {
     text-align: right;
+}
+
+.amountInput {
+    width: 90%;
 }

@@ -14,7 +14,7 @@
                 <th>Genre</th>
                 <th>Amount</th>
                 <th>Price</th>
-                <th>Remove One</th>
+                <th>Remove</th>
             </tr>
             <tr ng-repeat="album in ctrl.orderedAlbums">
                 <td><img ng-src="{{album.Pic_Link}}" width="100" height="100"/></td>
@@ -24,7 +24,8 @@
                 <td class="text-center">{{album.Amount}}</td>
                 <td class="text-center">{{album.Price}}</td>
                 <td>
-                    <button data-ng-click="ctrl.removeFromCart(album.AlbumID)">Remove</button>
+                    <input class="amountInput" type="number" placeholder="Amount" ng-model="amount" onkeydown="return false" min="1" max="{{album.Amount}}">
+                    <button data-ng-click="ctrl.removeFromCart(album.AlbumID,amount)">Remove</button>
                 </td>
             </tr>
             <tr>
