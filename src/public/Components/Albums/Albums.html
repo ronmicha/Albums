@@ -45,8 +45,8 @@
                 </div>
             </div>
             <p class="albumNavigatorIndex" ng-if="filteredAlbums.length">{{ctrl.SelectedAlbumInGenre[genre] + 1}}/{{filteredAlbums.length }}</p>
-            <button class="albumNavigatorButton" ng-click="ctrl.Scroll(filteredAlbums,genre,-1)" ng-if="filteredAlbums.length">&#10094;</button>
-            <button class="albumNavigatorButton" ng-click="ctrl.Scroll(filteredAlbums,genre,1)" ng-if="filteredAlbums.length">&#10095;</button>
+            <button class="btn btn-primary" ng-click="ctrl.Scroll(filteredAlbums,genre,-1)" ng-if="filteredAlbums.length">&#10094;</button>
+            <button class="btn btn-primary" ng-click="ctrl.Scroll(filteredAlbums,genre,1)" ng-if="filteredAlbums.length">&#10095;</button>
             <h4 class="viewHeader" ng-if="!filteredAlbums.length">No albums found</h4>
         </div>
     </div>
@@ -59,7 +59,7 @@
     </div>
     <p class="albumNavigatorIndex" ng-if="ctrl.Recommendations.length"
     > {{ctrl.SelectedAlbumInRecommendations + 1}}/{{ctrl.Recommendations.length }}</p>
-    <button class="albumNavigatorButton" ng-click="ctrl.ScrollInRecommendations(-1)" ng-if="ctrl.Recommendations.length">&#10094;</button>
-    <button class="albumNavigatorButton" ng-click="ctrl.ScrollInRecommendations(1)" ng-if="ctrl.Recommendations.length">&#10095;</button>
+    <button class="btn btn-primary" ng-click="ctrl.ScrollInRecommendations(-1)" ng-if="ctrl.Recommendations.length">&#10094;</button>
+    <button class="btn btn-primary" ng-click="ctrl.ScrollInRecommendations(1)" ng-if="ctrl.Recommendations.length">&#10095;</button>
     <h4 class="viewHeader" ng-if="!ctrl.Recommendations.length">No recommendations found</h4>
 </div>
