@@ -12,12 +12,12 @@ angular.module('AlbumApp').factory('CartService', ['$http', function ($http)
             return Promise.reject(err);
         })
     };
-    service.addAlbumToCart = function (albumID)
+    service.addAlbumToCart = function (albumID, amount)
     {
         return $http({
             url: url + '/addAlbumToCart',
             method: 'POST',
-            params: {albumID: albumID}
+            params: {albumID: albumID, amount: amount}
         }).then(function ()
         {
             return Promise.resolve();
@@ -26,12 +26,12 @@ angular.module('AlbumApp').factory('CartService', ['$http', function ($http)
             return Promise.reject(err);
         })
     };
-    service.removeFromCart = function (albumID)
+    service.removeFromCart = function (albumID, amount)
     {
         return $http({
             url: url + '/removeAlbumFromCart',
             method: 'POST',
-            params: {albumID: albumID}
+            params: {albumID: albumID, amount: amount}
         }).then(function ()
         {
             return Promise.resolve();

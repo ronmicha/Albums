@@ -16,10 +16,15 @@ angular.module('AlbumApp').controller('cartController', ['CartService', 'UserSer
             alert(err.data);
         });
     };
-    vm.addAlbumToCart = function (album)
+    vm.addAlbumToCart = function (album, amount)
     {
         let albumID = album.ID;
-        CartService.addAlbumToCart(albumID).then(function ()
+        if (!amount)
+        {
+            alert('Please enter amount');
+            return;
+        }
+        CartService.addAlbumToCart(albumID, amount).then(function ()
         {
             calculateTotal();
             alert('Album added to cart');
@@ -28,9 +33,14 @@ angular.module('AlbumApp').controller('cartController', ['CartService', 'UserSer
             alert(err.data);
         })
     };
-    vm.removeFromCart = function (albumID)
+    vm.removeFromCart = function (albumID, amount)
     {
-        CartService.removeFromCart(albumID).then(function ()
+        if (!amount)
+        {
+            alert('Please enter amount');
+            return;
+        }
+        CartService.removeFromCart(albumID, amount).then(function ()
         {
             vm.getCart();
         }).catch(function (err)

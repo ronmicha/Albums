@@ -5,8 +5,10 @@
             <div ng-repeat="album in ctrl.hottestAlbums">
                 <album ng-if="ctrl.selectedHotAlbum == $index" thisalbum="album" style="width: 50%"></album>
             </div>
-            <button ng-click="ctrl.scrollInHot(-1)">&#10094;</button>
-            <button ng-click="ctrl.scrollInHot(1)">&#10095;</button>
+            <p class="albumNavigatorIndex"
+            > {{ctrl.selectedHotAlbum + 1}}/{{ctrl.hottestAlbums.length }}</p>
+            <button class="btn btn-primary" ng-click="ctrl.scrollInHot(-1)">&#10094;</button>
+            <button class="btn btn-primary" ng-click="ctrl.scrollInHot(1)">&#10095;</button>
         </div>
     </div>
     <div ng-if="ctrl.model.loggedIn" ng-init="ctrl.getNewestAlbums()">
@@ -15,8 +17,10 @@
             <div ng-repeat="album in ctrl.newestAlbums">
                 <album ng-if="ctrl.selectedNewAlbum == $index" thisalbum="album" style="width: 50%"></album>
             </div>
-            <button ng-click="ctrl.scrollInNew(-1)">&#10094;</button>
-            <button ng-click="ctrl.scrollInNew(1)">&#10095;</button>
+            <p class="albumNavigatorIndex"
+            > {{ctrl.selectedNewAlbum + 1}}/{{ctrl.newestAlbums.length }}</p>
+            <button class="btn btn-primary" ng-click="ctrl.scrollInNew(-1)">&#10094;</button>
+            <button class="btn btn-primary" ng-click="ctrl.scrollInNew(1)">&#10095;</button>
         </div>
     </div>
 </div>
