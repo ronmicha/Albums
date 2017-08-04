@@ -165,7 +165,7 @@ function CheckItemsInCartAreInStock(data, username, shippingDate, currency)
             let priceInCurrency = record.Price;
             if (currency === 'USD')
                 priceInCurrency *= 0.281962;
-            totalPrice += priceInCurrency * record.OrderAmount;
+            totalPrice += priceInCurrency * record.Amount;
         }
         let orderData = {};
         orderData.Username = username;
