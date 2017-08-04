@@ -242,7 +242,7 @@ exports.ClearCart = function (username)
 exports.AlbumsOfOrder = function (orderID)
 {
     let query =
-        ("SELECT A.Name as Name, A.Artist as Artist, A.Genre as Genre, A.Price as Price, A.Rating as Rating " +
+        ("SELECT A.Name as Name,O.Amount as Amount, A.Artist as Artist, A.Genre as Genre, A.Price as Price, A.Rating as Rating " +
         "FROM Albums A INNER JOIN AlbumsOrdered O ON O.Album_ID = A.ID " +
         "WHERE O.Order_ID = {0} ").format(orderID);
     return Read(query);
