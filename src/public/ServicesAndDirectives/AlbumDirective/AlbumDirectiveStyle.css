@@ -653,3 +653,8 @@
     vertical-align: middle;
 }
 
+.directiveAmountInput {
+    width: 50%;
+    margin-top: -5px;
+    height: 80%;
+}
