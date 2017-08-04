@@ -59,8 +59,8 @@
 <div class="right" ng-if="ctrl.model.loggedIn">
     <h2 class="viewHeader">Recommended for you</h2>
     <div ng-repeat="recomm in ctrl.Recommendations">
-        <album style="overflow: auto; width: 70%" ng-if="ctrl.SelectedAlbumInRecommendations == $index"
-               thisalbum="recomm"></album>
+        <album ng-if="ctrl.SelectedAlbumInRecommendations == $index"
+               thisalbum="recomm" style="overflow: auto; width: 70%"></album>
     </div>
     <p class="albumNavigatorIndex" ng-if="ctrl.Recommendations.length"
     > {{ctrl.SelectedAlbumInRecommendations + 1}}/{{ctrl.Recommendations.length }}</p>
