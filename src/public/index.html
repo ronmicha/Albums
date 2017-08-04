@@ -51,10 +51,6 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#cart" ng-if="ctrl.model.loggedIn"><span
                         class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
-                <p class="navbar-text" style="margin-left: 40px">Hello, {{ctrl.model.loggedIn ? ctrl.User.Username :
-                    'guest'}}</p>
-                <p class="navbar-text" ng-if="ctrl.model.loggedIn">We haven't seen you since
-                    {{ctrl.model.lastLoggedIn}}</p>
             </ul>
             <ul class="nav navbar-nav navbar-right" ng-if="!ctrl.model.loggedIn">
                 <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign
@@ -63,6 +59,13 @@
                     Login</a>
                 </li>
             </ul>
+            <ul class="nav navbar-nav navbar-right" ng-if="ctrl.model.loggedIn">
+                <p class="navbar-text" style="margin-left: 40px">Hello, {{ctrl.model.loggedIn ? ctrl.User.Username :
+                    'guest'}}</p>
+                <p class="navbar-text" ng-if="ctrl.model.loggedIn">We haven't seen you since
+                    {{ctrl.model.lastLoggedIn}}</p>
+            </ul>
+
         </div>
     </nav>
     <ng-view></ng-view>
