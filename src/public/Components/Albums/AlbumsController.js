@@ -50,16 +50,14 @@ angular.module('AlbumApp').controller('albumsController', ['UserService', 'Album
 
     vm.Scroll = function (albums, genre, direction)
     {
-        if (vm.SelectedAlbumInGenre[genre] + direction >= 0 &&
-            vm.SelectedAlbumInGenre[genre] + direction < albums.length)
-            vm.SelectedAlbumInGenre[genre] += direction;
+        let iterationVar = direction > 0 ? 1 : albums.length - 1;
+        vm.SelectedAlbumInGenre[genre] = (vm.SelectedAlbumInGenre[genre] + iterationVar) % albums.length;
     };
 
     vm.ScrollInRecommendations = function (direction)
     {
-        if (vm.SelectedAlbumInRecommendations + direction >= 0 &&
-            vm.SelectedAlbumInRecommendations + direction < vm.Recommendations.length)
-            vm.SelectedAlbumInRecommendations += direction;
+        let iterationVar = direction > 0 ? 1 : vm.Recommendations.length - 1;
+        vm.SelectedAlbumInRecommendations = (vm.SelectedAlbumInRecommendations + iterationVar) % vm.Recommendations.length;
     };
 
     function setByGenre(albums)

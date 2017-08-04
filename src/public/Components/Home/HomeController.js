@@ -31,14 +31,14 @@ angular.module('AlbumApp').controller('homeController', ['UserService', 'AlbumsS
     // Directions is 1/(-1)
     vm.scrollInHot = function (direction)
     {
-        if (vm.selectedHotAlbum + direction >= 0 && vm.selectedHotAlbum + direction < vm.hottestAlbums.length)
-            vm.selectedHotAlbum += direction;
+        let iterationVar = direction > 0 ? 1 : vm.hottestAlbums.length - 1;
+        vm.selectedHotAlbum = (vm.selectedHotAlbum + iterationVar) % vm.hottestAlbums.length;
     };
 
     // Directions is 1/(-1)
     vm.scrollInNew = function (direction)
     {
-        if (vm.selectedNewAlbum + direction >= 0 && vm.selectedNewAlbum + direction < vm.newestAlbums.length)
-            vm.selectedNewAlbum += direction;
+        let iterationVar = direction > 0 ? 1 : vm.newestAlbums.length - 1;
+        vm.selectedNewAlbum = (vm.selectedNewAlbum + iterationVar) % vm.newestAlbums.length;
     };
 }]);
