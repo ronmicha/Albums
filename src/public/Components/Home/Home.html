@@ -13,7 +13,7 @@
     </div>
     <div ng-if="ctrl.model.loggedIn" ng-init="ctrl.getNewestAlbums()">
         <h2 class="viewHeader">Newest Albums</h2>
-        <div class="newestAlbums">
+        <div class="newestAlbums" style="margin-bottom: 20px;">
             <div ng-repeat="album in ctrl.newestAlbums">
                 <album ng-if="ctrl.selectedNewAlbum == $index" thisalbum="album" style="width: 50%"></album>
             </div>
