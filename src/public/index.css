@@ -2,9 +2,17 @@
     background-image: url(Resources/sativaBG.png)
 }
 
-.viewHeader{
+.viewHeader {
     color: rgb(118, 118, 118);
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     letter-spacing: 1px;
     text-align: center;
+}
+
+.albumNavigatorIndex {
+    color: #7a7c7f;
+    font-size: 20px;
+    font-family: "Libre Baskerville", serif;
+    text-align: center;
+    text-shadow: 0 1px 1px #fff;
 }
