@@ -4,7 +4,8 @@ angular.module('AlbumApp').controller('cartController', ['CartService', 'UserSer
     vm.User = UserService.User;
     vm.orderedAlbums = [];
     vm.shownAlbum = {};
-    vm.cartTotal = 0;
+    vm.cartTotalAmount = 0;
+    vm.cartTotalPrice = 0;
     vm.getCart = function ()
     {
         CartService.getCart(vm.User.username).then(function (response)
@@ -55,8 +56,12 @@ angular.module('AlbumApp').controller('cartController', ['CartService', 'UserSer
 
     function calculateTotal()
     {
-        vm.cartTotal = 0;
+        vm.cartTotalPrice = 0;
+        vm.cartTotalAmount = 0;
         for (var i = 0; i < vm.orderedAlbums.length; i++)
-            vm.cartTotal += vm.orderedAlbums[i].Price * vm.orderedAlbums[i].Amount;
+        {
+            vm.cartTotalPrice += vm.orderedAlbums[i].Price * vm.orderedAlbums[i].Amount;
+            vm.cartTotalAmount += vm.orderedAlbums[i].Amount;
+        }
     }
 }]);
