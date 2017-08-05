@@ -22,9 +22,8 @@
     border-radius: 3px;
     border-collapse: collapse;
     height: 320px;
-    max-width: 600px;
     padding: 5px;
-    width: 100%;
+    width: 60%;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     animation: float 5s infinite;
     margin: auto auto 20px;
@@ -35,12 +34,13 @@ th {
     background: #1b1e24;
     border-bottom: 4px solid #9ea7af;
     border-right: 1px solid #343a45;
-    font-size: 23px;
+    font-size: 21px;
     font-weight: 100;
     padding: 24px;
-    text-align: left;
+    text-align: center;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     vertical-align: middle;
+    height: 10%;
 }
 
 th:first-child {
@@ -54,7 +54,7 @@ th:last-child {
 
 tr {
     border-top: 1px solid #C1C3D1;
-    border-bottom-: 1px solid #C1C3D1;
+    border-bottom: 1px solid #C1C3D1;
     color: #666B85;
     font-size: 16px;
     font-weight: normal;
@@ -95,7 +95,7 @@ tr:last-child td:last-child {
 td {
     background: #FFFFFF;
     padding: 20px;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
     font-weight: 300;
     font-size: 18px;
@@ -104,7 +104,7 @@ td {
 }
 
 td:last-child {
-    border-right: 0px;
+    border-right: 0;
 }
 
 th.text-left {

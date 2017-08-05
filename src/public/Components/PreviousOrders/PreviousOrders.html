@@ -13,11 +13,13 @@
         <tr ng-repeat="o in ctrl.Orders">
             <td><a ng-click="ctrl.ShowOrder(o)" href="" data-target="#orderModal"
                    data-toggle="modal">Order #{{o.ID}}</a></td>
-            <td>{{o.Total |number:2}} {{o.Currency}}</p>{{album.Name}}</td>
+            <td>{{o.Total |number:2}} {{o.Currency}}</td>
             <td>{{o.Date | date}}</td>
             <td>{{o['Shipping Date'] | date}}</td>
         </tr>
     </table>
+
+
     <div id="orderModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div id="modal-dialog" class="modal-dialog">
             <div class="modal-content">
@@ -40,7 +42,6 @@
                                         <p>Total albums: {{ctrl.OrderAlbums.length}}</p>
                                         <table id="albumsInOrderTable"
                                                class="table table-striped table-hover table-condensed">
-                                            <thead>
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Artist</th>
@@ -49,7 +50,6 @@
                                                 <th>Amount</th>
                                                 <th>Price</th>
                                             </tr>
-                                            </thead>
                                             <tbody>
                                             <tr ng-repeat="a in ctrl.OrderAlbums">
                                                 <td>{{a.Name}}</td>
